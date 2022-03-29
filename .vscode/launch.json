@@ -1,0 +1,8 @@
+{
+  "type": "pwa-chrome",
+  "request": "launch",
+  "name": "Launch Chrome against localhost",
+  "preLaunchTask": "yarn dev:h5",
+  "url": "https://localhost:3000",
+  "webRoot": "${workspaceFolder}"
+}

@@ -1,0 +1,11 @@
+*.min.js
+*-min.js
+dist
+public
+assets
+node_modules
+uni_modules
+manifest.json
+
+# 微信原生组件
+wxcomponents
