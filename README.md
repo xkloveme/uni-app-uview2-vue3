@@ -190,6 +190,8 @@ docs: https://www.uviewui.com/components/intro.html
 
 适配 vue3 可能会带来一些 bug, 你也可以不使用这个库
 
+// "uview-ui": "git+ssh://git@github.com:wt-front-end/uView2.0.git#pkg",
+
 #### 原子化 css
 
 playground: https://unocss.antfu.me/

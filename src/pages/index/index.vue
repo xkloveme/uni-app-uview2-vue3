@@ -1,5 +1,12 @@
 <template>
   <meta title="主页" title:微信="微信端主页" />
+  <UniNoticeBar
+    single="true"
+    text="[单行] 这是 NoticeBar 通告栏，这是 NoticeBar 通告栏，这是 NoticeBar 通告栏"
+  ></UniNoticeBar>
+  <UniNoticeBar
+    text="[多行] 这是 NoticeBar 通告栏，这是 NoticeBar 通告栏，这是 NoticeBar 通告栏，这是 NoticeBar 通告栏"
+  ></UniNoticeBar>
   <div flex-center-col pt100>
     <div text-4xl py-25>
       <div class="icon" i-ri-leaf-fill inline-block></div>
@@ -10,13 +17,16 @@
     <div py-25>
       <u-input v-model="name" placeholder="你的名字?" inputAlign="center" />
     </div>
+    <UniNumberBox></UniNumberBox>
+    <UniTag text="测试页" @click="goTest()"></UniTag>
     <div py-25>
-      <u-button
+      <UniTag
         text="开冲"
         :disabled="!name"
         color="linear-gradient(120deg, #f093fb 0%, #f5576c 100%)"
         @click="name && sayHi()"
-      ></u-button>
+      ></UniTag>
+
       <!-- ↑这里有个小bug,由于组件中没有声明事件,vue3会优先匹配原生事件,导致disabled时仍会触发 -->
       <!-- 欢迎提交pr修复 -->
     </div>
@@ -37,6 +47,9 @@ function sayHi() {
         ? uni.showToast({ title: '收到返回值: ' + text })
         : uni.showToast({ title: '未收到返回值', icon: 'none' }),
     )
+}
+function goTest() {
+  app.to('/pages/test/index')
 }
 
 useScroll(onPageScroll).onLoad(page => {
