@@ -1,29 +1,7 @@
-<h1 align="center">Uniapp Preset</h1>
+<h1 align="center">Uniapp Vite Vue3</h1>
 <div align="center">🌁 基于 uniapp，快速，优雅的全栈预设模板</div>
 <br>
-<a href="https://4chao.github.io/preset/"><div align="center">DEMO</div></a>
-<br>
-<div align="center">
-<img src="https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D" height="31">
-<img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" height="31">
-<img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" height="31">
-<img src="https://user-images.githubusercontent.com/26431026/159439484-68970ebe-d484-4aff-a556-eb8fd6e58202.png" height="31">
-</div>
-<div align="center">
-<img src="https://img.shields.io/badge/license-MIT-44ccff.svg" height="20">
-<img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" height="20">
-</div>
-<div align="center">
-<img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2F4chao%2Fpreset.svg?type=small" height="20">
-</div>
-<br>
 
-<a href="https://www.pixiv.net/artworks/93782133">
-<div align="right">93782133</div>
-</a>
-<a href="https://www.pixiv.net/artworks/93782133">
-<img src="https://user-images.githubusercontent.com/26431026/159630824-ea9fcd0e-0a32-4aae-8be1-61725f6b6bb8.png" align="right" height="580">
-</a>
 
 - [💄 Features](#-features)
 - [🎉 Getting Started](#-getting-started)
@@ -48,30 +26,13 @@
 - [🍻 Contribute](#-contribute)
 - [📜 License](#-license)
 
-## 💄 Features
+## 🎉 开始使用
 
-- ✅ 开箱即用 - 下载即可体验最新的技术栈 vite,ts,vue3,...
-- ✅ 随时更新 - 妈妈再也不用担心项目不能用脚手架的新功能了
-- ✅ 各种自动按需引入 - 减少代码量，保护你娇弱的手指
-- ✅ 自动路由配置 - 全自动化构建 pages.json 文件
-- ✅ 原子化 css - 并且支持小程序使用 Attributify 风格
-- ✅ 超多 utils - 工具函数加快开发效率
-- ✅ uView UI 组件库 - 我偷偷适配了 Vue3 哦
-- ✅ vitest + power-assert 单测 - 最简单的 assert, 最极致的享受
-- 🚧 完善更新日志流程
-- 🚧 添加 axios 模块，构建请求封装
-- 🚧 添加 UniCloud-ts 基础框架 (`src/app/server/`)
-- 🚧 页面跳转传参改为事件机制
+- uni-ui
+[uni-ui 文档](https://uniapp.dcloud.io/component/uniui/uni-ui.html)
+[uni-ui 示例](https://hellouniapp.dcloud.net.cn/pages/extUI/card/card)
 
-**欢迎大家提交 PR 和 Issue**
 
-## 🎉 Getting Started
-
-1. fork 或 use 本模板，克隆到本地
-2. 进入主目录并执行`yarn bootstrap`
-3. 执行`yarn dev:h5`运行服务
-4. 若模板有更新，可执行`yarn upgrade:template`升级模板（windows 请参照[此流程](#更新模板)）
-5. 请通过`yarn commit`提交更新
 
 ## 📖 Wiki
 

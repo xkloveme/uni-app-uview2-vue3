@@ -40,6 +40,7 @@ export default function (options: Partial<Options> = {}) {
       'Meta',
       'sys',
       'u-',
+      'wt-',
     ],
     includedFiles = [/.vue/],
     strippedPrefixes = ['v-bind:', ':'],

@@ -7,6 +7,7 @@
     <p>
       <em text-sm opacity-75>快速，优雅的全栈预设模板</em>
     </p>
+    <UniRate :max="10" :value="5" />
     <div py-25>
       <u-input v-model="name" placeholder="你的名字?" inputAlign="center" />
     </div>
