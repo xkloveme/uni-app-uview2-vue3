@@ -190,8 +190,6 @@ docs: https://www.uviewui.com/components/intro.html
 
 适配 vue3 可能会带来一些 bug, 你也可以不使用这个库
 
-// "uview-ui": "git+ssh://git@github.com:wt-front-end/uView2.0.git#pkg",
-
 #### 原子化 css
 
 playground: https://unocss.antfu.me/
@@ -207,13 +205,17 @@ docs: https://github.com/unocss/unocss
 
 注意：
 
-1. Attributify 风格直接编译到小程序会被忽略，所以小程序平台将会由`build/vite-plugin-mp-attr-fix.ts`转换成有`data-`前缀的 dataset
+1. Attributify 风格直接编译到小程序会被忽略，所以小程序平台在解析 ast 时将 attr 压入 class 中
 2. 小程序 wxss 不支持`hover:`这种类名前缀会报错，请使用`hover-`前缀
-3. padding 和 margin 等长度属性的默认单位为 rpx, 例如：`p-30`和`pa30`意为`padding: 30rpx`, 注：app 和 h5 下 rpx 单位其实由 uniapp 转换为 $\frac{1}{32}$ rem 实现的，所以请不要显式使用 rpx 单位：`p-30rpx`, 这样不经过转换会样式失灵。
-4. 同样的，`paxs`,`pasm`等尺寸也会在 app 被转换。规则：`xs = 10rpx, sm = 20rpx`以此类推
-5. 由于 3 中转换逻辑与 uniapp 官方相同，所以 rpxCalcMaxDeviceWidth 等属性不受影响
-6. patch 源码：`patches/@unocss+preset-mini+**.patch`
+3. 同时请不要使用类似`bg="blue-400 hover-blue-500"`这样的 attr, 因为 unocss 解析时不会生成相应类名选择器，应只使用无 value 的 attr
+4. padding 和 margin 等长度属性的默认单位为 rpx, 例如：`p-30`和`pa30`意为`padding: 30rpx`, 注：app 和 h5 下 rpx 单位其实由 uniapp 转换为 $\frac{1}{32}$ rem 实现的，所以请不要显式使用 rpx 单位：`p-30rpx`, 这样不经过转换会样式失灵。
+5. 同样的，`paxs`,`pasm`等尺寸也进行了隐式转换。规则：`xs = 10rpx, sm = 20rpx`以此类推
+6. 由于 4 中转换逻辑与 uniapp 官方相同，所以 rpxCalcMaxDeviceWidth 等属性不受影响
 7. 如果你有更好的解决方案欢迎 PR
+
+相关 patches 文件：
+`patches/@unocss+preset-mini+**.patch`
+`patches/@dcloudio+uni-mp-compiler+**.patch`
 
 #### 更新模板
 
@@ -246,9 +248,10 @@ Thanks to [power-assert](https://github.com/power-assert-js/power-assert)，你�
 #### 页面跳转
 
 ```ts
+// 使用#作为分包标识, 详情看下方表格
 app.to('/pages/aaa/bbb') // 跳转到 /pages/aaa/bbb.vue 页面
-app.to('ccc/ddd') // 跳转到 /pages/ccc/ddd.vue 页面
-app.to('eee') // 跳转到 当前分包下的 ddd.vue 页面
+app.to('#ccc/ddd') // 跳转到 /pages/ccc/ddd.vue 页面
+app.to('eee') // 跳转到 当前目录下的 eee.vue 页面
 
 // 跳转到 当前分包下的 fff.vue 页面 并携带参数
 app.to('fff',{g:'h'})
@@ -262,8 +265,25 @@ app.back() // 返回上一页
 app.back({i:'j'})
 // 在上一个页面的相应app.to的then方法中获取回调参数:
 app.to('...').then(res => {...})
-
 ```
+
+__页面路径解析规则：__
+
+> $currentGroup 为当前分包
+
+|说明|输入|解析|
+|-|-|-|
+| #后为包名，路径留空默认为 index | #group | /pages/group/index |
+| 同上 | #group/ | /pages/group/index |
+| #后为包名，提供路径 | #group/foo | /pages/group/foo |
+| #留空默认当前分包并提供路径 | #/foo/bar | /pages/$currentGroup/foo/bar |
+| 默认当前分包，默认解析到 index | # | /pages/$currentGroup/index |
+| 同上 | #/ | /pages/$currentGroup/index |
+| 不涉及分包，遵循 uniapp 标准 | foo/bar | foo/bar |
+| 不涉及分包，遵循 uniapp 标准 | foo/bar/baz | foo/bar/baz |
+| 不涉及分包，遵循 uniapp 标准 | /pages/foo/bar | /pages/foo/bar |
+| 不涉及分包，遵循 uniapp 标准 | ./foo/bar | ./foo/bar |
+| 不涉及分包，遵循 uniapp 标准 | ../foo | ../foo |
 
 #### API 请求封装 (TODO)
 
