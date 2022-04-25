@@ -1,7 +1,7 @@
 /*
  * @Author: xkloveme
  * @Date: 2022-04-02 17:44:36
- * @LastEditTime: 2022-04-21 14:30:13
+ * @LastEditTime: 2022-04-25 14:39:21
  * @LastEditors: xkloveme
  * @Description: 打包文件输出版本到public目录
  * @FilePath: /uni-app-uview2-vue3/build/vite-plugin-version.ts
@@ -19,11 +19,12 @@ export default function createGitVersion(viteEnv, options = { fileName: 'version
       try {
         // 执行命令失败进行异常捕获
         const command = 'git log -1 --pretty=format:'
+        const commandContent = 'git log -3 --pretty=format:%s'
         const Branch = execSync(`${command}%d`).toString().trim()
         const Hash = execSync(`${command}%H`).toString().trim()
         const author = execSync(`${command}%cn`).toString().trim()
         const email = execSync(`${command}%ce`).toString().trim()
-        const content = execSync(`${command}%s`).toString().trim()
+        const content = execSync(`${commandContent}`).toString().trim()
         // 生成版本时间
         let getNowTime = function () {
           let dateTime
