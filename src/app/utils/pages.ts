@@ -11,7 +11,7 @@ let to = debounce(
   (path: string, obj?: any) => {
     const currentPath = getCurrentPages().pop()['route']
     const currentGroup = currentPath.split('/')[1]
-    const id = uni.$u.guid(5) + new Date().getTime()
+    const id = Math.random().toString(36).slice(-6) + new Date().getTime()
 
     const pkg = { data: obj, from: currentPath, id }
     uni.$on(id + '_query', cb => cb(pkg))

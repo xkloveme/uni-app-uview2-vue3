@@ -9,15 +9,17 @@
     </p>
     <UniRate :max="10" :value="5" />
     <div py-25>
-      <u-input v-model="name" placeholder="你的名字?" inputAlign="center" />
+      <!-- <input v-model="name" placeholder="你的名字?" inputAlign="center" /> -->
+      <UniEasyinput v-model="name" errorMessage focus placeholder="你的名字?"></UniEasyinput>
     </div>
     <div py-25>
-      <u-button
-        text="开冲"
-        :disabled="!name"
+      <button
+        type="primary"
         color="linear-gradient(120deg, #f093fb 0%, #f5576c 100%)"
-        @click="name && sayHi()"
-      ></u-button>
+        @click="sayHi()"
+      >
+        开冲
+      </button>
       <!-- ↑这里有个小bug,由于组件中没有声明事件,vue3会优先匹配原生事件,导致disabled时仍会触发 -->
       <!-- 欢迎提交pr修复 -->
     </div>
