@@ -68,7 +68,7 @@
   <wt-section title="自定义列数" type="line" padding>
     <uni-grid :column="4" :highlight="true" @change="change">
       <uni-grid-item v-for="(item, index) in 8" :index="index" :key="index">
-        <view class="grid-item-box" style="background-color: #fff">
+        <view class="grid-item-box flex flex-direction flex-wrap" style="background-color: #fff">
           <uni-icons type="image" :size="30" color="#777" />
           <text class="text">文本信息</text>
         </view>

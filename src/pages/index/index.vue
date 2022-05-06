@@ -20,8 +20,12 @@
       >
         开冲
       </button>
-      <!-- ↑这里有个小bug,由于组件中没有声明事件,vue3会优先匹配原生事件,导致disabled时仍会触发 -->
-      <!-- 欢迎提交pr修复 -->
+      <button color="linear-gradient(120deg, #f093fb 0%, #f5576c 100%)" m="10" @click="sayTest()">
+        测试页
+      </button>
+      <button color="linear-gradient(120deg, #f093fb 0%, #f5576c 100%)" m="10" @click="sayApi()">
+        api页
+      </button>
     </div>
     <p text-sm opacity-75>打开F12进入移动端视图</p>
     <p text-sm opacity-75>向下滑动体验下拉刷新</p>
@@ -43,6 +47,13 @@ function sayHi() {
     .catch(({ text }) => {
       uni.showToast({ title: '子页面抛出异常' + text, icon: 'none' })
     })
+}
+
+function sayTest() {
+  app.to('/pages/test/index')
+}
+function sayApi() {
+  app.to('/pages/api/index')
 }
 
 useScroll(onPageScroll).onLoad(page => {
