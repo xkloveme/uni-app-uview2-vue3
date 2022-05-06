@@ -11,6 +11,7 @@
     "build:prod": "uni build --mode production",
     "build:mp-weixin": "uni build --mode production -p mp-weixin",
     "test": "vitest",
+    "push": "cz",
     "commit": "cz",
     "prepare": "husky install",
     "preinstall": "node ./scripts/preinstall.js",

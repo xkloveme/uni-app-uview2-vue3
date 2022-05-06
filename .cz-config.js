@@ -12,7 +12,7 @@ module.exports = {
     '🏢 构建,build,构建流程、外部依赖变更，比如升级 npm 包、修改 webpack 配置',
     '🔩 架构,chore,对构建过程或辅助工具和库的更改,不影响源文件、测试用例的其他操作',
     '⏪ 回滚,revert,回滚 commit',
-  ].map((str) => {
+  ].map(str => {
     const [value, tag, description] = str.split(',')
     const icon = value.split(' ')[0]
     return {
@@ -26,10 +26,11 @@ module.exports = {
     'layout,布局',
     'components,组件',
     'deps,依赖',
+    'business,业务',
     'cloud,unicloud后端',
     'database,数据库',
     //在这里添加scope,最好聚焦到具体服务
-  ].map((str) => {
+  ].map(str => {
     const [value, description] = str.split(',')
     return {
       value,
