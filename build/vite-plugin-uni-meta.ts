@@ -7,7 +7,7 @@ import { merge, transform, isObject } from 'lodash'
 import normallize from 'normalize-path'
 import AppConfig from '../src/app.config'
 
-export const defaultPagesRE = /src\/pages\/((?!.+(component(s)?|static).+).)*\.vue$/
+export const defaultPagesRE = /src[\/\\]pages[\/\\]((?!.+(component(s)?|static).+).)*\.vue$/
 export const defaultMetaRE = /\<meta(.|\s)*?(\/\>|\/meta\>)/im
 export function MetaParser(str, alias, preset): Record<string, any> {
   let attr
@@ -127,7 +127,7 @@ export default function (options: Partial<Options> = {}) {
             } catch (error) {
               log(c.red(`请为文件 ${normalizePagePath(id)} 提供正确的meta信息\n` + c.red(error)))
             }
-            if (pageMeta[normalizePagePath(id)] !== meta) {
+            if (pageMeta[normalizePagePath(id)] !== (meta || '{}')) {
               debug(pageMeta[normalizePagePath(id)], meta)
 
               log(c.blue(normalizePagePath(id)), c.yellow(`更新了meta信息`))
