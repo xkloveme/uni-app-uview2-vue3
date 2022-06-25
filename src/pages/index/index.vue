@@ -1,16 +1,16 @@
 <template>
   <meta title="主页" title:微信="微信端主页" />
-  <div flex-center-col pt100>
-    <div text-4xl py-25>
+  <div flex-center-col pt10>
+    <div text-4xl py-15>
       <div class="icon" i-ri-leaf-fill inline-block></div>
     </div>
     <p>
       <em text-sm opacity-75>快速，优雅的全栈预设模板</em>
     </p>
-    <UniRate :max="10" :value="5" />
-    <div py-25>
+    <uni-rate :max="10" :value="5" />
+    <div py-15>
       <!-- <input v-model="name" placeholder="你的名字?" inputAlign="center" /> -->
-      <UniEasyinput v-model="name" errorMessage focus placeholder="你的名字?"></UniEasyinput>
+      <uni-easyinput v-model="name" errorMessage focus placeholder="你的名字?"></uni-easyinput>
     </div>
     <!-- ↓这里可以直接使用app -->
     <div @click="app.User.handleClick">reverse: {{ app.User.reverseName }}</div>
