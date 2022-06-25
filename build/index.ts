@@ -7,7 +7,6 @@
  * @FilePath: /uni-app-uview2-vue3/build/index.ts
  * @Copyright © xkloveme
  */
-import vue from '@vitejs/plugin-vue'
 import uni from '@dcloudio/vite-plugin-uni'
 import ViteRestart from 'vite-plugin-restart'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -18,6 +17,9 @@ import UniProvider from './vite-plugin-uni-provider'
 import Espower from './vite-plugin-espower'
 import GitVersion from './vite-plugin-version'
 import SetupExtend from './vite-plugin-setup-extend'
+import ImportsConfig from './imports.config'
+import Define from './vite-plugin-define'
+import { visualizer } from 'rollup-plugin-visualizer'
 function isTest() {
   return process.env.NODE_ENV === 'test'
 }
@@ -32,21 +34,11 @@ export default function createVitePlugins(viteEnv, isBuild = false) {
     ViteRestart({
       restart: ['src/pages.js', 'src/app.config.ts'],
     }),
-    AutoImport({
-      imports: [
-        'vue',
-        'uni-app',
-        { '@/app/index': ['app'] },
-        { 'power-assert': [['default', 'assert']] },
-      ],
-      dts: 'declare/auto-imports.d.ts',
-    }),
-    isTest() ||
-      uni({
-        vueOptions: {
-          reactivityTransform: true,
-        },
-      }),
+    AutoImport(ImportsConfig),
+    isTest() || uni({ vueOptions: { reactivityTransform: true } }),
+    isTest() && Espower(),
+    Define(), //添加一些全局变量
+    visualizer(), //可视化依赖关系
   ]
   VITE_APP_ENV === 'development' && vitePlugins.push(Espower())
   isBuild && vitePlugins.push(GitVersion(viteEnv))

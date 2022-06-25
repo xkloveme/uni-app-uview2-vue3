@@ -52,5 +52,8 @@ export default defineConfig(({ mode, command }) => {
       watch: { ignored: ['**/dist/**'] },
     },
     plugins: createVitePlugins(env, command === 'build'),
+    esbuild: { keepNames: true },
+    optimizeDeps: { exclude: ['lodash-es'] },
+    test: { globals: true, environment: 'jsdom', deps: { inline: ['@vue'] } },
   }
 })

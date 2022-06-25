@@ -1,5 +1,6 @@
 import { debounce, DebouncedFuncLeading } from 'lodash'
-import { useQuery } from '@/hooks'
+import USID from 'usid'
+const usid = new USID()
 
 export function getPath(p: string, currentGroup: string) {
   let [group, path] = Array.from(p.match(/^(?:#(.*?)(?:\/|$))?(.*)$/)).slice(1)
@@ -29,8 +30,8 @@ let to = debounce(
 const back = debounce(
   (data?: any, type: 'resolve' | 'reject' = 'resolve') => {
     if (data) console.log('回调:', data)
-    const { id } = useQuery()
-    uni.$emit(id.value + '_' + type, data)
+    const id = Math.random().toString(36).slice(-6) + new Date().getTime()
+    uni.$emit(id + '_' + type, data)
     const url = '/pages/index/index'
     if (getCurrentPages().length > 1) uni.navigateBack()
     else uni.redirectTo({ url }).catch(() => uni.switchTab({ url }))
