@@ -1,0 +1,133 @@
+pipeline {
+	agent any
+  // agent {
+  // 	docker {
+  // 		image 'reg.watone.local/library/yarn:v1.22.4'
+  // 		args '-v /usr/bin/docker:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock'
+  // 	}
+  // }
+
+  stages {
+    stage('Git Checkout'){
+        steps {
+            checkout([$class: 'GitSCM', branches: [[name: "$BRANCHES"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'df5d99a0-9b4f-4ac1-aaaa-6e0865e0cd67', url: 'git@30.207.88.65:js/js-zlb-h5.git']]])
+        }
+    }
+
+    stage('Yarn Build'){
+        // agent { docker 'reg.watone.local/library/yarn:v1.22.4' }
+        steps {
+          script {
+            if(PROFILES == 'pre'){
+                sh '''
+                yarn config set ignore-engines true
+                pnpm install --no-frozen-lockfile
+                pnpm install
+                yarn build:ver
+                '''
+            }
+            if(PROFILES == 'test'){
+                sh '''
+                yarn config set ignore-engines true
+                pnpm install --no-frozen-lockfile
+                pnpm install
+                yarn build:ver
+                '''
+            }
+            if(PROFILES == 'prod'){
+               sh '''
+                yarn config set ignore-engines true
+                pnpm install --no-frozen-lockfile
+                pnpm install
+                yarn build
+                '''
+            }
+          }
+        }
+    }
+
+    stage('docker push') {
+        steps {
+          script {
+            if(PROFILES == 'pre'){
+              sh '''
+              echo "构建并推送镜像到: ${REGISTRY} 仓库！！！"
+              docker login -u ${ACCOUNT} -p ${PASSWD} ${REGISTRY}
+              docker build -t ${REGISTRY}/${PROJECT_NAME}-pre/${IMAGE_NAME}:${VERSION} -f dockerfile .
+              docker push ${REGISTRY}/${PROJECT_NAME}-pre/${IMAGE_NAME}:${VERSION}
+              sleep 3
+              docker rmi ${REGISTRY}/${PROJECT_NAME}-pre/${IMAGE_NAME}:${VERSION}
+              '''
+            }
+            if(PROFILES == 'test'){
+              sh '''
+              echo "构建并推送镜像到: ${REGISTRY} 仓库！！！"
+              docker login -u ${ACCOUNT} -p ${PASSWD} ${REGISTRY}
+              docker build -t ${REGISTRY}/${PROJECT_NAME}-test/${IMAGE_NAME}:${VERSION} -f dockerfile .
+              docker push ${REGISTRY}/${PROJECT_NAME}-test/${IMAGE_NAME}:${VERSION}
+              sleep 3
+              docker rmi ${REGISTRY}/${PROJECT_NAME}-test/${IMAGE_NAME}:${VERSION}
+              '''
+            }
+            if(PROFILES == 'prod'){
+              sh '''
+              echo "构建并推送镜像到: ${REGISTRY} 仓库！！！"
+              docker login -u ${ACCOUNT} -p ${PASSWD} ${REGISTRY}
+              docker build -t ${REGISTRY}/${PROJECT_NAME}/${IMAGE_NAME}:${VERSION} -f dockerfile .
+              docker push ${REGISTRY}/${PROJECT_NAME}/${IMAGE_NAME}:${VERSION}
+              sleep 3
+              docker rmi ${REGISTRY}/${PROJECT_NAME}/${IMAGE_NAME}:${VERSION}
+              '''
+            }
+           }
+        }
+    }
+
+    stage('Deploy to k8s') {
+        steps {
+            script {
+                // if ( PROFILES == 'prod' ) {
+                //     echo '接下来进行生产项目的发布...'
+                //     sh '''
+                //     sed -i "/image/{s/latest/${VERSION}/}"  ${DEPLOYMENT}
+                //     sshpass scp ${DEPLOYMENT} root@172.18.39.191:/root/caosx/yml
+                //     sshpass ssh root@172.18.39.191 "kubectl apply -f /root/caosx/yml/${DEPLOYMENT}"
+                //     '''
+                //     // kubernetesDeploy configs: 'watone-jw-web-deployment.yaml', kubeConfig: [path: ''], kubeconfigId: '3ab9d4b4-ffb9-44af-ab49-c17b64161198', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+                // }
+
+                if ( PROFILES == 'dev' ) {
+                   echo '接下来进行开发测试项目的发布...'
+                   sh '''
+                   sed -i "/image/{s/latest/${VERSION}/}"  ${DEPLOYMENT}
+                   sed -i "/image/{s/${PROJECT_NAME}/${PROJECT_NAME}-test/}"  ${DEPLOYMENT}
+                   sed -i "/profiles/{s/profiles/${PROFILES}/}"  ${DEPLOYMENT}
+                   sshpass scp ${DEPLOYMENT} root@172.18.46.62:/data01/yml/jsjw
+                   sshpass ssh root@172.18.46.62 "kubectl apply -f /data01/yml/jsjw/${DEPLOYMENT}"
+                   '''
+              //     kubernetesDeploy configs: 'deploy.yaml', kubeConfig: [path: ''], kubeconfigId: '3ab9d4b4-ffb9-44af-ab49-c17b64161198', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+               }
+                if ( PROFILES == 'pre' ) {
+                   echo '接下来进行预发项目的发布...'
+                   sh '''
+                   sed -i "/image/{s/latest/${VERSION}/}"  ${DEPLOYMENT}
+                   sed -i "/image/{s/${PROJECT_NAME}/${PROJECT_NAME}-pre/}"  ${DEPLOYMENT}
+                   sed -i "/profiles/{s/profiles/${PROFILES}/}"  ${DEPLOYMENT}
+                   sshpass scp ${DEPLOYMENT} root@30.207.88.39:/data01/yml/jsjw
+                   sshpass ssh root@30.207.88.39 "kubectl apply -f /data01/yml/jsjw/${DEPLOYMENT}"
+                   '''
+              //     kubernetesDeploy configs: 'deploy.yaml', kubeConfig: [path: ''], kubeconfigId: '3ab9d4b4-ffb9-44af-ab49-c17b64161198', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+               }
+            }
+        }
+    }
+
+    stage ('Post-Build') {
+        steps {
+            script {
+                currentBuild.description = "${VERSION}"
+            }
+        }
+    }
+  }
+}
