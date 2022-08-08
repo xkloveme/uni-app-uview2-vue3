@@ -15,5 +15,5 @@ export default {
       },
     },
   },
-  uniCloud: true,
+  uniCloud: false,
 }

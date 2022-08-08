@@ -30,7 +30,7 @@
   </view>
 </template>
 
-<script setup lang="ts">
+<script setup>
 /**
  * Section 标题栏
  * @description 标题栏

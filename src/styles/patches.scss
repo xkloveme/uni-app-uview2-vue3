@@ -1,6 +1,14 @@
 :not(not) {
   box-sizing: border-box;
 }
+.amap-logo {
+  display: none;
+  opacity: 0 !important;
+}
+.amap-copyright {
+  display: none;
+  opacity: 0 !important;
+}
 
 page {
   --safe-area-inset-top: 0px;

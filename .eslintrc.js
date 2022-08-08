@@ -15,6 +15,9 @@ module.exports = {
     my: 'readonly',
     getCurrentPages: 'readonly',
     app: 'readonly',
+    AMap: 'true',
+    AMapUI: 'true',
+    $api: 'true',
   },
   extends: [
     'plugin:vue/vue3-recommended',
@@ -40,8 +43,7 @@ module.exports = {
     'vue/component-name-in-template-casing': 'off',
     'vue/no-v-html': 'off',
     'accessor-pairs': 2,
-
-    'block-spacing': [2, 'always'],
+    '@typescript-eslint/no-explicit-any': ['off'],
     'brace-style': [
       2,
       '1tbs',

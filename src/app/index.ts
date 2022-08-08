@@ -2,6 +2,7 @@ import { App as VueApp } from 'vue'
 import store from './store'
 import server from './server'
 import preset from './preset'
+import Apis from '../api'
 
 export const app = {
   [Symbol.toStringTag]: 'AppGlobalUtils',
@@ -16,6 +17,7 @@ export const appPlugin = {
     app.catch(() => (wx['uni'] = uni))
     vueApp.config.globalProperties.app = app
     vueApp.config.globalProperties.uni = uni
+    vueApp.config.globalProperties.$api = Apis
     vueApp.use(store)
     vueApp.use(server)
     let sum = ''

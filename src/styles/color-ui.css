@@ -3812,6 +3812,12 @@ scroll-view.cu-steps .cu-item {
   white-space: nowrap;
   overflow: hidden;
 }
+.text-cut-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 .text-bold {
   font-weight: bold;

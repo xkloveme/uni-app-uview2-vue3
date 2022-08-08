@@ -1,46 +1,5 @@
-<h1 align="center">Uniapp Vite Vue3</h1>
-<div align="center">🌁 基于 uniapp，快速，优雅的全栈预设模板</div>
-<br>
-<div align="center"><a href="https://4chao.github.io/preset/"><table><thead><tr><th>🌟 DEMO</th></tr></thead></table></a></div>
-<div align="center">
-<img src="https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D" height="31">
-<img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" height="31">
-<img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" height="31">
-<img src="https://user-images.githubusercontent.com/26431026/159439484-68970ebe-d484-4aff-a556-eb8fd6e58202.png" height="31">
-</div>
-<div align="center">
-<img src="https://img.shields.io/badge/license-MIT-44ccff.svg" height="20">
-<img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" height="20">
-<img src="https://img.shields.io/github/workflow/status/4chao/preset/Build%20and%20Deploy" height="20">
-</div>
-<div align="center">
-<img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2F4chao%2Fpreset.svg?type=small" height="20">
-</div>
-<br>
-
-
-- [💄 Features](#-features)
-- [🎉 Getting Started](#-getting-started)
-- [📖 Wiki](#-wiki)
-  - [⚙️ Presets](#️-presets)
-    - [项目配置文件](#项目配置文件)
-    - [自动路由配置](#自动路由配置)
-    - [API 自动引入](#api-自动引入)
-    - [根组件自动引入](#根组件自动引入)
-    - [原子化 css](#原子化-css)
-    - [更新模板](#更新模板)
-    - [单元测试](#单元测试)
-  - [🧰 Utils](#-utils)
-    - [页面跳转](#页面跳转)
-    - [API 请求封装 (TODO)](#api-请求封装-todo)
-    - [状态管理](#状态管理)
-    - [时间处理](#时间处理)
-  - [🪝 Hooks](#-hooks)
-    - [页面传参获取](#页面传参获取)
-    - [上拉加载下拉刷新](#上拉加载下拉刷新)
-- [🍻 Contribute](#-contribute)
-- [📜 License](#-license)
-
+<h1 align="center">嘉善纪委一网监督</h1>
+<div align="center">嘉善纪委一网监督</div>
 ## 🎉 开始使用
 
 - uni-ui
