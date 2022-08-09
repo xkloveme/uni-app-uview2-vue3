@@ -23,13 +23,7 @@
 </template>
 
 <script setup>
-import $api from '@/api'
 function goPage(url) {
   app.to(`/pages/${url}/index`)
 }
-console.log($api)
-
-$api.getTest().then(res => {
-  console.log(res)
-})
 </script>

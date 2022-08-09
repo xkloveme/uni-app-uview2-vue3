@@ -4,9 +4,12 @@
 </template>
 
 <script setup>
+import { useQuery } from '@/hooks'
+const { data } = $(useQuery())
 let input = $('')
 function search(e) {
-  console.log('🐛 ~ file: index.vue ~ line 24 ~ src', e)
+  app.User.addName(e.value)
+  app.to(data.name)
 }
 </script>
 

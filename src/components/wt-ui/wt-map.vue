@@ -57,6 +57,7 @@
 </template>
 
 <script setup name="Map">
+import $api from '@/api'
 import MapLoader from '@/utils/map.js'
 let MAps = null
 let district = null
@@ -79,7 +80,85 @@ function initMaps() {
   addBoundary('嘉善县', '#3493FF', '#1498FF')
   addBoundary('吴江区', '#FFB41F', '#FFB41F')
   addBoundary('青浦区', '#2AAE33', '#2AAE33')
-  location()
+  addText()
+  // location()
+  // addMarker()
+}
+function getDataMap() {
+  $api
+    .getMapPoints({
+      page: 1,
+      size: 10000,
+      longitude: app.User.locationArr[0],
+      latitude: app.User.locationArr[1],
+      name: app.User.name,
+      area: app.User.area,
+      line: app.User.line,
+    })
+    .then(res => {
+      addMarker(res.rows)
+    })
+}
+let icon = {
+  // 图标类型，现阶段只支持 image 类型
+  type: 'image',
+  // 图片 url
+  image: 'https://a.amap.com/jsapi_demos/static/demo-center/marker/express2.png',
+  // 图片尺寸
+  size: [64, 30],
+  // 图片相对 position 的锚点，默认为 bottom-center
+  anchor: 'center',
+}
+let textStyle = {
+  fontSize: 12,
+  fontWeight: 'normal',
+  fillColor: '#22886f',
+  strokeColor: '#fff',
+  strokeWidth: 2,
+  fold: true,
+  padding: '2, 5',
+}
+function addMarker(rows) {
+  let markers = []
+  let LabelsData = []
+  rows?.map(item => {
+    LabelsData.push({
+      name: item.name,
+      position: [item.longitude, item.latitude],
+      zooms: [10, 20],
+      opacity: 1,
+      zIndex: 16,
+      icon,
+      text: {
+        content: item.name,
+        direction: 'bottom',
+        offset: [-20, -5],
+        style: textStyle,
+      },
+    })
+  })
+  var layer = new AMap.LabelsLayer({
+    zooms: [3, 20],
+    zIndex: 1000,
+    allowCollision: true, //可以让标注避让用户的标注
+  })
+  layer.add(markers)
+  // 图层添加到地图
+  MAps.add(layer)
+
+  // 初始化 labelMarker
+  for (var i = 0; i < LabelsData.length; i++) {
+    var curData = LabelsData[i]
+    curData.extData = {
+      index: i,
+    }
+
+    var labelMarker = new AMap.LabelMarker(curData)
+
+    markers.push(labelMarker)
+  }
+  // 将 marker 添加到图层
+  layer.add(markers)
 }
 function addBoundary(name = '嘉善县', fillColor = '#CCF3FF', strokeColor = '#CC66CC') {
   if (!district) {
@@ -116,6 +195,80 @@ function addBoundary(name = '嘉善县', fillColor = '#CCF3FF', strokeColor = '#
     }
   })
 }
+
+function addText() {
+  let touristSpots = [
+    {
+      name: '嘉善县',
+      position: [120.92, 30.85],
+      zIndex: 300,
+      smallIcon: 'https://a.amap.com/jsapi_demos/static/resource/img/qiniandian.png',
+      bigIcon: 'https://a.amap.com/jsapi_demos/static/resource/img/qiniandian.png',
+      size: [128, 160],
+      anchor: 'bottom-center',
+    },
+    {
+      name: '吴江区',
+      position: [120.638, 31.0598],
+      zIndex: 300,
+      smallIcon: 'https://a.amap.com/jsapi_demos/static/resource/img/men3.png',
+      bigIcon: 'https://a.amap.com/jsapi_demos/static/resource/img/men.png',
+      size: [146, 144],
+      anchor: 'bottom-center',
+    },
+    {
+      name: '青浦区',
+      position: [121.12, 31.15],
+      zIndex: 300,
+      smallIcon: 'https://a.amap.com/jsapi_demos/static/resource/img/men2.png',
+      bigIcon: 'https://a.amap.com/jsapi_demos/static/resource/img/men2.png',
+      size: [185, 94],
+      anchor: 'bottom-center',
+    },
+  ]
+
+  var spots = []
+  var zoomStyleMapping2 = {
+    7: 0,
+    8: 0,
+    9: 0,
+    10: 0,
+    14: 0,
+    15: 0,
+    16: 0,
+  }
+  for (var i = 0; i < touristSpots.length; i += 1) {
+    var marker = new AMap.ElasticMarker({
+      position: touristSpots[i].position,
+      zooms: [7, 20],
+      styles: [
+        {
+          icon: {
+            img: touristSpots[i].smallIcon,
+            size: [50, 50], //可见区域的大小
+            anchor: 'bottom-center', //锚点
+            fitZoom: 10, //最合适的级别
+            scaleFactor: 2, //地图放大一级的缩放比例系数
+            maxScale: 2, //最大放大比例
+            minScale: 1, //最小放大比例
+          },
+          label: {
+            content: touristSpots[i].name,
+            position: 'BM',
+            minZoom: 3,
+            fitZoom: 10, //最合适的级别
+            scaleFactor: 2, //地图放大一级的缩放比例系数
+            maxScale: 2, //最大放大比例
+            minScale: 1, //最小放大比例
+          },
+        },
+      ],
+      zoomStyleMapping: zoomStyleMapping2,
+    })
+    spots.push(marker)
+  }
+  MAps.add(spots)
+}
 function location() {
   AMap.plugin('AMap.Geolocation', function () {
     var geolocation = new AMap.Geolocation({
@@ -128,12 +281,7 @@ function location() {
     MAps.addControl(geolocation)
     geolocation.getCurrentPosition(function (status, result) {
       if (status == 'complete') {
-        console.log(
-          '🐛 ~ file: wt-map.vue ~ line 68 ~ geolocation.getCurrentPosition ~ result',
-          result,
-        )
         app.User.addLocation([result.position.lng, result.position.lat])
-        // onComplete(result)
       } else {
         uni.showToast({ icon: 'none', title: '地图定位失败' })
       }
@@ -144,16 +292,29 @@ onMounted(() => {
   MapLoader().then(
     AMap => {
       initMaps()
+      getDataMap()
     },
     e => {
       console.log('地图加载失败', e)
     },
   )
 })
+defineExpose({
+  initMaps,
+})
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .icon {
   background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+}
+#MAps {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>

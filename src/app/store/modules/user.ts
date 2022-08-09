@@ -5,6 +5,9 @@ export class User extends Pinia {
   // 使用Persist修饰器持久化数据
   @Persist
   location = []
+  name = ''
+  area = ''
+  line = ''
 
   // 允许直接编写getter
   get locationArr() {
@@ -14,5 +17,14 @@ export class User extends Pinia {
   // 或action
   async addLocation(location) {
     this.location = location
+  }
+  async addName(name) {
+    this.name = name
+  }
+  async addArea(area) {
+    this.area = area
+  }
+  async addLine(line) {
+    this.line = line
   }
 }

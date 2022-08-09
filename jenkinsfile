@@ -23,7 +23,7 @@ pipeline {
                 yarn config set ignore-engines true
                 pnpm install --no-frozen-lockfile
                 pnpm install
-                yarn build:ver
+                yarn build
                 '''
             }
             if(PROFILES == 'test'){
@@ -31,7 +31,7 @@ pipeline {
                 yarn config set ignore-engines true
                 pnpm install --no-frozen-lockfile
                 pnpm install
-                yarn build:ver
+                yarn build
                 '''
             }
             if(PROFILES == 'prod'){

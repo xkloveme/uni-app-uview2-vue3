@@ -15,12 +15,12 @@
 <script setup lang="ts">
 import MescrollBody from 'mescroll-uni/mescroll-body.vue'
 import { useQuery, ScrollSymbol, ScrollOptions } from '@/hooks'
-const { id } = $(useQuery())
+const { uuid } = $(useQuery())
 
 // 页面卸载,解绑回调事件
-onUnload(() => uni.$off(id + '_resolve'))
-onUnload(() => uni.$off(id + '_reject'))
-onUnload(() => uni.$off(id + '_query'))
+onUnload(() => uni.$off(uuid + '_resolve'))
+onUnload(() => uni.$off(uuid + '_reject'))
+onUnload(() => uni.$off(uuid + '_query'))
 
 // mescroll 提供上拉加载下拉刷新能力
 // 文档: https://www.mescroll.com/uni.html
