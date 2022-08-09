@@ -41,6 +41,6 @@ spec:
     - name: jsjw-zlb-h5
       port: 3000
       targetPort: 3000
-      nodePort: 33032
+      nodePort: 31132
   selector:
     web: jsjw-zlb-h5
