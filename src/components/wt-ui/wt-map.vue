@@ -1,5 +1,5 @@
 <template>
-  <div id="MAps" style="width: 100vw; height: 95vh" @click="toggle"></div>
+  <div id="MAps" style="width: 100vw; height: 95vh"></div>
   <uni-popup ref="popup" background-color="#0000" @change="change">
     <uni-card :is-shadow="true">
       <template #title>
@@ -29,7 +29,7 @@
             </view>
             <view flex color="#666" font-normal>
               <uni-icons type="location" size="18" color="#666"></uni-icons>
-              {{ item.address }} | {{ item.distance || '-' }}公里
+              {{ item.address }} | {{ distance || '-' }}公里
             </view>
           </view>
         </view>
@@ -70,6 +70,9 @@ function PhoneCall(num) {
     phoneNumber: num,
   })
 }
+function handleGo(item) {
+  app.to('/pages/culture/mapDetail', { detailId: item.id, distance: distance.value })
+}
 let selectMapPopup = ref(null)
 let lnglat = ref([])
 let addr = ref('')
@@ -89,13 +92,13 @@ function initMaps() {
   MAps = new AMap.Map('MAps', {
     resizeEnable: true, // 是否监控地图容器尺寸变化
     showLabel: false,
-    zoom: 10, // 初始化地图层级120.92559,30.82993
-    center: ['120.92559', '30.82993'], // 初始化地图中心点
+    zoom: 9,
+    center: ['120.92559', '30.99993'], // 初始化地图中心点
   })
   addBoundary('嘉善县', '#3493FF', '#1498FF')
   addBoundary('吴江区', '#FFB41F', '#FFB41F')
   addBoundary('青浦区', '#2AAE33', '#2AAE33')
-  // location()
+  location()
   // addMarker()
 }
 function getDataMap() {
@@ -176,9 +179,15 @@ function addMarker(rows) {
   // 将 marker 添加到图层
   layer.add(markers)
 }
+let distance = ref('')
 function showInfoM(e) {
   $api.getPointsDetail(e._opts.extData.id).then(res => {
     item.value = res.data
+    var p1 = app.User.locationArr
+    var p2 = [res.data.longitude, res.data.latitude]
+    // 返回 p1 到 p2 间的地面距离，单位：米
+    var dis = AMap.GeometryUtil.distance(p1, p2)
+    distance.value = (dis / 1000).toFixed(2)
     toggle()
   })
 }
@@ -307,14 +316,18 @@ function location() {
       offset: [20, 20], //定位按钮与设置的停靠位置的偏移量，默认：[10, 20]
       zoomToAccuracy: false, //定位成功后是否自动调整地图视野到定位点
     })
-    MAps.addControl(geolocation)
     geolocation.getCurrentPosition(function (status, result) {
       if (status == 'complete') {
+        let position = new AMap.LngLat(120.92559, 30.99993) // 标准写法
         app.User.addLocation([result.position.lng, result.position.lat])
+        setTimeout(() => {
+          MAps.setZoomAndCenter(9, position)
+        }, 2000)
       } else {
         uni.showToast({ icon: 'none', title: '地图定位失败' })
       }
     })
+    MAps.addControl(geolocation)
   })
 }
 onMounted(() => {

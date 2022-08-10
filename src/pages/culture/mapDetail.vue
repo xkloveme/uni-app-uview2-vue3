@@ -65,7 +65,7 @@ function openPopup(point) {
   selectMapPopup.value.toggle()
 }
 let item = ref({})
-$api.getPointsDetail(data.deatilId).then(res => {
+$api.getPointsDetail(data.detailId).then(res => {
   item.value = res.data
   info.value = res.data.imageList
 })

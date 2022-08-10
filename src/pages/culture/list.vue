@@ -58,6 +58,9 @@ function PhoneCall(num) {
     phoneNumber: num,
   })
 }
+function handleGo(item) {
+  app.to('mapDetail', { detailId: item.id, distance: item.distance })
+}
 let selectMapPopup = ref(null)
 let lnglat = ref([])
 let addr = ref('')
