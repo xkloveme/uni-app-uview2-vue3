@@ -46,22 +46,18 @@ let info = ref([
   },
 ])
 function PhoneCall(num) {
-  dd.ready(
-    {
-      developer: 'xkloveme@qq.com',
-      usage: ['dd.biz.telephone'],
-      remark: '打电话',
-    },
-    /* eslint handle-callback-err: "warn" */
-    () => {
-      /* 可以放心调用JSBridge方法 */
-      dd.biz.telephone.call({
-        corpId: num,
-        onSuccess: function (data) {},
-        onFail: function (error) {},
+  ZWJSBridge.onReady(() => {
+    console.log('初始化完成后，执行bridge方法')
+    ZWJSBridge.phoneCall({
+      corpId: num,
+    })
+      .then(result => {
+        console.log(result)
       })
-    },
-  )
+      .catch(error => {
+        console.log(error)
+      })
+  })
   // uni.makePhoneCall({
   //   phoneNumber: num,
   // })
