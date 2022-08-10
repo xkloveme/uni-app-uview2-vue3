@@ -46,6 +46,22 @@ let info = ref([
   },
 ])
 function PhoneCall(num) {
+  dd.ready(
+    {
+      developer: 'xkloveme@qq.com',
+      usage: ['dd.biz.telephone'],
+      remark: '打电话',
+    },
+    /* eslint handle-callback-err: "warn" */
+    () => {
+      /* 可以放心调用JSBridge方法 */
+      dd.biz.telephone.call({
+        corpId: num,
+        onSuccess: function (data) {},
+        onFail: function (error) {},
+      })
+    },
+  )
   uni.makePhoneCall({
     phoneNumber: num,
   })

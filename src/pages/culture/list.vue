@@ -56,6 +56,22 @@ import { useScroll } from '@/hooks'
 import MapTopSelect from '@/components/MapTopSelect'
 import SelectMap from '@/components/SelectMap'
 function PhoneCall(num) {
+  /* eslint handle-callback-err: "warn" */
+  dd.ready(
+    {
+      developer: 'xkloveme@qq.com',
+      usage: ['dd.biz.telephone'],
+      remark: '打电话',
+    },
+    () => {
+      /* 可以放心调用JSBridge方法 */
+      dd.biz.telephone.call({
+        corpId: num,
+        onSuccess: function (data) {},
+        onFail: function (error) {},
+      })
+    },
+  )
   uni.makePhoneCall({
     phoneNumber: num,
   })
