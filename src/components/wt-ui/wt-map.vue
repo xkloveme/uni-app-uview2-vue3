@@ -14,9 +14,9 @@
           <view flex flex-col ml-2 mt-2>
             <view flex-center justify="between">
               <view>
-                <text font-900 class="text-base">吴镇纪念馆</text>
+                <text font-900 class="text-base">{{ item.name }}</text>
                 <span ml-3 bg="red-500" color="#fff" px-2 class="text-sm text-center">
-                  清廉教育线
+                  {{ item.line }}
                 </span>
               </view>
               <uni-icons
@@ -29,40 +29,55 @@
             </view>
             <view flex color="#666" font-normal>
               <uni-icons type="location" size="18" color="#666"></uni-icons>
-              嘉善县魏塘街道花园路178号 | 5公里
+              {{ item.address }} | {{ item.distance || '-' }}公里
             </view>
           </view>
         </view>
       </template>
       <view class="text-cut-2">
-        吴镇纪念馆于2000年8地址位于嘉善县魏塘街道花园路178号地址位于嘉善县魏塘街道花园路178号地址位于嘉善县魏塘街道花园路178号地址位于嘉善县魏塘街道花园路178号地址位于嘉善县魏塘街道花园路178号月建成，地址位于嘉善县魏塘街道花园路178号，是为了纪念元代四大画家之
+        {{ item.intro }}
       </view>
       <view flex color="#3089FF" mt-2>
-        <view flex-center @click="actionsClick('分享')">
+        <view flex-center @click="PhoneCall(item.phone)">
           <uni-icons type="phone-filled" size="18" color="#3089FF"></uni-icons>
           <text mx-2>拨打</text>
         </view>
-        <view flex-center mx-6 @click="actionsClick('点赞')">
+        <view flex-center mx-6 @click="openPopup(item)">
           <uni-icons type="navigate-filled" size="18" color="#3089FF"></uni-icons>
           <text mx-2>导航</text>
         </view>
-        <view flex-center @click="actionsClick('评论')">
+        <view flex-center @click="handleGo(item)">
           <uni-icons type="bars" size="18" color="#3089FF"></uni-icons>
           <text mx-2>查看详情</text>
         </view>
       </view>
     </uni-card>
     <view w-full h-10></view>
+    <SelectMap ref="selectMapPopup" :lnglat="lnglat" :addr="addr" />
   </uni-popup>
 </template>
 
 <script setup name="Map">
 import $api from '@/api'
+import SelectMap from '@/components/SelectMap'
 import MapLoader from '@/utils/map.js'
 let MAps = null
 let district = null
-
+let item = ref({})
 let popup = ref(null)
+function PhoneCall(num) {
+  uni.makePhoneCall({
+    phoneNumber: num,
+  })
+}
+let selectMapPopup = ref(null)
+let lnglat = ref([])
+let addr = ref('')
+function openPopup(item) {
+  lnglat.value = [item.longitude, item.latitude]
+  addr.value = item.address
+  selectMapPopup.value.toggle()
+}
 function toggle() {
   popup.value.open('bottom')
 }
@@ -80,7 +95,6 @@ function initMaps() {
   addBoundary('嘉善县', '#3493FF', '#1498FF')
   addBoundary('吴江区', '#FFB41F', '#FFB41F')
   addBoundary('青浦区', '#2AAE33', '#2AAE33')
-  addText()
   // location()
   // addMarker()
 }
@@ -98,68 +112,77 @@ function getDataMap() {
     .then(res => {
       addMarker(res.rows)
     })
+  $api.getMapCount().then(res => {
+    let obj = {}
+    res.data.map(item => {
+      obj[item.area] = item.count
+    })
+    addText(obj)
+  })
 }
-let icon = {
-  // 图标类型，现阶段只支持 image 类型
-  type: 'image',
-  // 图片 url
-  image: 'https://a.amap.com/jsapi_demos/static/demo-center/marker/express2.png',
-  // 图片尺寸
-  size: [64, 30],
-  // 图片相对 position 的锚点，默认为 bottom-center
-  anchor: 'center',
-}
-let textStyle = {
-  fontSize: 12,
-  fontWeight: 'normal',
-  fillColor: '#22886f',
-  strokeColor: '#fff',
-  strokeWidth: 2,
-  fold: true,
-  padding: '2, 5',
+let color = {
+  场馆: '#4a60ff',
+  村: '#13ba2f',
+  园: '#b351fe',
+  陵园: '#ff1714',
+  学校: '#ff8617',
 }
 function addMarker(rows) {
   let markers = []
-  let LabelsData = []
-  rows?.map(item => {
-    LabelsData.push({
-      name: item.name,
-      position: [item.longitude, item.latitude],
-      zooms: [10, 20],
-      opacity: 1,
-      zIndex: 16,
-      icon,
-      text: {
-        content: item.name,
-        direction: 'bottom',
-        offset: [-20, -5],
-        style: textStyle,
-      },
-    })
-  })
   var layer = new AMap.LabelsLayer({
     zooms: [3, 20],
     zIndex: 1000,
     allowCollision: true, //可以让标注避让用户的标注
   })
-  layer.add(markers)
+
   // 图层添加到地图
   MAps.add(layer)
-
-  // 初始化 labelMarker
-  for (var i = 0; i < LabelsData.length; i++) {
-    var curData = LabelsData[i]
-    curData.extData = {
-      index: i,
+  rows?.map(item => {
+    let LabelsData = {
+      name: item.name,
+      extData: { id: item.id },
+      position: [item.longitude, item.latitude],
+      zooms: [11, 20],
+      opacity: 1,
+      zIndex: 1000,
+      icon: {
+        // 图标类型，现阶段只支持 image 类型
+        type: 'image',
+        // 图片 url
+        image: `http://hltm.jw.linan.gov.cn/linanjiwei/jsjw/img/${item.type}.png`,
+        // 图片尺寸
+        size: [30, 40],
+        // 图片相对 position 的锚点，默认为 bottom-center
+        anchor: 'center',
+      },
+      text: {
+        content: item.name,
+        direction: 'bottom',
+        style: {
+          fontSize: 12,
+          fontWeight: 'normal',
+          fillColor: color[item.type],
+          strokeColor: '#fff',
+          strokeWidth: 2,
+          fold: true,
+          padding: '2, 5',
+        },
+      },
     }
-
-    var labelMarker = new AMap.LabelMarker(curData)
-
+    var labelMarker = new AMap.LabelMarker(LabelsData)
+    labelMarker.on('click', () => showInfoM(labelMarker))
     markers.push(labelMarker)
-  }
+  })
   // 将 marker 添加到图层
   layer.add(markers)
 }
+function showInfoM(e) {
+  $api.getPointsDetail(e._opts.extData.id).then(res => {
+    item.value = res.data
+    toggle()
+  })
+}
+
 function addBoundary(name = '嘉善县', fillColor = '#CCF3FF', strokeColor = '#CC66CC') {
   if (!district) {
     //实例化DistrictSearch
@@ -196,10 +219,11 @@ function addBoundary(name = '嘉善县', fillColor = '#CCF3FF', strokeColor = '#
   })
 }
 
-function addText() {
+function addText(obj) {
   let touristSpots = [
     {
-      name: '嘉善县',
+      name: '嘉善',
+      count: 0,
       position: [120.92, 30.85],
       zIndex: 300,
       smallIcon: 'https://a.amap.com/jsapi_demos/static/resource/img/qiniandian.png',
@@ -208,7 +232,8 @@ function addText() {
       anchor: 'bottom-center',
     },
     {
-      name: '吴江区',
+      name: '吴江',
+      count: 0,
       position: [120.638, 31.0598],
       zIndex: 300,
       smallIcon: 'https://a.amap.com/jsapi_demos/static/resource/img/men3.png',
@@ -217,7 +242,8 @@ function addText() {
       anchor: 'bottom-center',
     },
     {
-      name: '青浦区',
+      name: '青浦',
+      count: 0,
       position: [121.12, 31.15],
       zIndex: 300,
       smallIcon: 'https://a.amap.com/jsapi_demos/static/resource/img/men2.png',
@@ -238,6 +264,7 @@ function addText() {
     16: 0,
   }
   for (var i = 0; i < touristSpots.length; i += 1) {
+    let lableName = touristSpots[i].name + '&nbsp;&nbsp;' + obj[touristSpots[i].name]
     var marker = new AMap.ElasticMarker({
       position: touristSpots[i].position,
       zooms: [7, 20],
@@ -253,7 +280,7 @@ function addText() {
             minScale: 1, //最小放大比例
           },
           label: {
-            content: touristSpots[i].name,
+            content: lableName,
             position: 'BM',
             minZoom: 3,
             fitZoom: 10, //最合适的级别
@@ -265,10 +292,12 @@ function addText() {
       ],
       zoomStyleMapping: zoomStyleMapping2,
     })
+    marker.on('click', () => MAps.setZoom(12))
     spots.push(marker)
   }
   MAps.add(spots)
 }
+
 function location() {
   AMap.plugin('AMap.Geolocation', function () {
     var geolocation = new AMap.Geolocation({

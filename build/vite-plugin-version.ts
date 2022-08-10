@@ -1,10 +1,10 @@
 /*
  * @Author: xkloveme
  * @Date: 2022-04-02 17:44:36
- * @LastEditTime: 2022-04-25 14:39:21
+ * @LastEditTime: 2022-08-10 09:16:12
  * @LastEditors: xkloveme
  * @Description: 打包文件输出版本到public目录
- * @FilePath: /uni-app-uview2-vue3/build/vite-plugin-version.ts
+ * @FilePath: /js-zlb-h5/build/vite-plugin-version.ts
  * @Copyright © xkloveme
  */
 import { execSync } from 'child_process'
@@ -40,7 +40,7 @@ export default function createGitVersion(viteEnv, options = { fileName: 'version
           return dateTime
         }
         const jsonStr = {
-          name: '模版--' + VITE_APP_ENV,
+          name: '嘉善zlb--' + VITE_APP_ENV,
           testurl: 'http://172.18.39.200:33020/#/',
           url: 'http://172.18.39.197:33020/#/',
           Branch: `${Branch}`,
