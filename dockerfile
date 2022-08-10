@@ -6,7 +6,6 @@ FROM nginx:stable-alpine
 LABEL xkloveme xkloveme@gmail.com
 #COPY
 COPY ./dist/build/h5/ /usr/share/nginx/html/
-COPY ./public/version.json /usr/share/nginx/html/version.json
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/default.conf /etc/nginx/conf.d/default.conf
 #RUN 赋予权限
