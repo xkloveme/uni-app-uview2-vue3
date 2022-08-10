@@ -1,13 +1,15 @@
 <template>
   <meta title="点位列表" navigationStyle="custom" />
   <div mt-2>
-    <MapTopSelect name="index" icon="map" @changeSelect="init" />
+    <MapTopSelect name="index" icon="map" @change-select="init()" />
   </div>
   <uni-card v-for="item in list" :key="item.id" :is-shadow="true">
     <template #title>
       <view flex>
         <img
-          src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png"
+          :src="
+            item.fileUrl || 'http://store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283'
+          "
           w-10
           h-10
           m-2

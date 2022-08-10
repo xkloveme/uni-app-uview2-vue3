@@ -1,5 +1,4 @@
 <h1 align="center">嘉善纪委一网监督</h1>
-<div align="center">嘉善纪委一网监督</div>
 ## 🎉 开始使用
 
 - uni-ui

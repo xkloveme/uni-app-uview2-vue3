@@ -9,7 +9,7 @@ const { data } = $(useQuery())
 let input = $('')
 function search(e) {
   app.User.addName(e.value)
-  app.to(data.name)
+  app.to(data.name == 'index' ? 'list' : 'index')
 }
 </script>
 

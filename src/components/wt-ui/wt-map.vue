@@ -1,6 +1,6 @@
 <template>
   <div id="MAps" style="width: 100vw; height: 100vh"></div>
-  <div fixed bottom-25 right-5 @click="reset">
+  <div fixed bottom-16 right-5 @click="reset">
     <uni-icons
       type="reload"
       size="25"
@@ -16,7 +16,10 @@
       <template #title>
         <view flex>
           <img
-            src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png"
+            :src="
+              item.imageList[0]?.url ||
+              'http://store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283'
+            "
             w-10
             h-10
             m-2
@@ -199,7 +202,7 @@ function showInfoM(e) {
     var p2 = [res.data.longitude, res.data.latitude]
     // 返回 p1 到 p2 间的地面距离，单位：米
     var dis = AMap.GeometryUtil.distance(p1, p2)
-    distance.value = (dis / 1000).toFixed(2)
+    distance.value = p1.length ? (dis / 1000).toFixed(2) : ''
     toggle()
   })
 }
@@ -313,7 +316,7 @@ function addText(obj) {
       ],
       zoomStyleMapping: zoomStyleMapping2,
     })
-    marker.on('click', () => MAps.setZoom(12))
+    marker.on('click', e => MAps.setZoomAndCenter(12, [e.lnglat.lng, e.lnglat.lat]))
     spots.push(marker)
   }
   MAps.add(spots)
@@ -325,7 +328,7 @@ function location() {
       enableHighAccuracy: true, //是否使用高精度定位，默认:true
       timeout: 10000, //超过10秒后停止定位，默认：5s
       position: 'RB', //定位按钮的停靠位置
-      offset: [20, 60], //定位按钮与设置的停靠位置的偏移量，默认：[10, 20]
+      offset: [20, 100], //定位按钮与设置的停靠位置的偏移量，默认：[10, 20]
       zoomToAccuracy: false, //定位成功后是否自动调整地图视野到定位点
     })
     geolocation.getCurrentPosition(function (status, result) {

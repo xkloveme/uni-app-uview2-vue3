@@ -1,9 +1,13 @@
 <template>
   <meta title="清廉文化地图" navigationStyle="custom" />
-  <wt-map ref="wtMaps" />
-  <div fixed top-12 left-0 right-0>
-    <MapTopSelect @changeSelect="init" />
-  </div>
+  <sys>
+    <template #fixed>
+      <wt-map ref="wtMaps" />
+      <div fixed top-6 left-0 right-0>
+        <MapTopSelect @change-select="init" />
+      </div>
+    </template>
+  </sys>
 </template>
 
 <script setup>
