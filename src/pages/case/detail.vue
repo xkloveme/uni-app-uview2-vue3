@@ -1,7 +1,8 @@
 <template>
-  <meta title="典型案例" />
-  <div bg="light-50" h-full>
-    <h2 text-center py-4>{{ deatil.title }}</h2>
+  <meta title="典型案例" navigationStyle="custom" />
+  <img :src="data.url" mode="aspectFill" bg="light-50" h-full w-full @click="app.back()" />
+  <!--  <div bg="light-50" h-full>
+   <h2 text-center py-4>{{ deatil.title }}</h2>
 
     <div flex-center justify="center">
       <view mx-2>
@@ -13,13 +14,14 @@
     <view p-5 pb-10>
       {{ deatil.html }}
     </view>
-  </div>
+  </div> -->
 </template>
 
 <script setup>
 import { useQuery } from '@/hooks'
+import SelectMap from '@/components/SelectMap'
+const { data } = $(useQuery())
 // ts-ignore
-const { data } = $(useQuery({ deatilId: '' }))
 let deatil = ref({
   title: '关于xxxxxxxxx收受贿赂的案例',
   dd: '嘉善',

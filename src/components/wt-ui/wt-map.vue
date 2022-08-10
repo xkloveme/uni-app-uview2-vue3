@@ -110,10 +110,10 @@ function initMaps() {
     zoom: 9,
     center: ['120.92559', '30.99993'], // 初始化地图中心点
   })
+  location()
   addBoundary('嘉善县', '#3493FF', '#1498FF')
   addBoundary('吴江区', '#FFB41F', '#FFB41F')
   addBoundary('青浦区', '#2AAE33', '#2AAE33')
-  location()
   layer = new AMap.LabelsLayer({
     zooms: [3, 20],
     zIndex: 1000,
