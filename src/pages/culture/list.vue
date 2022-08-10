@@ -1,5 +1,5 @@
 <template>
-  <meta title="点位列表" />
+  <meta title="点位列表" navigationStyle="custom" />
   <div mt-2>
     <MapTopSelect name="index" icon="map" @changeSelect="init" />
   </div>

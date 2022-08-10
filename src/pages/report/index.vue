@@ -1,5 +1,5 @@
 <template>
-  <meta title="我要举报" title:微信="我要举报" />
+  <meta title="我要举报" title:微信="我要举报" navigationStyle="custom" />
   <img src="@/static/img/banner.png" w-full h-40 />
   <div>
     <h3 p-5 font="normal">举报网站</h3>

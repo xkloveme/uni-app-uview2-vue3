@@ -1,5 +1,5 @@
 <template>
-  <meta title="典型案例" title:微信="典型案例" />
+  <meta title="典型案例" title:微信="典型案例" navigationStyle="custom" />
   <div @up="fetch">
     <uni-card
       v-for="item in list"

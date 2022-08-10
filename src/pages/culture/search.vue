@@ -1,5 +1,5 @@
 <template>
-  <meta title="搜索点位" />
+  <meta title="搜索点位" navigationStyle="custom" />
   <uni-search-bar placeholder="搜索点位" @confirm="search" @input="input"></uni-search-bar>
 </template>
 

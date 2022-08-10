@@ -1,5 +1,5 @@
 <template>
-  <meta title="点位详情" />
+  <meta title="点位详情" navigationStyle="custom" />
   <uni-swiper-dot :info="info" field="content" mode="dot">
     <swiper class="swiper-box" h-50>
       <swiper-item v-for="(item, index) in info" :key="index">

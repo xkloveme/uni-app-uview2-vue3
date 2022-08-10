@@ -1,5 +1,16 @@
 <template>
-  <div id="MAps" style="width: 100vw; height: 95vh"></div>
+  <div id="MAps" style="width: 100vw; height: 100vh"></div>
+  <div fixed bottom-25 right-5 @click="reset">
+    <uni-icons
+      type="reload"
+      size="25"
+      color="#666"
+      bg="light-50"
+      shadow-xl
+      p-1
+      rounded-100
+    ></uni-icons>
+  </div>
   <uni-popup ref="popup" background-color="#0000" @change="change">
     <uni-card :is-shadow="true">
       <template #title>
@@ -155,7 +166,7 @@ function addMarker(rows) {
         // 图片 url
         image: `http://hltm.jw.linan.gov.cn/linanjiwei/jsjw/img/${item.type}.png`,
         // 图片尺寸
-        size: [30, 40],
+        size: [40, 50],
         // 图片相对 position 的锚点，默认为 bottom-center
         anchor: 'center',
       },
@@ -314,7 +325,7 @@ function location() {
       enableHighAccuracy: true, //是否使用高精度定位，默认:true
       timeout: 10000, //超过10秒后停止定位，默认：5s
       position: 'RB', //定位按钮的停靠位置
-      offset: [20, 20], //定位按钮与设置的停靠位置的偏移量，默认：[10, 20]
+      offset: [20, 60], //定位按钮与设置的停靠位置的偏移量，默认：[10, 20]
       zoomToAccuracy: false, //定位成功后是否自动调整地图视野到定位点
     })
     geolocation.getCurrentPosition(function (status, result) {
@@ -330,6 +341,10 @@ function location() {
     })
     MAps.addControl(geolocation)
   })
+}
+function reset() {
+  let position = new AMap.LngLat(120.92559, 30.99993) // 标准写法
+  MAps.setZoomAndCenter(9, position)
 }
 onMounted(() => {
   MapLoader().then(

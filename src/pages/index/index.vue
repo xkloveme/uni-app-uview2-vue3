@@ -1,5 +1,5 @@
 <template>
-  <meta title="一网监督" title:微信="一网监督" />
+  <meta title="一网监督" title:微信="一网监督" navigationStyle="custom" />
   <div>
     <h3 p-5>群众监督</h3>
     <div mx-5 bg="light-100" rounded flex-center justify="start" @click="goPage('report')">
