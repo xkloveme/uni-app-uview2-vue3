@@ -72,9 +72,9 @@ function PhoneCall(num) {
       })
     },
   )
-  uni.makePhoneCall({
-    phoneNumber: num,
-  })
+  // uni.makePhoneCall({
+  //   phoneNumber: num,
+  // })
 }
 function handleGo(item) {
   app.to('mapDetail', { detailId: item.id, distance: item.distance })

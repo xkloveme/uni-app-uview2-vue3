@@ -62,9 +62,9 @@ function PhoneCall(num) {
       })
     },
   )
-  uni.makePhoneCall({
-    phoneNumber: num,
-  })
+  // uni.makePhoneCall({
+  //   phoneNumber: num,
+  // })
 }
 let selectMapPopup = ref(null)
 let lnglat = ref([])

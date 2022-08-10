@@ -96,9 +96,9 @@ function PhoneCall(num) {
       })
     },
   )
-  uni.makePhoneCall({
-    phoneNumber: num,
-  })
+  // uni.makePhoneCall({
+  //   phoneNumber: num,
+  // })
 }
 function handleGo(item) {
   app.to('/pages/culture/mapDetail', { detailId: item.id, distance: distance.value })
