@@ -11,7 +11,7 @@
             m-2
             mb-1
           />
-          <view flex flex-col ml-2 mt-2>
+          <view flex flex-col w-full ml-2 mt-2>
             <view flex-center justify="between">
               <view>
                 <text font-900 class="text-base">{{ item.name }}</text>
@@ -87,6 +87,7 @@ function toggle() {
 function close() {
   popup.value.close()
 }
+let layer = null
 function initMaps() {
   // 配置地图的基本显示
   MAps = new AMap.Map('MAps', {
@@ -99,8 +100,21 @@ function initMaps() {
   addBoundary('吴江区', '#FFB41F', '#FFB41F')
   addBoundary('青浦区', '#2AAE33', '#2AAE33')
   location()
-  // addMarker()
+  layer = new AMap.LabelsLayer({
+    zooms: [3, 20],
+    zIndex: 1000,
+    allowCollision: true, //可以让标注避让用户的标注
+  })
+  MAps.add(layer)
+  $api.getMapCount().then(res => {
+    let obj = {}
+    res.data.map(item => {
+      obj[item.area] = item.count
+    })
+    addText(obj)
+  })
 }
+
 function getDataMap() {
   $api
     .getMapPoints({
@@ -113,15 +127,9 @@ function getDataMap() {
       line: app.User.line,
     })
     .then(res => {
+      layer.clear()
       addMarker(res.rows)
     })
-  $api.getMapCount().then(res => {
-    let obj = {}
-    res.data.map(item => {
-      obj[item.area] = item.count
-    })
-    addText(obj)
-  })
 }
 let color = {
   场馆: '#4a60ff',
@@ -132,14 +140,7 @@ let color = {
 }
 function addMarker(rows) {
   let markers = []
-  var layer = new AMap.LabelsLayer({
-    zooms: [3, 20],
-    zIndex: 1000,
-    allowCollision: true, //可以让标注避让用户的标注
-  })
-
   // 图层添加到地图
-  MAps.add(layer)
   rows?.map(item => {
     let LabelsData = {
       name: item.name,
@@ -342,7 +343,7 @@ onMounted(() => {
   )
 })
 defineExpose({
-  initMaps,
+  getDataMap,
 })
 </script>
 
