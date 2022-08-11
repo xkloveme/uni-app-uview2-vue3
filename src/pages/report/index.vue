@@ -28,7 +28,7 @@
       justify="between"
       align="items-center"
       mt-4
-      @click="gotopage('青浦', 'http://jiangsu.12388.gov.cn/suzhoushi/wujiangqu/')"
+      @click="gotopage('青浦', 'http://shanghai.12388.gov.cn/qingpu/')"
     >
       <h4>青浦</h4>
       <a color="blue">我要举报</a>
@@ -43,7 +43,7 @@
       justify="between"
       align="items-center"
       mt-4
-      @click="gotopage('吴江', 'http://shanghai.12388.gov.cn/qingpu/')"
+      @click="gotopage('吴江', 'http://jiangsu.12388.gov.cn/suzhoushi/wujiangqu/')"
     >
       <h4>吴江</h4>
       <a color="blue">我要举报</a>
