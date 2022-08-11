@@ -1,4 +1,11 @@
 <template>
+  <uni-search-bar
+    rounded
+    placeholder="搜索点位"
+    @confirm="search"
+    @input="input"
+    @cancel="cancel"
+  ></uni-search-bar>
   <div w-full flex-center px-2>
     <uni-data-select
       v-model="value1"
@@ -20,9 +27,9 @@
       :localdata="range2"
       @change="change2"
     ></uni-data-select>
-    <div p-2 flex-center shadow-xl mx-2 rounded bg="light-50" @click="goPage('search')">
+    <!-- <div p-2 flex-center shadow-xl mx-2 rounded bg="light-50" @click="goPage('search')">
       <uni-icons type="search" size="15"></uni-icons>
-    </div>
+    </div> -->
     <div p-2 flex-center shadow-xl rounded bg="light-50" @click="goPage(name)">
       <uni-icons :type="icon" size="15"></uni-icons>
     </div>
@@ -50,6 +57,15 @@ let range2 = $([
   { value: '红色文化线', text: '红色文化线' },
   { value: '清廉传承线', text: '清廉传承线' },
 ])
+let input = $('')
+function search(e) {
+  app.User.addName(e.value)
+  emit('changeSelect', e.value)
+}
+function cancel() {
+  app.User.addName('')
+  emit('changeSelect', '取消搜索')
+}
 function change1(e) {
   app.User.addArea(e)
   emit('changeSelect', e === null ? '全部' : e)

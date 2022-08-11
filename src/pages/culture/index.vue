@@ -3,7 +3,7 @@
   <sys>
     <template #fixed>
       <wt-map ref="wtMaps" />
-      <div fixed top-6 left-0 right-0>
+      <div fixed top-0 left-0 right-0>
         <MapTopSelect @change-select="init" />
       </div>
     </template>

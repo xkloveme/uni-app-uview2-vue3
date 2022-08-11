@@ -1,7 +1,7 @@
 <template>
   <meta title="点位列表" navigationStyle="custom" />
-  <div mt-2>
-    <MapTopSelect name="index" icon="map" @change-select="init()" />
+  <div>
+    <MapTopSelect name="index" icon="map" @change-select="init" />
   </div>
   <uni-card v-for="item in list" :key="item.id" :is-shadow="true">
     <template #title>
