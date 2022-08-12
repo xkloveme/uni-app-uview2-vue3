@@ -42,8 +42,8 @@ const props = defineProps({
   icon: { default: 'list' },
 })
 const emit = defineEmits(['changeSelect'])
-let value1 = $('')
-let value2 = $('')
+let value1 = ''
+let value2 = ''
 let range1 = [
   { value: null, text: '全部区域' },
   { value: '嘉善', text: '嘉善' },
