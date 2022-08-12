@@ -17,7 +17,7 @@
         <view flex>
           <img
             :src="
-              item.imageList[0]?.url ||
+              item.thumbnail?.url ||
               'http://store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283'
             "
             w-10
@@ -80,6 +80,12 @@ let district = null
 let item = ref({})
 let popup = ref(null)
 function PhoneCall(num) {
+  if (!num) {
+    return uni.showToast({
+      icon: 'none',
+      title: '暂未提供电话',
+    })
+  }
   /* eslint handle-callback-err: "warn" */
   ZWJSBridge.onReady(() => {
     console.log('初始化完成后，执行bridge方法')
@@ -259,7 +265,7 @@ function addBoundary(name = '嘉善县', fillColor = '#CCF3FF', strokeColor = '#
 function addText(obj) {
   let touristSpots = [
     {
-      name: '嘉善',
+      name: '嘉善县',
       count: 0,
       position: [120.92, 30.85],
       zIndex: 300,
@@ -269,7 +275,7 @@ function addText(obj) {
       anchor: 'bottom-center',
     },
     {
-      name: '吴江',
+      name: '吴江区',
       count: 0,
       position: [120.638, 31.0598],
       zIndex: 300,
@@ -279,7 +285,7 @@ function addText(obj) {
       anchor: 'bottom-center',
     },
     {
-      name: '青浦',
+      name: '青浦区',
       count: 0,
       position: [121.12, 31.15],
       zIndex: 300,

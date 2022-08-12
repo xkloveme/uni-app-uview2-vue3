@@ -2,9 +2,15 @@
   <meta title="一网监督" title:微信="一网监督" navigationStyle="custom" />
   <div>
     <h3 p-5>群众监督</h3>
-    <div mx-5 bg="light-100" rounded flex-center justify="start" @click="goPage('report')">
-      <img src="@/static/img/1.png" w-10 h-10 m-5 />
-      <span>我要举报</span>
+    <div mx-5 bg="light-100" rounded flex-center justify="between">
+      <div flex-center @click="goPage('report')">
+        <img src="@/static/img/1.png" w-10 h-10 m-5 />
+        <span>我要举报</span>
+      </div>
+      <div flex-center mx-5 @click="goPage('lzdt')">
+        <img src="@/static/img/qldt.png" w-10 h-10 m-5 />
+        <span>廉政动态</span>
+      </div>
     </div>
   </div>
   <div>

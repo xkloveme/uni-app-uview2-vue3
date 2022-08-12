@@ -57,6 +57,12 @@ function gotopage(name, href) {
   window.location.href = href
 }
 function PhoneCall(num) {
+  if (!num) {
+    return uni.showToast({
+      icon: 'none',
+      title: '暂未提供电话',
+    })
+  }
   /* eslint handle-callback-err: "warn" */
   ZWJSBridge.onReady(() => {
     console.log('初始化完成后，执行bridge方法')

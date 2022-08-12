@@ -56,6 +56,12 @@ import { useScroll } from '@/hooks'
 import MapTopSelect from '@/components/MapTopSelect'
 import SelectMap from '@/components/SelectMap'
 function PhoneCall(num) {
+  if (!num) {
+    return uni.showToast({
+      icon: 'none',
+      title: '暂未提供电话',
+    })
+  }
   /* eslint handle-callback-err: "warn" */
   ZWJSBridge.onReady(() => {
     console.log('初始化完成后，执行bridge方法')
@@ -91,8 +97,8 @@ useScroll(onPageScroll).onLoad(page => {
   app.info('页面加载', `第${page.num}页`)
   $api
     .getMapPoints({
-      page: page.num,
-      size: page.size,
+      pageNum: page.num,
+      pageSize: page.size,
       longitude: app.User.locationArr[0],
       latitude: app.User.locationArr[1],
       name: app.User.name,
@@ -112,8 +118,8 @@ function init(e) {
   if (e) {
     $api
       .getMapPoints({
-        page: 1,
-        size: 10,
+        pageNum: 1,
+        pageSize: 10,
         longitude: app.User.locationArr[0],
         latitude: app.User.locationArr[1],
         name: app.User.name,

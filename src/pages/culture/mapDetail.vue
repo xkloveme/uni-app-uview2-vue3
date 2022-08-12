@@ -15,15 +15,23 @@
         <text font-900 class="text-base">{{ item.name }}</text>
         <span ml-3 bg="red-500" color="#fff" px-2 class="text-sm text-center">{{ item.line }}</span>
       </view>
-      <view flex color="#666" font-normal my-2 @click="openPopup(item)">
+      <view flex-center justify="start" color="#666" font-normal my-2 @click="openPopup(item)">
         <uni-icons type="location" size="18" color="#666"></uni-icons>
         {{ item.address }} | {{ data.distance || '-' }}公里
-        <text bg="#2289FF" color="#fff" rounded-lg px-2 ml-4>导航</text>
+        <text bg="#2289FF" color="#fff" rounded-lg px-2 ml-4 flex-center w-12>导航</text>
       </view>
-      <view flex color="#666" font-normal mb-2 @click="PhoneCall(item.phone)">
+      <view
+        v-if="item.phone"
+        flex-center
+        justify="start"
+        color="#666"
+        font-normal
+        mb-2
+        @click="PhoneCall(item.phone)"
+      >
         <uni-icons type="phone" size="18" color="#666"></uni-icons>
         {{ item.phone }}
-        <text bg="#2289FF" color="#fff" rounded-lg px-2 ml-4>拨打</text>
+        <text bg="#2289FF" color="#fff" rounded-lg px-2 ml-4 flex-center>拨打</text>
       </view>
     </view>
     <hr color="#f0f0f0" />
@@ -46,6 +54,12 @@ let info = ref([
   },
 ])
 function PhoneCall(num) {
+  if (!num) {
+    return uni.showToast({
+      icon: 'none',
+      title: '暂未提供电话',
+    })
+  }
   ZWJSBridge.onReady(() => {
     console.log('初始化完成后，执行bridge方法')
     ZWJSBridge.phoneCall({
