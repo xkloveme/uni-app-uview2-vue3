@@ -8,6 +8,7 @@ export class User extends Pinia {
   name = ''
   area = ''
   line = ''
+  resetUpScroll = false
 
   // 允许直接编写getter
   get locationArr() {
@@ -26,5 +27,8 @@ export class User extends Pinia {
   }
   async addLine(line) {
     this.line = line
+  }
+  async addresetUpScroll() {
+    this.resetUpScroll = !this.resetUpScroll
   }
 }

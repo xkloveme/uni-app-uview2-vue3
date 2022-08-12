@@ -27,6 +27,18 @@ onUnload(() => uni.$off(uuid + '_query'))
 const { mescroll, fetch, enable } = $(inject<Partial<ScrollOptions>>(ScrollSymbol, {}))
 let enableUp = $computed(() => ['all', 'up'].some(e => e == enable))
 let enableDown = $computed(() => ['all', 'down'].some(e => e == enable))
+// 监听页面是否需要刷新
+const getShowTask = computed(() => {
+  return app.User.resetUpScroll
+})
+
+watch(
+  getShowTask,
+  (newVal, oldVal) => {
+    mescroll.resetUpScroll()
+  },
+  { deep: true },
+)
 </script>
 
 <script lang="ts">

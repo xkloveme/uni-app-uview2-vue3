@@ -114,20 +114,7 @@ useScroll(onPageScroll).onLoad(page => {
 })
 function init(e) {
   if (e) {
-    $api
-      .getMapPoints({
-        pageNum: 1,
-        pageSize: 10,
-        longitude: app.User.locationArr[0],
-        latitude: app.User.locationArr[1],
-        name: app.User.name,
-        area: app.User.area,
-        line: app.User.line,
-      })
-      .then(res => {
-        list.value = [] //如果是第一页需手动置空列表
-        list.value = list.value.concat(res.rows) //追加新数据
-      })
+    app.User.addresetUpScroll()
   }
 }
 </script>
