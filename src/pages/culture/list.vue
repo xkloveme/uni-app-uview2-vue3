@@ -18,9 +18,7 @@
         <view flex flex-col mx-2 mt-2>
           <view flex-center justify="start">
             <text font-900 class="text-base">{{ item.name }}</text>
-            <span ml-3 bg="red-500" color="#fff" px-2 class="text-sm text-center">
-              {{ item.line }}
-            </span>
+            <uni-tag :text="item.line" type="error" size="small" ml-1 min-w-18></uni-tag>
           </view>
           <view flex color="#666" font-200>
             <uni-icons type="location" size="18" color="#666"></uni-icons>

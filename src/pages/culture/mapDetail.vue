@@ -13,12 +13,12 @@
     <view flex flex-col mx-2 mt-2>
       <view flex-center justify="start">
         <text font-900 class="text-base">{{ item.name }}</text>
-        <span ml-3 bg="red-500" color="#fff" px-2 class="text-sm text-center">{{ item.line }}</span>
+        <uni-tag :text="item.line" type="error" size="small" ml-1 min-w-18></uni-tag>
       </view>
       <view flex-center justify="start" color="#666" font-normal my-2 @click="openPopup(item)">
         <uni-icons type="location" size="18" color="#666"></uni-icons>
         {{ item.address }} | {{ data.distance || '-' }}公里
-        <text bg="#2289FF" color="#fff" rounded-lg px-2 ml-4 flex-center w-12>导航</text>
+        <uni-tag text="导航" type="primary" size="small" ml-1></uni-tag>
       </view>
       <view
         v-if="item.phone"
@@ -31,7 +31,7 @@
       >
         <uni-icons type="phone" size="18" color="#666"></uni-icons>
         {{ item.phone }}
-        <text bg="#2289FF" color="#fff" rounded-lg px-2 ml-4 flex-center>拨打</text>
+        <uni-tag text="拨打" type="primary" size="small" ml-1></uni-tag>
       </view>
     </view>
     <hr color="#f0f0f0" />

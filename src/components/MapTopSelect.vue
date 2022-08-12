@@ -44,19 +44,19 @@ const props = defineProps({
 const emit = defineEmits(['changeSelect'])
 let value1 = $('')
 let value2 = $('')
-let range1 = $([
+let range1 = [
   { value: null, text: '全部区域' },
   { value: '嘉善', text: '嘉善' },
   { value: '吴江', text: '吴江' },
   { value: '青浦', text: '青浦' },
-])
-let range2 = $([
+]
+let range2 = [
   { value: null, text: '全部路线' },
   { value: '清廉实践线', text: '清廉实践线' },
   { value: '清廉教育线', text: '清廉教育线' },
   { value: '红色文化线', text: '红色文化线' },
   { value: '清廉传承线', text: '清廉传承线' },
-])
+]
 let input = $('')
 function search(e) {
   app.User.addName(e.value)

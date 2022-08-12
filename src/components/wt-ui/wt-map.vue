@@ -29,9 +29,7 @@
             <view flex-center justify="between">
               <view>
                 <text font-900 class="text-base">{{ item.name }}</text>
-                <span ml-3 bg="red-500" color="#fff" px-2 class="text-sm text-center">
-                  {{ item.line }}
-                </span>
+                <uni-tag min-w-18 :text="item.line" type="error" size="small" ml-1></uni-tag>
               </view>
               <uni-icons
                 type="closeempty"
