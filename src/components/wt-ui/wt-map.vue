@@ -119,6 +119,7 @@ function close() {
   popup.value.close()
 }
 let layer = null
+let spots = []
 function initMaps() {
   // 配置地图的基本显示
   MAps = new AMap.Map('MAps', {
@@ -137,16 +138,27 @@ function initMaps() {
     allowCollision: true, //可以让标注避让用户的标注
   })
   MAps.add(layer)
-  $api.getMapCount().then(res => {
-    let obj = {}
-    res.data.map(item => {
-      obj[item.area] = item.count
-    })
-    addText(obj)
-  })
 }
 
 function getDataMap() {
+  $api
+    .getMapCount({
+      longitude: app.User.locationArr[0],
+      latitude: app.User.locationArr[1],
+      name: app.User.name,
+      area: app.User.area,
+      line: app.User.line,
+    })
+    .then(res => {
+      MAps.remove(spots)
+      spots = []
+      console.log('🐛 ~ file: wt-map.vue ~ line 154 ~ getDataMap ~ spots', spots)
+      let obj = {}
+      res.data.map(item => {
+        obj[item.area] = item.count || 0
+      })
+      addText(obj)
+    })
   $api
     .getMapPoints({
       page: 1,
@@ -294,7 +306,6 @@ function addText(obj) {
     },
   ]
 
-  var spots = []
   var zoomStyleMapping2 = {
     7: 0,
     8: 0,
@@ -305,7 +316,7 @@ function addText(obj) {
     16: 0,
   }
   for (var i = 0; i < touristSpots.length; i += 1) {
-    let lableName = touristSpots[i].name + '&nbsp;&nbsp;' + obj[touristSpots[i].name]
+    let lableName = touristSpots[i].name + '&nbsp;&nbsp;' + (obj[touristSpots[i].name] || 0)
     var marker = new AMap.ElasticMarker({
       position: touristSpots[i].position,
       zooms: [7, 20],
