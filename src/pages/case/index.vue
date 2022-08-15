@@ -32,52 +32,52 @@ let list = ref([
   {
     name: '"一时任性"损人又害己',
     addrs: '嘉善',
-    imgUrl: 'http://hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
+    imgUrl: '//hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
   },
   {
     name: '"跑偏"的公务考察 "走歪"的政商关系',
     addrs: '嘉善',
-    imgUrl: 'http://hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
+    imgUrl: '//hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
   },
   {
     name: '与老板“亲”却丢了“清”',
     addrs: '嘉善',
-    imgUrl: 'http://hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
+    imgUrl: '//hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
   },
   {
     name: '以贷谋私 "亲""清"不分',
     addrs: '嘉善',
-    imgUrl: 'http://hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
+    imgUrl: '//hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
   },
   {
     name: '拿"面子"换利益 这名党员被处分',
     addrs: '嘉善',
-    imgUrl: 'http://hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
+    imgUrl: '//hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
   },
   {
     name: '无视规定"打招呼" 插手工程栽跟头',
     addrs: '嘉善',
-    imgUrl: 'http://hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
+    imgUrl: '//hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
   },
   {
     name: '礼品礼卡让运管所干部"翻了车"',
     addrs: '嘉善',
-    imgUrl: 'http://hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
+    imgUrl: '//hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
   },
   {
     name: '管不住嘴的代价',
     addrs: '嘉善',
-    imgUrl: 'http://hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
+    imgUrl: '//hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
   },
   {
     name: '被“小意思”攻陷的“明星”村支书',
     addrs: '嘉善',
-    imgUrl: 'http://hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
+    imgUrl: '//hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
   },
   {
     name: '骗取种粮补贴，这个村班子集体吃了处分',
     addrs: '嘉善',
-    imgUrl: 'http://hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
+    imgUrl: '//hltm.jw.linan.gov.cn/linanjiwei/jsjw/al',
   },
 ])
 // useScroll(onPageScroll).onLoad(page => {

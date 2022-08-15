@@ -7,8 +7,7 @@ export default function MapLoader(key) {
       resolve(window.AMap)
     } else {
       var script = document.createElement('script')
-      const key = '4c16a357fd34a09ad354f0c2f7527e75'
-      // const key = "3f2c32d72f50f705fb2d053d4bec1ef0";
+      const key = 'a08a2a3e54269dffd35f5ec9191fcfaa'
       const plugin =
         'AMap.DistrictSearch,AMap.RangingTool,AMap.Geolocation,AMap.ElasticMarker,AMap.LabelsLayer'
       script.type = 'text/javascript'

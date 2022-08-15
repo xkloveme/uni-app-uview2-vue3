@@ -7,9 +7,7 @@
     <template #title>
       <view flex>
         <img
-          :src="
-            item.fileUrl || 'http://store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283'
-          "
+          :src="item.fileUrl || '//store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283'"
           w-10
           h-10
           m-2

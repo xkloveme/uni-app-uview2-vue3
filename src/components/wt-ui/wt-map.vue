@@ -18,7 +18,7 @@
           <img
             :src="
               item.thumbnail?.url ||
-              'http://store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283'
+              '//store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283'
             "
             w-10
             h-10
@@ -152,7 +152,6 @@ function getDataMap() {
     .then(res => {
       MAps.remove(spots)
       spots = []
-      console.log('🐛 ~ file: wt-map.vue ~ line 154 ~ getDataMap ~ spots', spots)
       let obj = {}
       res.data.map(item => {
         obj[item.area] = item.count || 0
@@ -196,7 +195,7 @@ function addMarker(rows) {
         // 图标类型，现阶段只支持 image 类型
         type: 'image',
         // 图片 url
-        image: `http://hltm.jw.linan.gov.cn/linanjiwei/jsjw/img/${item.type}.png`,
+        image: `//hltm.jw.linan.gov.cn/linanjiwei/jsjw/img/${item.type}.png`,
         // 图片尺寸
         size: [40, 50],
         // 图片相对 position 的锚点，默认为 bottom-center

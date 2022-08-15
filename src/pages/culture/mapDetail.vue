@@ -50,7 +50,7 @@ import SelectMap from '@/components/SelectMap'
 const { data } = $(useQuery())
 let info = ref([
   {
-    url: 'http://store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283',
+    url: '//store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283',
   },
 ])
 function PhoneCall(num) {
