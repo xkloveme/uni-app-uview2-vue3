@@ -64,7 +64,7 @@
         </view>
       </view>
     </uni-card>
-    <view w-full h-10></view>
+    <view w-full h-4></view>
     <SelectMap ref="selectMapPopup" :lnglat="lnglat" :addr="addr" />
   </uni-popup>
 </template>
@@ -126,18 +126,21 @@ function initMaps() {
     resizeEnable: true, // 是否监控地图容器尺寸变化
     showLabel: false,
     zoom: 9,
-    center: ['120.92559', '30.99993'], // 初始化地图中心点
+    features: ['bg'],
+    mapStyle: 'amap://styles/macaron',
+    center: ['120.84559', '31.09993'], // 初始化地图中心点
   })
+
+  layer = new AMap.LabelsLayer({
+    zooms: [3, 20],
+    zIndex: 1000,
+    allowCollision: false, //可以让标注避让用户的标注
+  })
+  MAps.add(layer)
   location()
   addBoundary('嘉善县', '#3493FF', '#1498FF')
   addBoundary('吴江区', '#FFB41F', '#FFB41F')
   addBoundary('青浦区', '#2AAE33', '#2AAE33')
-  layer = new AMap.LabelsLayer({
-    zooms: [3, 20],
-    zIndex: 1000,
-    allowCollision: true, //可以让标注避让用户的标注
-  })
-  MAps.add(layer)
 }
 
 function getDataMap() {
@@ -310,9 +313,12 @@ function addText(obj) {
     8: 0,
     9: 0,
     10: 0,
-    14: 0,
-    15: 0,
-    16: 0,
+    11: 1,
+    12: 1,
+    13: 1,
+    14: 1,
+    15: 1,
+    16: 1,
   }
   for (var i = 0; i < touristSpots.length; i += 1) {
     let lableName = touristSpots[i].name + '&nbsp;&nbsp;' + (obj[touristSpots[i].name] || 0)
@@ -334,6 +340,19 @@ function addText(obj) {
             content: lableName,
             position: 'BM',
             minZoom: 3,
+            maxZoom: 13,
+            fitZoom: 10, //最合适的级别
+            scaleFactor: 2, //地图放大一级的缩放比例系数
+            maxScale: 2, //最大放大比例
+            minScale: 1, //最小放大比例
+          },
+        },
+        {
+          label: {
+            content: touristSpots[i].name,
+            position: 'BM',
+            minZoom: 3,
+            maxZoom: 13,
             fitZoom: 10, //最合适的级别
             scaleFactor: 2, //地图放大一级的缩放比例系数
             maxScale: 2, //最大放大比例
@@ -360,7 +379,7 @@ function location() {
     })
     geolocation.getCurrentPosition(function (status, result) {
       if (status == 'complete') {
-        let position = new AMap.LngLat(120.92559, 30.99993) // 标准写法
+        let position = new AMap.LngLat(120.84559, 31.09993) // 标准写法
         app.User.addLocation([result.position.lng, result.position.lat])
         setTimeout(() => {
           MAps.setZoomAndCenter(9, position)
@@ -373,14 +392,16 @@ function location() {
   })
 }
 function reset() {
-  let position = new AMap.LngLat(120.92559, 30.99993) // 标准写法
+  let position = new AMap.LngLat(120.84559, 31.09993) // 标准写法
   MAps.setZoomAndCenter(9, position)
 }
 onMounted(() => {
   MapLoader().then(
-    AMap => {
-      initMaps()
+    () => {
       getDataMap()
+      nextTick(() => {
+        initMaps()
+      })
     },
     e => {
       console.log('地图加载失败', e)

@@ -1,7 +1,7 @@
 <template>
   <meta title="点位详情" navigationStyle="custom" />
   <uni-swiper-dot :info="info" field="content" mode="dot">
-    <swiper class="swiper-box" h-50>
+    <swiper class="swiper-box" h-40>
       <swiper-item v-for="(img, index) in info" :key="index">
         <view class="swiper-item">
           <img :src="img.url" w-full h-full />
@@ -9,7 +9,7 @@
       </swiper-item>
     </swiper>
   </uni-swiper-dot>
-  <view bg="light-50" rounded-lg px-2 pt-2 fixed top-40 left-0 right-0 h-full>
+  <view bg="light-50" rounded-lg px-2 pt-2 fixed top-39 left-0 right-0 h-full>
     <view flex flex-col mx-2 mt-2>
       <view flex-center justify="start">
         <text font-900 class="text-base">{{ item.name }}</text>
@@ -18,7 +18,7 @@
       <view flex-center justify="start" color="#666" font-normal my-2 @click="openPopup(item)">
         <uni-icons type="location" size="18" color="#666"></uni-icons>
         {{ item.address }} | {{ data.distance || '-' }}公里
-        <uni-tag text="导航" type="primary" size="small" ml-1></uni-tag>
+        <uni-tag text="导航" type="primary" ml-1 w-10 class="font-bold"></uni-tag>
       </view>
       <view
         v-if="item.phone"
@@ -31,7 +31,7 @@
       >
         <uni-icons type="phone" size="18" color="#666"></uni-icons>
         {{ item.phone }}
-        <uni-tag text="拨打" type="primary" size="small" ml-1></uni-tag>
+        <uni-tag text="拨打" type="primary" ml-1 w-10 class="font-bold"></uni-tag>
       </view>
     </view>
     <hr color="#f0f0f0" />

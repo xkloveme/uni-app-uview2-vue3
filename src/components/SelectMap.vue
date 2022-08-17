@@ -7,6 +7,7 @@
         decoration-none
         text-lg
         flex-center
+        @click="close"
       >
         <img src="@/static/img/百度地图.png" w-10 h-10 m-2 mb-1 />
         <div color="#666">百度地图</div>
@@ -18,6 +19,7 @@
         decoration-none
         text-lg
         flex-center
+        @click="close"
       >
         <img src="@/static/img/高德地图.png" w-10 h-10 m-2 mb-1 />
         <div color="#666">高德地图</div>
@@ -29,6 +31,7 @@
         flex-center
         decoration-none
         text-lg
+        @click="close"
       >
         <img src="@/static/img/腾讯地图.png" w-10 h-10 m-2 mb-1 />
         <div color="#666">腾讯地图</div>

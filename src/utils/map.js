@@ -7,14 +7,19 @@ export default function MapLoader(key) {
       resolve(window.AMap)
     } else {
       var script = document.createElement('script')
+      // key
       const key = 'a08a2a3e54269dffd35f5ec9191fcfaa'
       const plugin =
         'AMap.DistrictSearch,AMap.RangingTool,AMap.Geolocation,AMap.ElasticMarker,AMap.LabelsLayer'
       script.type = 'text/javascript'
       script.async = true
-      script.src = `https://webapi.amap.com/maps?v=2.0&callback=initAMap&key=${key}&plugin=${plugin}`
+      script.src = `https://webapi.amap.com/maps?v=2.1Beta&callback=initAMap&key=${key}&plugin=${plugin}`
       script.onerror = reject
       document.head.appendChild(script)
+    }
+    // 安全密钥
+    window._AMapSecurityConfig = {
+      securityJsCode: '5fda8c0e32f2bc0ef9025dcb12ace754',
     }
     window.initAMap = () => {
       resolve(window.AMap)
