@@ -1,17 +1,6 @@
 <template>
   <div id="MAps" style="width: 100vw; height: 100vh"></div>
-  <div fixed bottom-16 right-5 @click="reset">
-    <uni-icons
-      type="reload"
-      size="25"
-      color="#666"
-      bg="light-50"
-      shadow-xl
-      p-1
-      rounded-100
-    ></uni-icons>
-  </div>
-  <div fixed bottom-40 right-5 @click="location">
+  <div fixed bottom-16 right-5 flex flex-col>
     <uni-icons
       type="navigate-filled"
       bg="light-50"
@@ -20,6 +9,18 @@
       p-1
       rounded-100
       color="#666"
+      @click="location"
+    ></uni-icons>
+    <uni-icons
+      type="reload"
+      size="25"
+      color="#666"
+      bg="light-50"
+      shadow-xl
+      p-1
+      my-2
+      rounded-100
+      @click="reset"
     ></uni-icons>
   </div>
   <uni-popup ref="popup" background-color="#0000" @change="change">
