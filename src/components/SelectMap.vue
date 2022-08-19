@@ -6,6 +6,7 @@
         target="_blank"
         decoration-none
         text-lg
+        my-2
         flex-center
         @click="close"
       >
@@ -18,6 +19,7 @@
         target="_blank"
         decoration-none
         text-lg
+        my-2
         flex-center
         @click="close"
       >
@@ -31,6 +33,7 @@
         flex-center
         decoration-none
         text-lg
+        my-2
         @click="close"
       >
         <img src="@/static/img/腾讯地图.png" w-10 h-10 m-2 mb-1 />

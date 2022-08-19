@@ -15,7 +15,7 @@ import MapTopSelect from '@/components/MapTopSelect'
 
 let wtMaps = ref(null)
 function init() {
-  wtMaps.value?.getDataMap()
+  wtMaps.value?.getDataMap(true)
 }
 </script>
 

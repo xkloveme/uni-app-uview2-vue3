@@ -143,7 +143,7 @@ function initMaps() {
   addBoundary('青浦区', '#2AAE33', '#2AAE33')
 }
 
-function getDataMap() {
+function getDataMap(needPoint = false) {
   $api
     .getMapCount({
       longitude: app.User.locationArr[0],
@@ -173,7 +173,7 @@ function getDataMap() {
     })
     .then(res => {
       layer.clear()
-      addMarker(res.rows)
+      addMarker(res.rows, needPoint)
     })
 }
 let color = {
@@ -183,7 +183,7 @@ let color = {
   陵园: '#ff1714',
   学校: '#ff8617',
 }
-function addMarker(rows) {
+function addMarker(rows, needPoint = false) {
   let markers = []
   // 图层添加到地图
   rows?.map(item => {
@@ -224,6 +224,11 @@ function addMarker(rows) {
   })
   // 将 marker 添加到图层
   layer.add(markers)
+  if (rows.length && needPoint && app.User.name) {
+    MAps.setZoomAndCenter(15, [rows[0].longitude, rows[0].latitude])
+  } else {
+    reset()
+  }
 }
 let distance = ref('')
 function showInfoM(e) {

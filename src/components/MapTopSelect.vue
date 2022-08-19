@@ -1,6 +1,7 @@
 <template>
   <uni-search-bar
     rounded
+    bgColor="#fff"
     placeholder="搜索点位"
     @confirm="search"
     @input="input"
@@ -79,4 +80,8 @@ function goPage(name) {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+:deep(.uni-searchbar__box) {
+  border: 1px solid #000 !important;
+}
+</style>
