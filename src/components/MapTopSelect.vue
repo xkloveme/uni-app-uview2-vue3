@@ -76,6 +76,10 @@ function change2(e) {
   emit('changeSelect', e === null ? '全部' : e)
 }
 function goPage(name) {
+  app.User.addName('')
+  app.User.addLine('')
+  app.User.addArea('')
+  app.User.addLocation([])
   app.to(name, { name: props.name })
 }
 </script>

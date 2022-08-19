@@ -41,8 +41,8 @@
     <wt-section title="介绍" type="line"></wt-section>
     <div>
       {{ item.intro }}
+      <div w-full h-50></div>
     </div>
-    <div w-full h-50></div>
   </view>
   <SelectMap ref="selectMapPopup" :lnglat="lnglat" :addr="addr" />
 </template>
