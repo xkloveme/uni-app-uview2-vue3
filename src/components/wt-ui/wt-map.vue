@@ -11,6 +11,17 @@
       rounded-100
     ></uni-icons>
   </div>
+  <div fixed bottom-25 right-5 @click="location">
+    <uni-icons
+      type="navigate-filled"
+      bg="light-50"
+      size="25"
+      shadow-xl
+      p-1
+      rounded-100
+      color="#666"
+    ></uni-icons>
+  </div>
   <uni-popup ref="popup" background-color="#0000" @change="change">
     <uni-card :is-shadow="true">
       <template #title>
@@ -221,12 +232,6 @@ function addMarker(rows, needPoint = false) {
   })
   // 将 marker 添加到图层
   layer.add(markers)
-  console.log(
-    '🐛 ~ file: wt-map.vue ~ line 228 ~ addMarker ~ rows.length && needPoint && app.User.name',
-    rows.length,
-    needPoint,
-    app.User.name,
-  )
   if (rows.length && needPoint && app.User.name) {
     MAps.setZoomAndCenter(15, [rows[0].longitude, rows[0].latitude])
   } else {
@@ -383,10 +388,11 @@ function location() {
       console.log('当前位置的经度：' + res.longitude)
       console.log('当前位置的纬度：' + res.latitude)
       app.User.addLocation([res.longitude, res.latitude])
+      uni.showToast({ icon: 'none', title: '获取地图定位成功' })
     },
     fail: function (err) {
       console.log(err)
-      uni.showToast({ icon: 'none', title: '地图定位失败' })
+      uni.showToast({ icon: 'none', title: '获取地图定位失败' })
     },
   })
   // AMap.plugin('AMap.Geolocation', function () {
