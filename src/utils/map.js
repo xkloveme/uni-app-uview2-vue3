@@ -13,7 +13,7 @@ export default function MapLoader(key) {
         'AMap.DistrictSearch,AMap.RangingTool,AMap.Geolocation,AMap.ElasticMarker,AMap.LabelsLayer'
       script.type = 'text/javascript'
       script.async = true
-      script.src = `https://webapi.amap.com/maps?v=2.1Beta&callback=initAMap&key=${key}&plugin=${plugin}`
+      script.src = `https://webapi.amap.com/maps?v=2.0&callback=initAMap&key=${key}&plugin=${plugin}`
       script.onerror = reject
       document.head.appendChild(script)
     }
