@@ -14,35 +14,34 @@
   <uni-popup ref="popup" background-color="#0000" @change="change">
     <uni-card :is-shadow="true">
       <template #title>
-        <view flex>
-          <img
-            :src="
-              item.thumbnail?.url ||
-              '//store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283'
-            "
-            w-10
-            h-10
-            m-2
-            mb-1
-          />
-          <view flex flex-col w-full ml-2 mt-2>
-            <view flex-center justify="between">
-              <view>
-                <text font-900 class="text-base">{{ item.name }}</text>
-                <uni-tag min-w-18 :text="item.line" type="error" size="small" ml-1></uni-tag>
+        <view flex flex-col>
+          <view flex>
+            <img
+              :src="
+                item.fileUrl || '//store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283'
+              "
+              w-10
+              h-10
+              m-2
+              mb-1
+            />
+            <view flex flex-col mx-2 mt-2 w-full>
+              <view font-900 class="text-base" flex-center justify="between">
+                {{ item.name }}
+                <uni-icons
+                  type="closeempty"
+                  self=""
+                  size="18"
+                  color="#666"
+                  @click="close"
+                ></uni-icons>
               </view>
-              <uni-icons
-                type="closeempty"
-                self=""
-                size="18"
-                color="#666"
-                @click="close"
-              ></uni-icons>
+              <view><uni-tag :text="item.line" type="error" size="small"></uni-tag></view>
             </view>
-            <view flex color="#666" font-normal>
-              <uni-icons type="location" size="18" color="#666"></uni-icons>
-              {{ item.address }} | {{ distance || '-' }}公里
-            </view>
+          </view>
+          <view flex color="#666" font-200>
+            <uni-icons type="location" size="18" color="#666"></uni-icons>
+            {{ item.address }} | {{ distance || '-' }}公里
           </view>
         </view>
       </template>
@@ -126,8 +125,6 @@ function initMaps() {
     resizeEnable: true, // 是否监控地图容器尺寸变化
     showLabel: false,
     zoom: 9,
-    features: ['bg'],
-    mapStyle: 'amap://styles/macaron',
     center: ['120.84559', '31.09993'], // 初始化地图中心点
   })
 
@@ -380,27 +377,39 @@ function addText(obj) {
 }
 
 function location() {
-  AMap.plugin('AMap.Geolocation', function () {
-    var geolocation = new AMap.Geolocation({
-      enableHighAccuracy: true, //是否使用高精度定位，默认:true
-      timeout: 10000, //超过10秒后停止定位，默认：5s
-      position: 'RB', //定位按钮的停靠位置
-      offset: [20, 100], //定位按钮与设置的停靠位置的偏移量，默认：[10, 20]
-      zoomToAccuracy: false, //定位成功后是否自动调整地图视野到定位点
-    })
-    geolocation.getCurrentPosition(function (status, result) {
-      if (status == 'complete') {
-        let position = new AMap.LngLat(120.84559, 31.09993) // 标准写法
-        app.User.addLocation([result.position.lng, result.position.lat])
-        setTimeout(() => {
-          MAps.setZoomAndCenter(9, position)
-        }, 2000)
-      } else {
-        uni.showToast({ icon: 'none', title: '地图定位失败' })
-      }
-    })
-    MAps.addControl(geolocation)
+  uni.getLocation({
+    type: 'wgs84',
+    success: function (res) {
+      console.log('当前位置的经度：' + res.longitude)
+      console.log('当前位置的纬度：' + res.latitude)
+      app.User.addLocation([res.longitude, res.latitude])
+    },
+    fail: function (err) {
+      console.log(err)
+      uni.showToast({ icon: 'none', title: '地图定位失败' })
+    },
   })
+  // AMap.plugin('AMap.Geolocation', function () {
+  //   var geolocation = new AMap.Geolocation({
+  //     enableHighAccuracy: true, //是否使用高精度定位，默认:true
+  //     timeout: 10000, //超过10秒后停止定位，默认：5s
+  //     position: 'RB', //定位按钮的停靠位置
+  //     offset: [20, 100], //定位按钮与设置的停靠位置的偏移量，默认：[10, 20]
+  //     zoomToAccuracy: false, //定位成功后是否自动调整地图视野到定位点
+  //   })
+  //   geolocation.getCurrentPosition(function (status, result) {
+  //     if (status == 'complete') {
+  //       let position = new AMap.LngLat(120.84559, 31.09993) // 标准写法
+  //       app.User.addLocation([result.position.lng, result.position.lat])
+  //       setTimeout(() => {
+  //         MAps.setZoomAndCenter(9, position)
+  //       }, 2000)
+  //     } else {
+  //       uni.showToast({ icon: 'none', title: '地图定位失败' })
+  //     }
+  //   })
+  //   MAps.addControl(geolocation)
+  // })
 }
 function reset() {
   let position = new AMap.LngLat(120.84559, 31.09993) // 标准写法

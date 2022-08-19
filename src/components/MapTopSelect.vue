@@ -82,6 +82,6 @@ function goPage(name) {
 
 <style lang="scss" scoped>
 :deep(.uni-searchbar__box) {
-  border: 1px solid #000 !important;
+  border: 1px solid #e5e5e5 !important;
 }
 </style>

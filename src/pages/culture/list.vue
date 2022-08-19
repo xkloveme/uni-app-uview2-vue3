@@ -5,23 +5,25 @@
   </div>
   <uni-card v-for="item in list" :key="item.id" :is-shadow="true">
     <template #title>
-      <view flex>
-        <img
-          :src="item.fileUrl || '//store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283'"
-          w-10
-          h-10
-          m-2
-          mb-1
-        />
-        <view flex flex-col mx-2 mt-2>
-          <view flex-center justify="start">
-            <text font-900 class="text-base">{{ item.name }}</text>
-            <uni-tag :text="item.line" type="error" size="small" ml-1 min-w-18></uni-tag>
+      <view flex flex-col>
+        <view flex>
+          <img
+            :src="
+              item.fileUrl || '//store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283'
+            "
+            w-10
+            h-10
+            m-2
+            mb-1
+          />
+          <view flex flex-col mx-2 mt-2>
+            <view font-900 class="text-base">{{ item.name }}</view>
+            <view><uni-tag :text="item.line" type="error" size="small"></uni-tag></view>
           </view>
-          <view flex color="#666" font-200>
-            <uni-icons type="location" size="18" color="#666"></uni-icons>
-            {{ item.address }} | {{ item.distance || '-' }}公里
-          </view>
+        </view>
+        <view flex color="#666" font-200>
+          <uni-icons type="location" size="18" color="#666"></uni-icons>
+          {{ item.address }} | {{ item.distance || '-' }}公里
         </view>
       </view>
     </template>
