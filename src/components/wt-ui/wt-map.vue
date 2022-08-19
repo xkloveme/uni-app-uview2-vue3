@@ -11,7 +11,7 @@
       rounded-100
     ></uni-icons>
   </div>
-  <div fixed bottom-25 right-5 @click="location">
+  <div fixed bottom-30 right-5 @click="location">
     <uni-icons
       type="navigate-filled"
       bg="light-50"
@@ -206,7 +206,7 @@ function addMarker(rows, needPoint = false) {
         // 图标类型，现阶段只支持 image 类型
         type: 'image',
         // 图片 url
-        image: `//hltm.jw.linan.gov.cn/linanjiwei/jsjw/img/${item.type}.png`,
+        image: `https://hltm.jw.linan.gov.cn/linanjiwei/jsjw/img/${item.type}.png`,
         // 图片尺寸
         size: [40, 50],
         // 图片相对 position 的锚点，默认为 bottom-center
