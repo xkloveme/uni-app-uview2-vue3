@@ -11,7 +11,7 @@
       rounded-100
     ></uni-icons>
   </div>
-  <div fixed bottom-30 right-5 @click="location">
+  <div fixed bottom-40 right-5 @click="location">
     <uni-icons
       type="navigate-filled"
       bg="light-50"
