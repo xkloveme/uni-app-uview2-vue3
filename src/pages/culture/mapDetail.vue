@@ -12,7 +12,7 @@
     </uni-swiper-dot>
   </div>
 
-  <view rounded-lg px-2 pt-2 class="relative top-39 bg-light-50" h-full>
+  <view rounded-lg px-2 pt-2 class="relative top-39 bg-light-50" bg="light-50" h-full>
     <view flex flex-col mx-2 mt-2>
       <view flex-center justify="start">
         <text font-900 class="text-base">{{ item.name }}</text>
@@ -21,7 +21,7 @@
       <view flex-center justify="start" color="#666" font-normal my-2 @click="openPopup(item)">
         <uni-icons type="location" size="18" color="#666"></uni-icons>
         {{ item.address }} | {{ data.distance || '-' }}公里
-        <button class="mini-btn ml-1" type="primary" size="mini">导航</button>
+        <button class="mini-btn ml-1" type="primary" size="mini" w-20>导航</button>
       </view>
       <view
         v-if="item.phone"
@@ -34,7 +34,7 @@
       >
         <uni-icons type="phone" size="18" color="#666"></uni-icons>
         {{ item.phone }}
-        <button class="mini-btn ml-1" type="primary" size="mini">拨打</button>
+        <button class="mini-btn ml-1" type="primary" size="mini" w-20>拨打</button>
       </view>
     </view>
     <hr color="#f0f0f0" />
