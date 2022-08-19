@@ -42,6 +42,7 @@
     <div>
       {{ item.intro }}
     </div>
+    <div w-full h-50></div>
   </view>
   <SelectMap ref="selectMapPopup" :lnglat="lnglat" :addr="addr" />
 </template>
