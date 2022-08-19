@@ -224,6 +224,12 @@ function addMarker(rows, needPoint = false) {
   })
   // 将 marker 添加到图层
   layer.add(markers)
+  console.log(
+    '🐛 ~ file: wt-map.vue ~ line 228 ~ addMarker ~ rows.length && needPoint && app.User.name',
+    rows.length,
+    needPoint,
+    app.User.name,
+  )
   if (rows.length && needPoint && app.User.name) {
     MAps.setZoomAndCenter(15, [rows[0].longitude, rows[0].latitude])
   } else {

@@ -1,6 +1,6 @@
 <template>
   <meta title="点位详情" navigationStyle="custom" />
-  <div fixed top-0 left-0 right-0>
+  <div>
     <uni-swiper-dot :info="info" field="content" mode="dot">
       <swiper class="swiper-box" h-40>
         <swiper-item v-for="(img, index) in info" :key="index">
@@ -12,7 +12,7 @@
     </uni-swiper-dot>
   </div>
 
-  <view rounded-lg px-2 pt-2 class="relative top-39 bg-light-50" bg="light-50" h-full>
+  <view rounded-lg px-2 pt-2 class="-mt-1 bg-light-50" bg="light-50" h-full>
     <view flex flex-col mx-2 mt-2>
       <view flex-center justify="start">
         <text font-900 class="text-base">{{ item.name }}</text>
@@ -21,7 +21,7 @@
       <view flex-center justify="start" color="#666" font-normal my-2 @click="openPopup(item)">
         <uni-icons type="location" size="18" color="#666"></uni-icons>
         {{ item.address }} | {{ data.distance || '-' }}公里
-        <button class="mini-btn ml-1" type="primary" size="mini" w-20>导航</button>
+        <button class="mini-btn ml-1" type="primary" size="mini" w-25>导航</button>
       </view>
       <view
         v-if="item.phone"
@@ -34,12 +34,12 @@
       >
         <uni-icons type="phone" size="18" color="#666"></uni-icons>
         {{ item.phone }}
-        <button class="mini-btn ml-1" type="primary" size="mini" w-20>拨打</button>
+        <button class="mini-btn ml-1" type="primary" size="mini" w-25>拨打</button>
       </view>
     </view>
     <hr color="#f0f0f0" />
     <wt-section title="介绍" type="line"></wt-section>
-    <div overflow-auto h-100>
+    <div>
       {{ item.intro }}
     </div>
   </view>
