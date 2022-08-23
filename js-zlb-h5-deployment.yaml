@@ -22,7 +22,7 @@ spec:
         - name: image
       containers:
         - name: jsjw-zlb-h5
-          image: reg.watone.local/jsjw/jsjw-zlb-h5:latest
+          image: reg.watone.local:8385/jsjw/jsjw-zlb-h5:latest
           imagePullPolicy: "Always"
           ports:
             - containerPort: 3000
