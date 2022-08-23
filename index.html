@@ -2,11 +2,7 @@
 <html lang="zh">
   <head>
     <meta charset="UTF-8" />
-    <script type="text/javascript">
-      window._AMapSecurityConfig = {
-        securityJsCode: 'c4194951e827a90faada6874cf0ac72d',
-      }
-    </script>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
     <script>
       var coverSupport =
         'CSS' in window &&
@@ -18,12 +14,23 @@
           '" />',
       )
     </script>
+    <script
+      type="text/javascript"
+      src="//assets.zjzwfw.gov.cn/assets/ZWJSBridge/1.0.1/zwjsbridge.js"
+    ></script>
+    <!-- <script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
+    <script>
+      let vConsole = new VConsole()
+    </script> -->
     <title></title>
     <!--preload-links-->
     <!--app-context-->
   </head>
+
   <body>
-    <div id="app"><!--app-html--></div>
+    <div id="app">
+      <!--app-html-->
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

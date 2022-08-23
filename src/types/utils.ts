@@ -1,5 +1,5 @@
 export interface PageParams {
   data?: any
-  id?: string
+  uuid?: string
   from?: string
 }

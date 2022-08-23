@@ -1,16 +1,47 @@
 <template>
-  <uni-popup ref="popup" background-color="#0000" @change="change">
-    <view w-full h-10>
-      <img
-        src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png"
-        w-10
-        h-10
-        m-2
-        mb-1
-      />
-      <text>百度地图</text>
+  <uni-popup ref="popupSelect" background-color="#fff" @change="change">
+    <view w-full>
+      <a
+        :href="`http://api.map.baidu.com/marker?location=${latlngStr}&title=${addr}&output=html`"
+        target="_blank"
+        decoration-none
+        text-lg
+        my-2
+        flex-center
+        @click="close"
+      >
+        <img src="@/static/img/百度地图.png" w-10 h-10 m-2 mb-1 />
+        <div color="#666">百度地图</div>
+      </a>
+      <hr color="#f0f0f0" />
+      <a
+        :href="`https://uri.amap.com/marker?position=${lnglatStr}&name=${addr}&src=mypage&coordinate=gaode&callnative=1`"
+        target="_blank"
+        decoration-none
+        text-lg
+        my-2
+        flex-center
+        @click="close"
+      >
+        <img src="@/static/img/高德地图.png" w-10 h-10 m-2 mb-1 />
+        <div color="#666">高德地图</div>
+      </a>
+      <hr color="#f0f0f0" />
+      <a
+        :href="`https://apis.map.qq.com/uri/v1/geocoder?coord=${latlngStr}&amp;referer=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77`"
+        target="_blank"
+        flex-center
+        decoration-none
+        text-lg
+        my-2
+        @click="close"
+      >
+        <img src="@/static/img/腾讯地图.png" w-10 h-10 m-2 mb-1 />
+        <div color="#666">腾讯地图</div>
+      </a>
+      <hr color="#f0f0f0" />
     </view>
-    <view w-full h-10></view>
+    <view w-full flex-center h-20 text-lg @click="close()">取消</view>
   </uni-popup>
 </template>
 
@@ -29,6 +60,24 @@ const props = defineProps({
     type: String,
     default: '未知',
   },
+})
+let lnglatStr = $computed(() => {
+  let b = JSON.parse(JSON.stringify(props.lnglat))
+  return b.join(',')
+})
+let latlngStr = $computed(() => {
+  let c = JSON.parse(JSON.stringify(props.lnglat)).reverse()
+  return c.join(',')
+})
+let popupSelect = ref(null)
+function toggle() {
+  popupSelect.value.open('bottom')
+}
+function close() {
+  popupSelect.value.close()
+}
+defineExpose({
+  toggle,
 })
 </script>
 

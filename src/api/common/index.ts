@@ -9,4 +9,8 @@ export default {
   getInfo: 'get:/getInfo',
   // 根据dingid获取人员信息
   getTest: 'get:/la/jw/sy/cxfxDetail',
+  // 获取区域内点位数量
+  getMapCount: 'get:/pmd/map/point/count',
+  getMapPoints: 'get:/pmd/map/points',
+  getPointsDetail: 'get:/pmd/map/point/',
 }

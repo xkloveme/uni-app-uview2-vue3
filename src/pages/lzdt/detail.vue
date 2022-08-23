@@ -1,5 +1,5 @@
 <template>
-  <meta title="典型案例" navigationStyle="custom" />
+  <meta title="廉政动态" navigationStyle="custom" />
   <img :src="data.url" mode="aspectFill" bg="light-50" h-full w-full @click="app.back()" />
   <!--  <div bg="light-50" h-full>
    <h2 text-center py-4>{{ deatil.title }}</h2>

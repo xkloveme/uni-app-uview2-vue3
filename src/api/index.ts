@@ -1,6 +1,6 @@
 import minRequest from '@/utils/request/index'
 const files = import.meta.globEager('../api/**/*.ts')
-let apiAll = {}
+let apiAll: any = {}
 const excludeFileNames = 'api/index.ts'
 Object.keys(files).forEach(c => {
   if (!c.endsWith(excludeFileNames)) {
@@ -68,3 +68,9 @@ for (const apis in apiAll) {
 }
 
 export default apiAll
+
+declare global {
+  interface App {
+    apiAll: typeof apiAll
+  }
+}

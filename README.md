@@ -1,5 +1,4 @@
 <h1 align="center">嘉善纪委一网监督</h1>
-<div align="center">嘉善纪委一网监督</div>
 ## 🎉 开始使用
 
 - uni-ui
@@ -7,44 +6,6 @@
 [uni-ui 示例](https://hellouniapp.dcloud.net.cn/pages/extUI/card/card)
 
 
-## 💄 Features
-
-- 🍱 开箱即用 - 下载即可体验最新的技术栈 vite,ts,vue3,...
-- 🧨 随时更新 - 妈妈再也不用担心脚手架更新了
-- 💡 自动引入 - 减少代码量，保护你娇弱的手指
-- 🛺 自动路由 - 全自动化构建 pages.json 文件
-- ⚛️ 原子 css - 并且支持小程序使用 Attributify 风格
-- 🧰 超多 utils - 工具函数加快开发效率
-- 🤹‍♂️ 超爽单测 - vitest + power-assert, 最简单的 assert, 最极致的享受
-- 🍍 装饰器 Pinia - 让你的 store 更简洁
-- 🥷 杀手级别的跳转 - 像使用 Promise 一样使用页面路由，传值回调应有尽有
-
-TODO
-- 🚧 完善更新日志流程
-- 🚧 添加 axios 模块，构建请求封装
-- 🚧 添加 UniCloud-ts 基础框架 (`src/app/server/`)
-
-**欢迎大家提交 PR 和 Issue**
-
-## 🎉 Getting Started
-
-1. fork 或 use 本模板，克隆到本地
-2. 进入主目录并执行`yarn bootstrap`
-3. 执行`yarn dev:h5`运行服务
-4. 若模板有更新，可执行`yarn upgrade:template`升级模板（windows 请参照[此流程](#更新模板)）
-5. 请通过`yarn commit`提交更新
-
-## 📖 Wiki
-
-### ⚙️ Presets
-
-> 一些项目级别的预设写法和功能项
-
-#### 项目配置文件
-
-整个项目的配置文件在 `src/app.config.ts` 中，你可以自由的在其中定义新字段并引入到项目中
-
-我们也会在后文反复提到此文件
 
 #### 自动路由配置
 
@@ -172,15 +133,6 @@ docs: https://github.com/unocss/unocss
 `patches/@unocss+preset-mini+**.patch`
 `patches/@dcloudio+uni-mp-compiler+**.patch`
 
-#### 更新模板
-
-执行`yarn upgrade:template`即可更新模板
-
-window 可能有问题，可以按照下面手动更新：
-
-- `git remote add template https://github.com/4chao/preset.git`
-- `git fetch template`
-- `git merge template/master -m '🥝 upgrade: template'`
 
 #### 单元测试
 
@@ -189,10 +141,6 @@ window 可能有问题，可以按照下面手动更新：
 Thanks to [power-assert](https://github.com/power-assert-js/power-assert)，你现在可以获得非常美妙的断言报错信息，即使是复杂的数据结构也不在话下
 
 （适配 espower 的插件源码在`build/vite-plugin-espower.ts`
-
-<img width="543" alt="image" src="https://user-images.githubusercontent.com/26431026/159885473-30cb69c1-045a-495f-aa91-9eed4a28dc46.png">
-<img width="607" alt="image" src="https://user-images.githubusercontent.com/26431026/159883357-43092e26-85da-49ed-83d7-5be61f1faf28.png">
-<img width="789" alt="image" src="https://user-images.githubusercontent.com/26431026/159884020-f005561b-2e17-4a9b-b3c3-c4e2a0049702.png">
 
 ### 🧰 Utils
 
@@ -251,11 +199,37 @@ __页面路径解析规则：__
 
 #### API 请求封装 (TODO)
 
-todo...
-
+``` js
+import $api from '@/api'
+  $api
+    .getMapPoints({
+      page: page.num,
+      size: page.size,
+      longitude: app.User.locationArr[0],
+      latitude: app.User.locationArr[1],
+      name: app.User.name,
+      area: app.User.area,
+      line: app.User.line,
+    })
+    .then(res => {
+      if (page.num == 1) list.value = [] //如果是第一页需手动置空列表
+      list.value = list.value.concat(res.rows) //追加新数据
+      page.endByPage(10, res.total)
+      if (list.value.length >= res.total) {
+        page.endSuccess(res.total, false)
+      }
+    })
+```
 #### 状态管理
 
 请阅读`src/app/store/module`中的代码
+
+``` js
+// 存数据
+  app.User.addName(e.value)
+  // 取数据
+   app.User.name
+```
 
 #### 时间处理
 
@@ -288,23 +262,4 @@ useScroll(onPageScroll).onLoad(page => {
   app.info('页面加载', `第${page.num}页`)
   setTimeout(() => page.endSuccess(10, false), 1000)
 })
-```
-
-## 🍻 Contribute
-
-我们非常欢迎你参与贡献，你可以将使用过程中添加的新 Hooks 或 Utils 提交至本仓库并获得社区的持续助力！
-
-期待你的 PR 和 Issue!（你甚至可以帮助完善一下这个贡献指南）
-
-## 📜 License
-
-<a href="https://app.fossa.com/projects/git%2Bgithub.com%2F4chao%2Fpreset?ref=badge_large">
-<img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2F4chao%2Fpreset.svg?type=large" align="left">
-</a>
-
-```
-MIT License
-
-Copyright © 2022-PRESENT PentaTea
-
 ```

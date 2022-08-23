@@ -16,15 +16,12 @@ minRequest.interceptors.response((response: any) => {
   if (response.data && response.data.code === 401) {
     // 保存登录信息
     uni.showModal({
-      title: '登录信息失效,请重新登录',
+      title: '接口异常',
       showCancel: false,
-      content: response.msg,
+      content: response.data.msg,
       success: function () {
         uni.clearStorage()
         uni.clearStorageSync()
-        uni.reLaunch({
-          url: '/',
-        })
       },
     })
     return response.data
