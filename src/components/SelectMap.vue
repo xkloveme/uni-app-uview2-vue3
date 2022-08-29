@@ -1,44 +1,20 @@
 <template>
   <uni-popup ref="popupSelect" background-color="#fff" @change="change">
     <view w-full>
-      <a
-        :href="`http://api.map.baidu.com/marker?location=${latlngStr}&title=${addr}&output=html`"
-        target="_blank"
-        decoration-none
-        text-lg
-        my-2
-        flex-center
-        @click="close"
-      >
+      <div target="_blank" decoration-none text-lg my-2 flex-center @click="close('baidu')">
         <img src="@/static/img/百度地图.png" w-10 h-10 m-2 mb-1 />
         <div color="#666">百度地图</div>
-      </a>
+      </div>
       <hr color="#f0f0f0" />
-      <a
-        :href="`https://uri.amap.com/marker?position=${lnglatStr}&name=${addr}&src=mypage&coordinate=gaode&callnative=1`"
-        target="_blank"
-        decoration-none
-        text-lg
-        my-2
-        flex-center
-        @click="close"
-      >
+      <div target="_blank" decoration-none text-lg my-2 flex-center @click="close('amap')">
         <img src="@/static/img/高德地图.png" w-10 h-10 m-2 mb-1 />
         <div color="#666">高德地图</div>
-      </a>
+      </div>
       <hr color="#f0f0f0" />
-      <a
-        :href="`https://apis.map.qq.com/uri/v1/geocoder?coord=${latlngStr}&amp;referer=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77`"
-        target="_blank"
-        flex-center
-        decoration-none
-        text-lg
-        my-2
-        @click="close"
-      >
+      <div target="_blank" flex-center decoration-none text-lg my-2 @click="close">
         <img src="@/static/img/腾讯地图.png" w-10 h-10 m-2 mb-1 />
         <div color="#666">腾讯地图</div>
-      </a>
+      </div>
       <hr color="#f0f0f0" />
     </view>
     <view w-full flex-center h-20 text-lg @click="close()">取消</view>
@@ -67,15 +43,43 @@ let lnglatStr = $computed(() => {
 })
 let latlngStr = $computed(() => {
   let c = JSON.parse(JSON.stringify(props.lnglat)).reverse()
-  return c.join(',')
+  return c
 })
 let popupSelect = ref(null)
 function toggle() {
   popupSelect.value.open('bottom')
 }
-function close() {
+function close(mapType) {
+  Callback(mapType)
   popupSelect.value.close()
 }
+
+// URL Scheme
+const u = navigator.userAgent
+const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) //ios终端
+let proto = ''
+function Callback(mapType) {
+  if (mapType === 'baidu') {
+    // IOS参考地址: https://lbsyun.baidu.com/index.php?title=uri/api/ios
+    // Android参考地址: https://lbsyun.baidu.com/index.php?title=uri/api/android
+    proto = isiOS
+      ? `baidumap://map/direction?src=ios.baidu.openAPIdemo&destination=${props.addr}&region=${props.addr}`
+      : `bdapp://map/direction?src=andr.baidu.openAPIdemo&destination=${props.addr}&region=${props.addr}`
+    window.location.href = proto
+  } else if (mapType === 'amap') {
+    // IOS参考地址: https://lbs.amap.com/api/amap-mobile/guide/ios/navi
+    // Android参考地址:  https://lbs.amap.com/api/amap-mobile/gettingstarted
+    proto = isiOS
+      ? `iosamap://navi?sourceApplication=applicationName&poiname=${props.addr}&poiid=BGVIS&lat=${latlngStr[0]}&lon=${latlngStr[1]}&dev=1&style=2`
+      : `androidamap://navi?sourceApplication=appname&amp;poiname=${props.addr}&amp;lat=${latlngStr[0]}&amp;lon=${latlngStr[1]}&amp;dev=1&amp;style=2`
+    window.location.href = proto
+  } else {
+    // IOS 和 Android 一样 参考地址:https://lbs.qq.com/webApi/uriV1/uriGuide/uriMobileRoute
+    proto = `qqmap://map/routeplan?type=drive&to=${props.addr}&tocoord=${latlngStr}&referer=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77`
+    window.location.href = proto
+  }
+}
+
 defineExpose({
   toggle,
 })

@@ -32,6 +32,33 @@ const getShowTask = computed(() => {
   return app.User.resetUpScroll
 })
 
+// #ifdef H5
+let fontSize = uni.getStorageSync('fontSize') || '16'
+try {
+  ZWJSBridge.getUiStyle({})
+    .then(result => {
+      switch (result.uiStyle) {
+        case 'normal':
+          fontSize = 16
+          break
+        case 'elder':
+          fontSize = 20
+          break
+        default:
+          fontSize = 16
+      }
+      app.Global.SetFontSize(fontSize)
+      window.document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
+    })
+    //浙里办APP 6.11.0 版本以下版本标准模式兼容
+    .catch(() => {
+      window.document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
+    })
+} catch (error) {
+  window.document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
+}
+window.document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
+// #endif
 watch(
   getShowTask,
   (newVal, oldVal) => {
