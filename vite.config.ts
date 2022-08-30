@@ -23,11 +23,11 @@ export default defineConfig(({ mode, command }) => {
       host: true,
       open: false,
       proxy: {
-        '/dataV-api': {
-          // target: 'http://172.18.46.69:8900', // 大屏代理
-          target: 'http://172.18.39.200:33020', // 大屏代理
+        '/prod-api': {
+          target: 'http://172.31.44.162:8800', // 大屏代理
+          // target: 'https://cpdev.watone.com.cn:30000/prod-api', // 大屏代理
           changeOrigin: true,
-          rewrite: p => p.replace(/^\/dataV-api/, ''),
+          rewrite: p => p.replace(/^\/prod-api/, ''),
         },
       },
       watch: { ignored: ['**/dist/**'] },

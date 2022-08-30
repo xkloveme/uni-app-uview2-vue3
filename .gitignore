@@ -4,6 +4,8 @@ unpackage/
 /dist/
 src/pages.json
 /stats.html
+build.zip
+/out/
 
 yarn.lock
 package-lock.json

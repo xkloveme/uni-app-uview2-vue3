@@ -98,7 +98,7 @@ export default function (options: Partial<Options> = {}) {
     fs.writeFileSync(
       'src/pages.json',
       '// ⛔ 本文件由 auto pages 插件生成\n' +
-        '// 请将本文件添加至 .gitignore\n' +
+        '// 🚧 请将本文件添加至 .gitignore\n' +
         '// 如需覆盖页面 meta 信息或更改原有 pages.json 配置项\n' +
         '// 请修改 app.config.ts 的 page 导出\n' +
         '\n' +

@@ -9,7 +9,7 @@
       </div>
       <div flex-center mx-5 @click="goPage('lzdt')">
         <img src="@/static/img/qldt.png" w-10 h-10 m-5 />
-        <span>廉政动态</span>
+        <span>清廉动态</span>
       </div>
     </div>
   </div>

@@ -13,4 +13,6 @@ export default {
   getMapCount: 'get:/pmd/map/point/count',
   getMapPoints: 'get:/pmd/map/points',
   getPointsDetail: 'get:/pmd/map/point/',
+  // 线路
+  getLinePointsDetail: 'get:/pmd/map/line/points',
 }

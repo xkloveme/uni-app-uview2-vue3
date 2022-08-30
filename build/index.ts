@@ -1,13 +1,12 @@
 /*
  * @Author: xkloveme
  * @Date: 2022-04-21 14:31:03
- * @LastEditTime: 2022-04-21 15:00:57
+ * @LastEditTime: 2022-08-30 10:24:37
  * @LastEditors: xkloveme
  * @Description: 插件中心
- * @FilePath: /uni-app-uview2-vue3/build/index.ts
+ * @FilePath: /js-zlb-h5/build/index.ts
  * @Copyright © xkloveme
  */
-import vue from '@vitejs/plugin-vue'
 import uni from '@dcloudio/vite-plugin-uni'
 import ViteRestart from 'vite-plugin-restart'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -18,6 +17,7 @@ import UniProvider from './vite-plugin-uni-provider'
 import Espower from './vite-plugin-espower'
 import GitVersion from './vite-plugin-version'
 import SetupExtend from './vite-plugin-setup-extend'
+import CreateDist from './vite-plugin-compress-dist'
 function isTest() {
   return process.env.NODE_ENV === 'test'
 }
@@ -49,6 +49,7 @@ export default function createVitePlugins(viteEnv, isBuild = false) {
       }),
   ]
   VITE_APP_ENV === 'development' && vitePlugins.push(Espower())
-  isBuild && vitePlugins.push(GitVersion(viteEnv))
+  isBuild && vitePlugins.push(GitVersion(viteEnv)) // 生成git提交记录
+  isBuild && vitePlugins.push(CreateDist()) // 生成浙里办需要的压缩包
   return vitePlugins
 }

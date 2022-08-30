@@ -1,5 +1,11 @@
 <template>
   <div id="MAps" style="width: 100vw; height: 100vh"></div>
+  <div fixed top-25 left-5 flex flex-col>
+    <div v-for="(cr, key) of color" :key="key" flex-center :style="{ color: cr }">
+      <img :src="`/src/static/img/${key}.png`" w-3 h-4 m-1 mb-1 />
+      {{ key }}
+    </div>
+  </div>
   <div fixed bottom-16 right-5 flex flex-col>
     <uni-icons
       type="navigate-filled"
@@ -39,7 +45,7 @@
             />
             <view flex flex-col mx-2 mt-2 w-full>
               <view font-900 class="text-base" flex-center justify="between">
-                {{ item.name }}
+                <text @click="handleGo(item)">{{ item.name }}</text>
                 <uni-icons
                   type="closeempty"
                   self=""
@@ -48,7 +54,9 @@
                   @click="close"
                 ></uni-icons>
               </view>
-              <view><uni-tag :text="item.line" type="error" size="small"></uni-tag></view>
+              <view>
+                <uni-tag :text="item.line" type="error" size="small"></uni-tag>
+              </view>
             </view>
           </view>
           <view flex color="#666" font-200>
@@ -57,7 +65,7 @@
           </view>
         </view>
       </template>
-      <view class="text-cut-2">
+      <view class="text-cut-2" @click="handleGo(item)">
         {{ item.intro }}
       </view>
       <view flex color="#3089FF" mt-2>
@@ -84,6 +92,7 @@
 import $api from '@/api'
 import SelectMap from '@/components/SelectMap'
 import MapLoader from '@/utils/map.js'
+
 let MAps = null
 let district = null
 let item = ref({})
@@ -137,6 +146,7 @@ function initMaps() {
     resizeEnable: true, // 是否监控地图容器尺寸变化
     showLabel: false,
     zoom: 9,
+    features: ['bg', 'point'],
     center: ['120.84559', '31.09993'], // 初始化地图中心点
   })
 
@@ -151,6 +161,78 @@ function initMaps() {
   addBoundary('吴江区', '#FFB41F', '#FFB41F')
   addBoundary('青浦区', '#2AAE33', '#2AAE33')
 }
+let polyline1 = null
+let polyline2 = null
+let polyline3 = null
+let polyline4 = null
+// 添加line
+function getDataLine() {
+  $api
+    .getLinePointsDetail({
+      line: app.User.line,
+    })
+    .then(res => {
+      if (res.code == 200) {
+        let line1 = []
+        let line2 = []
+        let line3 = []
+        let line4 = []
+        line1 = res.data['清廉传承线']
+        line2 = res.data['清廉实践线']
+        line3 = res.data['清廉教育线']
+        line4 = res.data['红色文化线']
+        polyline1 = new AMap.Polyline({
+          path: line1,
+          geodesic: true,
+          lineJoin: 'round',
+          showDir: true,
+          dirColor: 'white',
+          strokeColor: '#FF9D01',
+          outlineColor: 'white',
+          isOutline: true,
+          strokeWeight: 6.0,
+          zIndex: 2,
+        })
+        polyline2 = new AMap.Polyline({
+          path: line2,
+          geodesic: true,
+          lineJoin: 'round',
+          showDir: true,
+          dirColor: 'white',
+          strokeColor: '#7F2D00',
+          outlineColor: 'white',
+          isOutline: true,
+          strokeWeight: 6.0,
+          zIndex: 2,
+        })
+        polyline3 = new AMap.Polyline({
+          path: line3,
+          geodesic: true,
+          lineJoin: 'round',
+          showDir: true,
+          dirColor: 'white',
+          strokeColor: '#0000FF',
+          outlineColor: 'white',
+          isOutline: true,
+          strokeWeight: 6.0,
+          zIndex: 2,
+        })
+        polyline4 = new AMap.Polyline({
+          path: line4,
+          geodesic: true,
+          lineJoin: 'round',
+          showDir: true,
+          dirColor: 'white',
+          strokeColor: '#FF0000',
+          outlineColor: 'white',
+          isOutline: true,
+          strokeWeight: 6.0,
+          zIndex: 2,
+        })
+        MAps.add([polyline1, polyline2, polyline3, polyline4])
+      }
+    })
+}
 
 function getDataMap(needPoint = false) {
   $api
@@ -162,7 +244,7 @@ function getDataMap(needPoint = false) {
       line: app.User.line,
     })
     .then(res => {
-      MAps.remove(spots)
+      MAps?.remove(spots)
       spots = []
       let obj = {}
       res.data.map(item => {
@@ -181,15 +263,50 @@ function getDataMap(needPoint = false) {
       line: app.User.line,
     })
     .then(res => {
-      layer.clear()
+      layer?.clear()
       addMarker(res.rows, needPoint)
     })
+  if (!polyline1) {
+    getDataLine()
+  } else {
+    switch (app.User.line) {
+      case '清廉传承线':
+        polyline1?.show()
+        polyline2?.hide()
+        polyline3?.hide()
+        polyline4?.hide()
+        break
+      case '清廉实践线':
+        polyline1?.hide()
+        polyline2?.show()
+        polyline3?.hide()
+        polyline4?.hide()
+        break
+      case '清廉教育线':
+        polyline1?.hide()
+        polyline2?.hide()
+        polyline3?.show()
+        polyline4?.hide()
+        break
+      case '红色文化线':
+        polyline1?.hide()
+        polyline2?.hide()
+        polyline3?.hide()
+        polyline4?.show()
+        break
+      default:
+        polyline1?.show()
+        polyline2?.show()
+        polyline3?.show()
+        polyline4?.show()
+        break
+    }
+  }
 }
 let color = {
   场馆: '#4a60ff',
-  村: '#13ba2f',
-  园: '#b351fe',
-  陵园: '#ff1714',
+  村居: '#13ba2f',
+  公园: '#b351fe',
   学校: '#ff8617',
 }
 function addMarker(rows, needPoint = false) {
@@ -209,7 +326,7 @@ function addMarker(rows, needPoint = false) {
         // 图片 url
         image: `https://hltm.jw.linan.gov.cn/linanjiwei/jsjw/img/${item.type}.png`,
         // 图片尺寸
-        size: [40, 50],
+        size: [15, 18],
         // 图片相对 position 的锚点，默认为 bottom-center
         anchor: 'center',
       },
@@ -232,17 +349,17 @@ function addMarker(rows, needPoint = false) {
     markers.push(labelMarker)
   })
   // 将 marker 添加到图层
-  layer.add(markers)
+  layer?.add(markers)
   if (rows.length && needPoint && app.User.name) {
     MAps.setZoomAndCenter(15, [rows[0].longitude, rows[0].latitude])
-  } else {
-    reset()
   }
 }
 let distance = ref('')
 function showInfoM(e) {
+  MAps.setZoomAndCenter(15, e._position)
   $api.getPointsDetail(e._opts.extData.id).then(res => {
     item.value = res.data
+    item.value['fileUrl'] = res.data?.thumbnail?.url
     var p1 = app.User.locationArr
     var p2 = [res.data.longitude, res.data.latitude]
     // 返回 p1 到 p2 间的地面距离，单位：米
@@ -376,10 +493,13 @@ function addText(obj) {
       ],
       zoomStyleMapping: zoomStyleMapping2,
     })
-    marker.on('click', e => MAps.setZoomAndCenter(12, [e.lnglat.lng, e.lnglat.lat]))
+    marker.on('click', onMapClick)
     spots.push(marker)
   }
   MAps.add(spots)
+}
+function onMapClick(e) {
+  MAps.setZoomAndCenter(12, [e.lnglat.lng, e.lnglat.lat])
 }
 
 function location() {
@@ -422,7 +542,7 @@ function reset() {
   let position = new AMap.LngLat(120.84559, 31.09993) // 标准写法
   MAps.setZoomAndCenter(9, position)
 }
-onMounted(() => {
+onBeforeMount(() => {
   MapLoader().then(
     () => {
       getDataMap()
@@ -444,6 +564,7 @@ defineExpose({
 .icon {
   background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
 }
+
 #MAps {
   position: absolute;
   top: 0;

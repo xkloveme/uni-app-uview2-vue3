@@ -1,52 +1,38 @@
 <template>
   <meta title="我要举报" title:微信="我要举报" navigationStyle="custom" />
-  <img src="@/static/img/banner.png" w-full h-40 @click="PhoneCall('12388')" />
-  <div>
-    <h3 p-5 font="normal">举报网站</h3>
+  <div class="report">
+    <div flex-center mx-20 py-15 pb-5 relative>
+      <img src="@/static/img/line-title.png" w-full h-10 />
+      <h3 absolute>举报电话</h3>
+    </div>
+    <div class="flex-center justify-between mx-10 p-5 click-btn" @click="PhoneCall('12388')">
+      <div>举报电话</div>
+      <div color="red">12388</div>
+    </div>
+    <div flex-center mx-20 py-5 relative>
+      <img src="@/static/img/line-title.png" w-full h-10 />
+      <h3 absolute>举报网站</h3>
+    </div>
     <div
-      mx-5
-      p-5
-      bg="light-100"
-      shadow-xl
-      rounded
-      flex
-      justify="between"
-      align="items-center"
-      mt-4
+      class="flex-center justify-between mx-10 p-5 click-btn"
       @click="gotopage('嘉善', 'http://zhejiang.12388.gov.cn/jiaxing/jiashan/')"
     >
-      <h4>嘉善</h4>
-      <a color="blue">我要举报</a>
+      <div>嘉善</div>
+      <div color="red">我要举报</div>
     </div>
     <div
-      mx-5
-      p-5
-      bg="light-100"
-      shadow-xl
-      rounded
-      flex
-      justify="between"
-      align="items-center"
-      mt-4
+      class="flex-center justify-between mx-10 p-5 click-btn"
       @click="gotopage('青浦', 'http://shanghai.12388.gov.cn/qingpu/')"
     >
-      <h4>青浦</h4>
-      <a color="blue">我要举报</a>
+      <div>青浦</div>
+      <div color="red">我要举报</div>
     </div>
     <div
-      mx-5
-      p-5
-      bg="light-100"
-      shadow-xl
-      rounded
-      flex
-      justify="between"
-      align="items-center"
-      mt-4
+      class="flex-center justify-between mx-10 p-5 click-btn"
       @click="gotopage('吴江', 'http://jiangsu.12388.gov.cn/suzhoushi/wujiangqu/')"
     >
-      <h4>吴江</h4>
-      <a color="blue">我要举报</a>
+      <div>吴江</div>
+      <div color="red">我要举报</div>
     </div>
   </div>
 </template>
@@ -82,4 +68,16 @@ function PhoneCall(num) {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.report {
+  height: 100vh;
+  width: 100%;
+  color: #fff;
+  background: url(@/static/img/bg.png) center/100% 100% no-repeat;
+  .click-btn {
+    color: #2f3435;
+    font-weight: 900;
+    background: url(@/static/img/line.png) center/100% 100% no-repeat;
+  }
+}
+</style>
