@@ -73,10 +73,10 @@ pipeline {
               sh '''
               echo "构建并推送镜像到: ${REGISTRY} 仓库！！！"
               docker login -u ${ACCOUNT} -p ${PASSWD} ${REGISTRY}
-              docker build -t ${REGISTRY}/${PROJECT_NAME}/${IMAGE_NAME}:${VERSION} -f dockerfile .
-              docker push ${REGISTRY}/${PROJECT_NAME}/${IMAGE_NAME}:${VERSION}
+              docker build -t ${REGISTRY}/${PROJECT_NAME}-prod/${IMAGE_NAME}:${VERSION} -f dockerfile .
+              docker push ${REGISTRY}/${PROJECT_NAME}-prod/${IMAGE_NAME}:${VERSION}
               sleep 3
-              docker rmi ${REGISTRY}/${PROJECT_NAME}/${IMAGE_NAME}:${VERSION}
+              docker rmi ${REGISTRY}/${PROJECT_NAME}-prod/${IMAGE_NAME}:${VERSION}
               '''
             }
            }
