@@ -1,5 +1,5 @@
 <template>
-  <div id="MAps" style="width: 100vw; height: 100vh"></div>
+  <div id="MAps" style="width: 100vw; height: 100vh; pointer-events: auto"></div>
   <div fixed top-25 left-5 flex flex-col>
     <div v-for="(cr, key) of color" :key="key" flex-center :style="{ color: cr }">
       <img :src="`/src/static/img/${key}.png`" w-3 h-4 m-1 mb-1 />
@@ -143,7 +143,10 @@ let spots = []
 function initMaps() {
   // 配置地图的基本显示
   MAps = new AMap.Map('MAps', {
-    resizeEnable: true, // 是否监控地图容器尺寸变化
+    turboMode: false,
+    showIndoorMap: false,
+    defaultCursor: 'pointer',
+    showBuildingBlock: false,
     showLabel: false,
     zoom: 9,
     features: ['bg', 'point'],
@@ -152,7 +155,7 @@ function initMaps() {
 
   layer = new AMap.LabelsLayer({
     zooms: [3, 20],
-    zIndex: 1000,
+    zIndex: 1,
     allowCollision: false, //可以让标注避让用户的标注
   })
   MAps.add(layer)
@@ -356,8 +359,8 @@ function addMarker(rows, needPoint = false) {
 }
 let distance = ref('')
 function showInfoM(e) {
-  MAps.setZoomAndCenter(15, e._position)
-  $api.getPointsDetail(e._opts.extData.id).then(res => {
+  MAps.setZoomAndCenter(15, e.De.position)
+  $api.getPointsDetail(e.w.extData.id).then(res => {
     item.value = res.data
     item.value['fileUrl'] = res.data?.thumbnail?.url
     var p1 = app.User.locationArr
@@ -409,97 +412,40 @@ function addText(obj) {
   let touristSpots = [
     {
       name: '嘉善县',
-      count: 0,
       position: [120.92, 30.85],
-      zIndex: 300,
-      smallIcon: 'https://a.amap.com/jsapi_demos/static/resource/img/qiniandian.png',
-      bigIcon: 'https://a.amap.com/jsapi_demos/static/resource/img/qiniandian.png',
-      size: [128, 160],
-      anchor: 'bottom-center',
     },
     {
       name: '吴江区',
-      count: 0,
       position: [120.638, 31.0598],
-      zIndex: 300,
-      smallIcon: 'https://a.amap.com/jsapi_demos/static/resource/img/men3.png',
-      bigIcon: 'https://a.amap.com/jsapi_demos/static/resource/img/men.png',
-      size: [146, 144],
-      anchor: 'bottom-center',
     },
     {
       name: '青浦区',
-      count: 0,
       position: [121.12, 31.15],
-      zIndex: 300,
-      smallIcon: 'https://a.amap.com/jsapi_demos/static/resource/img/men2.png',
-      bigIcon: 'https://a.amap.com/jsapi_demos/static/resource/img/men2.png',
-      size: [185, 94],
-      anchor: 'bottom-center',
     },
   ]
-
-  var zoomStyleMapping2 = {
-    7: 0,
-    8: 0,
-    9: 0,
-    10: 0,
-    11: 1,
-    12: 1,
-    13: 1,
-    14: 1,
-    15: 1,
-    16: 1,
-  }
   for (var i = 0; i < touristSpots.length; i += 1) {
-    let lableName = touristSpots[i].name + '&nbsp;&nbsp;' + (obj[touristSpots[i].name] || 0)
-    var marker = new AMap.ElasticMarker({
+    let marker = new AMap.Marker({
       position: touristSpots[i].position,
-      zooms: [7, 20],
-      styles: [
-        {
-          icon: {
-            img: touristSpots[i].smallIcon,
-            size: [50, 50], //可见区域的大小
-            anchor: 'bottom-center', //锚点
-            fitZoom: 10, //最合适的级别
-            scaleFactor: 2, //地图放大一级的缩放比例系数
-            maxScale: 2, //最大放大比例
-            minScale: 1, //最小放大比例
-          },
-          label: {
-            content: lableName,
-            position: 'BM',
-            minZoom: 3,
-            maxZoom: 13,
-            fitZoom: 10, //最合适的级别
-            scaleFactor: 2, //地图放大一级的缩放比例系数
-            maxScale: 2, //最大放大比例
-            minScale: 1, //最小放大比例
-          },
-        },
-        {
-          label: {
-            content: touristSpots[i].name,
-            position: 'BM',
-            minZoom: 3,
-            maxZoom: 13,
-            fitZoom: 10, //最合适的级别
-            scaleFactor: 2, //地图放大一级的缩放比例系数
-            maxScale: 2, //最大放大比例
-            minScale: 1, //最小放大比例
-          },
-        },
-      ],
-      zoomStyleMapping: zoomStyleMapping2,
+      clickable: true,
+      zIndex: 3000,
+      bubble: true,
+      anchor: 'center',
+      content: `
+               <div class="marker-all">
+                  <div >${obj[touristSpots[i].name] || 0}
+                  </div>
+                   <div class="marker-title">${touristSpots[i].name}</div>
+               </div>
+               `,
     })
     marker.on('click', onMapClick)
     spots.push(marker)
   }
-  MAps.add(spots)
+  MAps?.add(spots)
 }
+
 function onMapClick(e) {
-  MAps.setZoomAndCenter(12, [e.lnglat.lng, e.lnglat.lat])
+  MAps.setZoomAndCenter(12, [e.target.De.position.lng, e.target.De.position.lat])
 }
 
 function location() {
@@ -573,5 +519,25 @@ defineExpose({
   bottom: 0;
   width: 100%;
   height: 100%;
+}
+
+:deep(.marker-all) {
+  color: #ff8800;
+  width: 2rem;
+  height: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: center;
+  font-weight: 900;
+  background: url(@/static/img/4.png) center/100% 100% no-repeat;
+}
+
+:deep(.marker-title) {
+  color: #ffffff;
+  font-size: 1rem;
+  margin-bottom: -2rem;
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.6);
 }
 </style>
