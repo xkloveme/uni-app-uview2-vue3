@@ -17,7 +17,7 @@ type ArchiverName<T> = T extends 'zip' | 'tar'
 const initOpts: CompressOptions<'zip'> = {
   archiverName: 'build.zip',
   type: 'zip',
-  sourceName: 'out/build',
+  sourceName: 'dist/build/build',
 }
 export default function createCompressDist(opts?: CompressOptions<'zip' | 'tar' | 'tgz'>) {
   const { sourceName, archiverName, type } = opts || initOpts
@@ -33,8 +33,8 @@ export default function createCompressDist(opts?: CompressOptions<'zip' | 'tar' 
 
       const sourcePath = resolve(rootPath, sourceName)
       console.log(`sourcePath: ${sourcePath}`)
-      const packagePath = resolve(rootPath, 'out/package.json')
-      const writerStream = createWriteStream(resolve(rootPath, 'out/package.json'))
+      const packagePath = resolve(rootPath, 'dist/build/package.json')
+      const writerStream = createWriteStream(resolve(rootPath, 'dist/build/package.json'))
       const data = `{
         "name": "vite-zlb",
         "private": true,
