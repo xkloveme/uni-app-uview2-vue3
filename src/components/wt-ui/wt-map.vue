@@ -353,7 +353,7 @@ function addMarker(rows, needPoint = false) {
   })
   // 将 marker 添加到图层
   layer?.add(markers)
-  if (rows.length && needPoint && app.User.name) {
+  if (rows.length && needPoint && (app.User.area || app.User.name)) {
     MAps.setZoomAndCenter(15, [rows[0].longitude, rows[0].latitude])
   }
 }
