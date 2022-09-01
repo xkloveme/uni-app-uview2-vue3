@@ -1,7 +1,7 @@
 /*
  * @Author: xkloveme
  * @Date: 2022-04-21 14:31:03
- * @LastEditTime: 2022-08-30 10:24:37
+ * @LastEditTime: 2022-09-01 10:06:30
  * @LastEditors: xkloveme
  * @Description: 插件中心
  * @FilePath: /js-zlb-h5/build/index.ts
@@ -49,7 +49,7 @@ export default function createVitePlugins(viteEnv, isBuild = false) {
       }),
   ]
   VITE_APP_ENV === 'development' && vitePlugins.push(Espower())
+  VITE_APP_ENV === 'development' && vitePlugins.push(CreateDist()) // 生成浙里办需要的压缩包
   isBuild && vitePlugins.push(GitVersion(viteEnv)) // 生成git提交记录
-  isBuild && vitePlugins.push(CreateDist()) // 生成浙里办需要的压缩包
   return vitePlugins
 }
