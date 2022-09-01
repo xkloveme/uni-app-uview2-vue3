@@ -1,7 +1,7 @@
 import { cwd } from 'process'
-import { resolve } from 'path'
+import { resolve, join } from 'path'
 import compressing from 'compressing'
-import { createWriteStream, rename } from 'fs'
+import { createWriteStream, rename, readdirSync, statSync, unlinkSync, rmdirSync } from 'fs'
 
 export interface CompressOptions<Type extends 'zip' | 'tar' | 'tgz'> {
   archiverName?: ArchiverName<Type>
@@ -15,7 +15,7 @@ type ArchiverName<T> = T extends 'zip' | 'tar'
   : never
 
 const initOpts: CompressOptions<'zip'> = {
-  archiverName: 'build.zip',
+  archiverName: 'src.zip',
   type: 'zip',
   sourceName: 'dist/build/build',
 }
@@ -26,6 +26,22 @@ export default function createCompressDist(opts?: CompressOptions<'zip' | 'tar' 
     closeBundle() {
       console.log('closeBundle')
       const rootPath = cwd()
+      let removeDir = dir => {
+        let files = readdirSync(dir)
+        for (let i = 0; i < files.length; i++) {
+          let newPath = join(dir, files[i])
+          let stat = statSync(newPath)
+          if (stat.isDirectory()) {
+            //如果是文件夹就递归下去
+            removeDir(newPath)
+          } else {
+            //删除文件
+            unlinkSync(newPath)
+          }
+        }
+        rmdirSync(dir) //如果文件夹是空的，就将自己删除掉
+      }
+      removeDir(resolve(rootPath, sourceName))
       rename(resolve(rootPath, 'dist/build/h5'), resolve(rootPath, sourceName), err => {
         if (err) throw err
         console.log('重命名完成')

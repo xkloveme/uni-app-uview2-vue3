@@ -5,6 +5,7 @@ unpackage/
 src/pages.json
 /stats.html
 build.zip
+src.zip
 /out/
 
 yarn.lock
