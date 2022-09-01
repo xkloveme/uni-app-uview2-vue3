@@ -2,7 +2,7 @@
   <div id="MAps" style="width: 100vw; height: 100vh; pointer-events: auto"></div>
   <div fixed top-25 left-5 flex flex-col>
     <div v-for="(cr, key) of color" :key="key" flex-center :style="{ color: cr }">
-      <img :src="`/src/static/img/${key}.png`" w-3 h-4 m-1 mb-1 />
+      <img :src="`https://hltm.jw.linan.gov.cn/linanjiwei/jsjw/img/${key}.png`" w-3 h-4 m-1 mb-1 />
       {{ key }}
     </div>
   </div>
