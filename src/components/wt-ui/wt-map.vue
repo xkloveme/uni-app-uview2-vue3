@@ -155,7 +155,7 @@ function initMaps() {
 
   layer = new AMap.LabelsLayer({
     zooms: [3, 20],
-    zIndex: 1,
+    zIndex: 3,
     allowCollision: false, //可以让标注避让用户的标注
   })
   MAps.add(layer)
@@ -194,7 +194,6 @@ function getDataLine() {
           outlineColor: 'white',
           isOutline: true,
           strokeWeight: 6.0,
-          zIndex: 2,
         })
         polyline2 = new AMap.Polyline({
           path: line2,
@@ -206,7 +205,6 @@ function getDataLine() {
           outlineColor: 'white',
           isOutline: true,
           strokeWeight: 6.0,
-          zIndex: 2,
         })
         polyline3 = new AMap.Polyline({
           path: line3,
@@ -218,7 +216,6 @@ function getDataLine() {
           outlineColor: 'white',
           isOutline: true,
           strokeWeight: 6.0,
-          zIndex: 2,
         })
         polyline4 = new AMap.Polyline({
           path: line4,
@@ -230,7 +227,6 @@ function getDataLine() {
           outlineColor: 'white',
           isOutline: true,
           strokeWeight: 6.0,
-          zIndex: 2,
         })
         MAps.add([polyline1, polyline2, polyline3, polyline4])
       }
@@ -445,7 +441,9 @@ function addText(obj) {
 }
 
 function onMapClick(e) {
+  spots.map(item => item.hide())
   MAps.setZoomAndCenter(12, [e.target.De.position.lng, e.target.De.position.lat])
+  layer.setzIndex(9999)
 }
 
 function location() {
@@ -486,6 +484,8 @@ function location() {
 }
 function reset() {
   let position = new AMap.LngLat(120.84559, 31.09993) // 标准写法
+  spots.map(item => item.show())
+  layer.setzIndex(1)
   MAps.setZoomAndCenter(9, position)
 }
 onBeforeMount(() => {
