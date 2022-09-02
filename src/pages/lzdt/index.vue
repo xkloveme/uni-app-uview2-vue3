@@ -1,5 +1,5 @@
 <template>
-  <meta title="廉政动态" title:微信="廉政动态" navigationStyle="custom" />
+  <meta title="清廉动态" title:微信="清廉动态" navigationStyle="custom" />
   <div @up="fetch">
     <uni-card
       v-for="(item, index) in list"
@@ -11,9 +11,9 @@
       @click="gotoPage(`${item.imgUrl}/动态/${index + 1}.png`)"
     >
       <div flex-center justify="start">
-        <image :src="`${item.imgUrl}/缩略图/${index + 1}.png`" mode="scaleToFill" w-10 h-10 />
+        <img :src="`${item.imgUrl}/缩略图/${index + 1}.png`" mode="scaleToFill" w-10 h-10 />
         <view ml-2 flex-1>
-          <view class="text-cut" w-60>{{ item.name }}</view>
+          <view class="text-cut w-5/6">{{ item.name }}</view>
           <view>
             <uni-icons type="map-pin-ellipse" size="16"></uni-icons>
             {{ item.addrs }}

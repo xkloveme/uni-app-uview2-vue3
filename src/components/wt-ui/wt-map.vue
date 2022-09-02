@@ -140,6 +140,16 @@ function close() {
 }
 let layer = null
 let spots = []
+function logMapinfo() {
+  let zoom = MAps.getZoom()
+  if (zoom < 10) {
+    spots.map(item => item.show())
+    layer.setzIndex(1)
+  } else {
+    spots.map(item => item.hide())
+    layer.setzIndex(9999)
+  }
+}
 function initMaps() {
   // 配置地图的基本显示
   MAps = new AMap.Map('MAps', {
@@ -152,6 +162,7 @@ function initMaps() {
     features: ['bg', 'point'],
     center: ['120.84559', '31.09993'], // 初始化地图中心点
   })
+  MAps.on('moveend', logMapinfo)
 
   layer = new AMap.LabelsLayer({
     zooms: [3, 20],
@@ -369,9 +380,9 @@ function addMarker(rows, needPoint = false) {
       MAps.setZoomAndCenter(10, position?.[0].position)
     }
     if (app.User.name) {
-      spots.map(item => item.hide())
-      layer.setzIndex(9999)
       MAps.setZoomAndCenter(15, [rows[0].longitude, rows[0].latitude])
+    } else {
+      reset()
     }
   }
 }
@@ -449,9 +460,7 @@ function addText(obj) {
 }
 
 function onMapClick(e) {
-  spots.map(item => item.hide())
   MAps.setZoomAndCenter(12, [e.target.De.position.lng, e.target.De.position.lat])
-  layer.setzIndex(9999)
 }
 
 function location() {
@@ -492,8 +501,6 @@ function location() {
 }
 function reset() {
   let position = new AMap.LngLat(120.84559, 31.09993) // 标准写法
-  spots.map(item => item.show())
-  layer.setzIndex(1)
   MAps.setZoomAndCenter(9, position)
 }
 onBeforeMount(() => {
