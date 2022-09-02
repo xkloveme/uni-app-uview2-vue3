@@ -80,8 +80,11 @@ function Callback(mapType) {
       window.location.href = proto
     }
   } else {
-    ZWJSBridge.openLink({
-      url: `zwfw://openThirdMap?longitude=${latlngStr[0]}&latitude=${latlngStr[1]}&locationName=${props.addr}`,
+    ZWJSBridge.onReady(() => {
+      console.log('初始化完成后，执行bridge方法', latlngStr, props.addr)
+      ZWJSBridge.openLink({
+        url: `zwfw://openThirdMap?longitude=${latlngStr[0]}&latitude=${latlngStr[1]}&locationName=${props.addr}`,
+      })
     })
   }
 }
