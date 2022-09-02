@@ -33,7 +33,7 @@ const getShowTask = computed(() => {
 })
 
 // #ifdef H5
-let fontSize = uni.getStorageSync('fontSize') || '16'
+let fontSize = app.Global.FontSizeNum || 16
 try {
   ZWJSBridge.getUiStyle({})
     .then(result => {
