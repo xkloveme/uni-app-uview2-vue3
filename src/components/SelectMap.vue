@@ -11,7 +11,7 @@
         <div color="#666">高德地图</div>
       </div>
       <hr color="#f0f0f0" />
-      <div target="_blank" flex-center decoration-none text-lg my-2 @click="close">
+      <div target="_blank" flex-center decoration-none text-lg my-2 @click="close('qqmap')">
         <img src="@/static/img/腾讯地图.png" w-10 h-10 m-2 mb-1 />
         <div color="#666">腾讯地图</div>
       </div>
@@ -50,7 +50,7 @@ function toggle() {
   popupSelect.value.open('bottom')
 }
 function close(mapType) {
-  Callback(mapType)
+  mapType && Callback(mapType)
   popupSelect.value.close()
 }
 
@@ -74,7 +74,7 @@ function Callback(mapType) {
         ? `iosamap://navi?sourceApplication=applicationName&poiname=${props.addr}&poiid=BGVIS&lat=${latlngStr[0]}&lon=${latlngStr[1]}&dev=1&style=2`
         : `androidamap://navi?sourceApplication=appname&amp;poiname=${props.addr}&amp;lat=${latlngStr[0]}&amp;lon=${latlngStr[1]}&amp;dev=1&amp;style=2`
       window.location.href = proto
-    } else {
+    } else if (mapType === 'qqmap') {
       // IOS 和 Android 一样 参考地址:https://lbs.qq.com/webApi/uriV1/uriGuide/uriMobileRoute
       proto = `qqmap://map/routeplan?type=drive&to=${props.addr}&tocoord=${latlngStr}&referer=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77`
       window.location.href = proto
