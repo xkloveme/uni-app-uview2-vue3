@@ -34,7 +34,7 @@ const props = defineProps({
   },
   addr: {
     type: String,
-    default: '未知',
+    default: '',
   },
 })
 let lnglatStr = $computed(() => {
@@ -48,7 +48,9 @@ let latlngStr = $computed(() => {
 let popupSelect = ref(null)
 function toggle() {
   // popupSelect.value.open('bottom')
-  Callback()
+  nextTick(() => {
+    Callback()
+  })
 }
 function close(mapType) {
   mapType && Callback(mapType)
