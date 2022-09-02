@@ -61,7 +61,7 @@ let proto = ''
 function Callback(mapType) {
   ZWJSBridge.onReady(() => {
     ZWJSBridge.openLink({
-      url: `zwfw://openThirdMap?longitude=${latlngStr[0]}&latitude=${latlngStr[1]}&locationName=${props.addr}`,
+      url: `zwfw://openThirdMap?longitude=${latlngStr[1]}&latitude=${latlngStr[0]}&locationName=${props.addr}`,
     })
     // ZWJSBridge.getUUID()
     //   .then(data => {
