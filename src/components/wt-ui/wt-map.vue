@@ -341,7 +341,7 @@ function addMarker(rows, needPoint = false) {
       name: item.name,
       extData: { id: item.id },
       position: [item.longitude, item.latitude],
-      zooms: [11, 20],
+      zooms: [9, 20],
       opacity: 1,
       zIndex: 1000,
       icon: {

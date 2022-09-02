@@ -1,7 +1,7 @@
 import { cwd } from 'process'
 import { resolve, join } from 'path'
 import compressing from 'compressing'
-import { createWriteStream, rename, readdirSync, statSync, unlinkSync, rmdirSync } from 'fs'
+import { createWriteStream, rename, readdirSync, statSync, unlinkSync, rmdirSync, exists } from 'fs'
 
 export interface CompressOptions<Type extends 'zip' | 'tar' | 'tgz'> {
   archiverName?: ArchiverName<Type>
@@ -41,7 +41,9 @@ export default function createCompressDist(opts?: CompressOptions<'zip' | 'tar' 
         }
         rmdirSync(dir) //如果文件夹是空的，就将自己删除掉
       }
-      removeDir(resolve(rootPath, sourceName))
+      exists(resolve(rootPath, sourceName), e => {
+        e && removeDir(resolve(rootPath, sourceName))
+      })
       rename(resolve(rootPath, 'dist/build/h5'), resolve(rootPath, sourceName), err => {
         if (err) throw err
         console.log('重命名完成')
