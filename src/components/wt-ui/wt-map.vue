@@ -114,12 +114,12 @@ function PhoneCall(num) {
         console.log(result)
       })
       .catch(error => {
+        uni.makePhoneCall({
+          phoneNumber: num,
+        })
         console.log(error)
       })
   })
-  // uni.makePhoneCall({
-  //   phoneNumber: num,
-  // })
 }
 function handleGo(item) {
   app.to('/pages/culture/mapDetail', { detailId: item.id, distance: distance.value })
@@ -164,6 +164,20 @@ function initMaps() {
   addBoundary('吴江区', '#FFB41F', '#FFB41F')
   addBoundary('青浦区', '#2AAE33', '#2AAE33')
 }
+let touristSpots = [
+  {
+    name: '嘉善县',
+    position: [120.92, 30.85],
+  },
+  {
+    name: '吴江区',
+    position: [120.638, 31.0598],
+  },
+  {
+    name: '青浦区',
+    position: [121.12, 31.15],
+  },
+]
 let polyline1 = null
 let polyline2 = null
 let polyline3 = null
@@ -193,7 +207,7 @@ function getDataLine() {
           strokeColor: '#FF9D01',
           outlineColor: 'white',
           isOutline: true,
-          strokeWeight: 6.0,
+          strokeWeight: 2.0,
         })
         polyline2 = new AMap.Polyline({
           path: line2,
@@ -204,7 +218,7 @@ function getDataLine() {
           strokeColor: '#7F2D00',
           outlineColor: 'white',
           isOutline: true,
-          strokeWeight: 6.0,
+          strokeWeight: 2.0,
         })
         polyline3 = new AMap.Polyline({
           path: line3,
@@ -215,7 +229,7 @@ function getDataLine() {
           strokeColor: '#0000FF',
           outlineColor: 'white',
           isOutline: true,
-          strokeWeight: 6.0,
+          strokeWeight: 2.0,
         })
         polyline4 = new AMap.Polyline({
           path: line4,
@@ -226,7 +240,7 @@ function getDataLine() {
           strokeColor: '#FF0000',
           outlineColor: 'white',
           isOutline: true,
-          strokeWeight: 6.0,
+          strokeWeight: 2.0,
         })
         MAps.add([polyline1, polyline2, polyline3, polyline4])
       }
@@ -349,8 +363,16 @@ function addMarker(rows, needPoint = false) {
   })
   // 将 marker 添加到图层
   layer?.add(markers)
-  if (rows.length && needPoint && (app.User.area || app.User.name)) {
-    MAps.setZoomAndCenter(15, [rows[0].longitude, rows[0].latitude])
+  if (rows.length && needPoint) {
+    if (app.User.area) {
+      let position = touristSpots.filter(item => item.name.includes(app.User.area))
+      MAps.setZoomAndCenter(10, position?.[0].position)
+    }
+    if (app.User.name) {
+      spots.map(item => item.hide())
+      layer.setzIndex(9999)
+      MAps.setZoomAndCenter(15, [rows[0].longitude, rows[0].latitude])
+    }
   }
 }
 let distance = ref('')
@@ -405,20 +427,6 @@ function addBoundary(name = '嘉善县', fillColor = '#CCF3FF', strokeColor = '#
 }
 
 function addText(obj) {
-  let touristSpots = [
-    {
-      name: '嘉善县',
-      position: [120.92, 30.85],
-    },
-    {
-      name: '吴江区',
-      position: [120.638, 31.0598],
-    },
-    {
-      name: '青浦区',
-      position: [121.12, 31.15],
-    },
-  ]
   for (var i = 0; i < touristSpots.length; i += 1) {
     let marker = new AMap.Marker({
       position: touristSpots[i].position,

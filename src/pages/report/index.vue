@@ -59,12 +59,12 @@ function PhoneCall(num) {
         console.log(result)
       })
       .catch(error => {
+        uni.makePhoneCall({
+          phoneNumber: num,
+        })
         console.log(error)
       })
   })
-  // uni.makePhoneCall({
-  //   phoneNumber: num,
-  // })
 }
 </script>
 

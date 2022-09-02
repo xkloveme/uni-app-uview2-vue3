@@ -64,6 +64,7 @@ function PhoneCall(num) {
       title: '暂未提供电话',
     })
   }
+  /* eslint handle-callback-err: "warn" */
   ZWJSBridge.onReady(() => {
     console.log('初始化完成后，执行bridge方法')
     ZWJSBridge.phoneCall({
@@ -73,12 +74,12 @@ function PhoneCall(num) {
         console.log(result)
       })
       .catch(error => {
+        uni.makePhoneCall({
+          phoneNumber: num,
+        })
         console.log(error)
       })
   })
-  // uni.makePhoneCall({
-  //   phoneNumber: num,
-  // })
 }
 let selectMapPopup = ref(null)
 let lnglat = ref([])

@@ -70,12 +70,12 @@ function PhoneCall(num) {
         console.log(result)
       })
       .catch(error => {
+        uni.makePhoneCall({
+          phoneNumber: num,
+        })
         console.log(error)
       })
   })
-  // uni.makePhoneCall({
-  //   phoneNumber: num,
-  // })
 }
 function handleGo(item) {
   app.to('mapDetail', { detailId: item.id, distance: item.distance })
