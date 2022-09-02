@@ -47,7 +47,8 @@ let latlngStr = $computed(() => {
 })
 let popupSelect = ref(null)
 function toggle() {
-  popupSelect.value.open('bottom')
+  // popupSelect.value.open('bottom')
+  Callback()
 }
 function close(mapType) {
   mapType && Callback(mapType)
