@@ -378,8 +378,7 @@ function addMarker(rows, needPoint = false) {
     if (app.User.area) {
       let position = touristSpots.filter(item => item.name.includes(app.User.area))
       MAps.setZoomAndCenter(10, position?.[0].position)
-    }
-    if (app.User.name) {
+    } else if (app.User.name) {
       MAps.setZoomAndCenter(15, [rows[0].longitude, rows[0].latitude])
     } else {
       reset()
