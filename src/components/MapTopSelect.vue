@@ -3,6 +3,7 @@
     rounded
     bgColor="#fff"
     placeholder="搜索点位"
+    class="text-sm"
     @confirm="search"
     @input="input"
     @cancel="cancel"

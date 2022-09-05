@@ -1,7 +1,7 @@
 <template>
   <div id="MAps" style="width: 100vw; height: 100vh; pointer-events: auto"></div>
   <div fixed top-25 left-5 flex flex-col>
-    <div v-for="(cr, key) of color" :key="key" flex-center :style="{ color: cr }">
+    <div v-for="(cr, key) of color" :key="key" flex-center class="text-sm" :style="{ color: cr }">
       <img :src="`https://hltm.jw.linan.gov.cn/linanjiwei/jsjw/img/${key}.png`" w-3 h-4 m-1 mb-1 />
       {{ key }}
     </div>
@@ -10,7 +10,7 @@
     <uni-icons
       type="navigate-filled"
       bg="light-50"
-      size="25"
+      :size="app.Global.FontSizeNum == 16 ? 25 : 40"
       shadow-xl
       p-1
       rounded-100
@@ -18,8 +18,8 @@
       @click="location"
     ></uni-icons>
     <uni-icons
+      :size="app.Global.FontSizeNum == 16 ? 25 : 40"
       type="reload"
-      size="25"
       color="#666"
       bg="light-50"
       shadow-xl
@@ -65,7 +65,7 @@
           </view>
         </view>
       </template>
-      <view class="text-cut-2" @click="handleGo(item)">
+      <view class="text-cut-2 text-sm" @click="handleGo(item)">
         {{ item.intro }}
       </view>
       <view flex color="#3089FF" mt-2>
@@ -111,6 +111,9 @@ function PhoneCall(num) {
       corpId: num,
     })
       .then(result => {
+        uni.makePhoneCall({
+          phoneNumber: num,
+        })
         console.log(result)
       })
       .catch(error => {
@@ -218,7 +221,7 @@ function getDataLine() {
           strokeColor: '#FF9D01',
           outlineColor: 'white',
           isOutline: true,
-          strokeWeight: 2.0,
+          strokeWeight: app.Global.FontSizeNum == 16 ? 2 : 5,
         })
         polyline2 = new AMap.Polyline({
           path: line2,
@@ -229,7 +232,7 @@ function getDataLine() {
           strokeColor: '#7F2D00',
           outlineColor: 'white',
           isOutline: true,
-          strokeWeight: 2.0,
+          strokeWeight: app.Global.FontSizeNum == 16 ? 2 : 5,
         })
         polyline3 = new AMap.Polyline({
           path: line3,
@@ -240,7 +243,7 @@ function getDataLine() {
           strokeColor: '#0000FF',
           outlineColor: 'white',
           isOutline: true,
-          strokeWeight: 2.0,
+          strokeWeight: app.Global.FontSizeNum == 16 ? 2 : 5,
         })
         polyline4 = new AMap.Polyline({
           path: line4,
@@ -251,7 +254,7 @@ function getDataLine() {
           strokeColor: '#FF0000',
           outlineColor: 'white',
           isOutline: true,
-          strokeWeight: 2.0,
+          strokeWeight: app.Global.FontSizeNum == 16 ? 2 : 5,
         })
         MAps.add([polyline1, polyline2, polyline3, polyline4])
       }
@@ -362,7 +365,7 @@ function addMarker(rows, needPoint = false) {
           fontWeight: 'normal',
           fillColor: color[item.type],
           strokeColor: '#fff',
-          strokeWidth: 2,
+          strokeWidth: app.Global.FontSizeNum == 16 ? 2 : 5,
           fold: true,
           padding: '2, 5',
         },

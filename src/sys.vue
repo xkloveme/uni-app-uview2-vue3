@@ -33,7 +33,7 @@ const getShowTask = computed(() => {
 })
 
 // #ifdef H5
-let fontSize = app.Global.FontSizeNum || 16
+let fontSize = app.Global.FontSizeNum || 20
 try {
   ZWJSBridge.getUiStyle({})
     .then(result => {
@@ -57,7 +57,6 @@ try {
 } catch (error) {
   window.document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
 }
-window.document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
 // #endif
 watch(
   getShowTask,

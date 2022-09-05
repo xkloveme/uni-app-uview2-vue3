@@ -33,7 +33,7 @@
         @click="PhoneCall(item.phone)"
       >
         <uni-icons type="phone" size="18" color="#666"></uni-icons>
-        {{ item.phone }}
+        {{ desensitization(item.phone) }}
         <button class="mini-btn ml-1" type="primary" size="mini" w-25>拨打</button>
       </view>
     </view>
@@ -57,6 +57,15 @@ let info = ref([
     url: '//store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283',
   },
 ])
+// 手机号脱敏
+function desensitization(str, beginLen = 3, endLen = -4) {
+  let len = String(str).length
+  let firstStr = str.substr(0, beginLen)
+  let lastStr = str.substr(endLen)
+  let middleStr = str.substring(beginLen, len - Math.abs(endLen)).replace(/[\s\S]/gi, '*')
+  let tempStr = firstStr + middleStr + lastStr
+  return tempStr
+}
 function PhoneCall(num) {
   if (!num) {
     return uni.showToast({
@@ -71,6 +80,9 @@ function PhoneCall(num) {
       corpId: num,
     })
       .then(result => {
+        uni.makePhoneCall({
+          phoneNumber: num,
+        })
         console.log(result)
       })
       .catch(error => {

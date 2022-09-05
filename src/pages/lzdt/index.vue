@@ -10,7 +10,7 @@
       :is-shadow="true"
       @click="gotoPage(`${item.imgUrl}/动态/${index + 1}.png`)"
     >
-      <div flex-center justify="start">
+      <div flex-center justify="start" class="text-sm">
         <img :src="`${item.imgUrl}/缩略图/${index + 1}.png`" mode="scaleToFill" w-10 h-10 />
         <view ml-2 flex-1>
           <view class="text-cut w-5/6">{{ item.name }}</view>

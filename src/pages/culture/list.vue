@@ -27,7 +27,7 @@
         </view>
       </view>
     </template>
-    <view class="text-cut-2" @click="handleGo(item)">
+    <view class="text-cut-2 text-sm" @click="handleGo(item)">
       {{ item.intro }}
     </view>
     <view flex color="#3089FF" mt-2>
@@ -67,6 +67,9 @@ function PhoneCall(num) {
       corpId: num,
     })
       .then(result => {
+        uni.makePhoneCall({
+          phoneNumber: num,
+        })
         console.log(result)
       })
       .catch(error => {

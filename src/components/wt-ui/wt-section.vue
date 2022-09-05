@@ -1,10 +1,10 @@
 <!--
  * @Author: xkloveme
  * @Date: 2022-04-21 11:52:46
- * @LastEditTime: 2022-04-25 14:38:09
+ * @LastEditTime: 2022-09-05 16:47:50
  * @LastEditors: xkloveme
  * @Description: uni-section
- * @FilePath: /uni-app-uview2-vue3/src/components/wt-ui/wt-section.vue
+ * @FilePath: /js-zlb-h5/src/components/wt-ui/wt-section.vue
  * @Copyright © xkloveme
 -->
 <template>
@@ -17,7 +17,7 @@
         <text
           :class="{ distraction: !subTitle }"
           :style="{ color: color }"
-          class="uni-section__content-title"
+          class="uni-section__content-title text-sm"
         >
           {{ title }}
         </text>
@@ -121,7 +121,6 @@ $uni-primary: #2979ff !default;
 }
 
 .uni-section__content-title {
-  font-size: 14px;
   color: $uni-primary;
 }
 

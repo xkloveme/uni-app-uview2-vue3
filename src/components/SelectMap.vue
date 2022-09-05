@@ -65,6 +65,8 @@ function Callback(mapType) {
   ZWJSBridge.onReady(() => {
     ZWJSBridge.openLink({
       url: `zwfw://openThirdMap?longitude=${props.lnglat[0]}&latitude=${props.lnglat[1]}&locationName=${props.addr}`,
+    }).catch(() => {
+      uni.showToast({ icon: 'none', title: '暂不支持微信端和支付宝端,请在浙里办APP操作' })
     })
     // ZWJSBridge.getUUID()
     //   .then(data => {

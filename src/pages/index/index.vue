@@ -26,7 +26,7 @@
       </div>
     </div>
   </div>
-  <div fixed bottom-40 right-2 p-1 py-2 flex-center flex-col bg-white rounded>
+  <!-- <div fixed bottom-40 right-2 p-1 py-2 flex-center flex-col bg-white rounded>
     <div v-if="app.Global.FontSizeNum == '16'" flex-center @click="SetFontSize(20)">
       <img
         style="width: 20px; margin-right: 5px"
@@ -41,11 +41,11 @@
       />
       常规版
     </div>
-  </div>
-  <div fixed bottom-10 right-4 left-4 text-center flex-center flex-col text-gray-500>
-    <div>本服务由浙江政务服务网、嘉善县西塘镇人民政府提供</div>
+  </div> -->
+  <div fixed bottom-10 right-2 left-2 text-center flex-center flex-col text-gray-500>
+    <div>本服务由浙江政务服务网、嘉善县西塘镇人民政府提供，</div>
     <div>
-      服务咨询热线：
+      咨询服务热线：
       <span class="text-blue-500" @click="PhoneCall('057384228969')">0573-84228969</span>
     </div>
   </div>
@@ -74,6 +74,9 @@ function PhoneCall(num) {
       corpId: num,
     })
       .then(result => {
+        uni.makePhoneCall({
+          phoneNumber: num,
+        })
         console.log(result)
       })
       .catch(error => {

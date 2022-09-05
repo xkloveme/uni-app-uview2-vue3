@@ -11,9 +11,9 @@
       @click="gotoPage(`${item.imgUrl}/${item.name}.png`)"
     >
       <image :src="`${item.imgUrl}/img/img${index + 1}.png`" mode="scaleToFill" w-full h-40 />
-      <view flex-center justify="between">
+      <view flex-center justify="between" class="text-sm">
         <view>{{ item.name }}</view>
-        <view>
+        <view class="w-15">
           <uni-icons type="map-pin-ellipse" size="16"></uni-icons>
           {{ item.addrs }}
         </view>
