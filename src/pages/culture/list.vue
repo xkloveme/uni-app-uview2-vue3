@@ -31,7 +31,7 @@
       {{ item.intro }}
     </view>
     <view flex color="#3089FF" mt-2>
-      <view flex-center @click="PhoneCall(item.phone)">
+      <view v-if="item.phone" flex-center @click="PhoneCall(item.phone)">
         <uni-icons type="phone-filled" size="18" color="#3089FF"></uni-icons>
         <text mx-2>拨打</text>
       </view>

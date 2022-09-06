@@ -25,6 +25,7 @@
       shadow-xl
       rounded
       bg="light-50"
+      class="text-sm"
       placeholder="全部路线"
       :localdata="range2"
       @change="change2"
@@ -33,7 +34,7 @@
       <uni-icons type="search" size="15"></uni-icons>
     </div> -->
     <div p-2 flex-center shadow-xl rounded bg="light-50" @click="goPage(name)">
-      <uni-icons :type="icon" size="15"></uni-icons>
+      <uni-icons :type="icon" :size="app.Global.FontSizeNum == 16 ? 15 : 20"></uni-icons>
     </div>
   </div>
 </template>

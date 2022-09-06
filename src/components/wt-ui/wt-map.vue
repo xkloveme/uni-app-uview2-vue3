@@ -68,7 +68,7 @@
       <view class="text-cut-2 text-sm" @click="handleGo(item)">
         {{ item.intro }}
       </view>
-      <view flex color="#3089FF" mt-2>
+      <view v-if="item.phone" flex color="#3089FF" mt-2>
         <view flex-center @click="PhoneCall(item.phone)">
           <uni-icons type="phone-filled" size="18" color="#3089FF"></uni-icons>
           <text mx-2>拨打</text>
@@ -358,15 +358,16 @@ function addMarker(rows, needPoint = false) {
         // 图片 url
         image: `https://hltm.jw.linan.gov.cn/linanjiwei/jsjw/img/${item.type}.png`,
         // 图片尺寸
-        size: [15, 18],
+        size: app.Global.FontSizeNum == 16 ? [15, 18] : [20, 23],
         // 图片相对 position 的锚点，默认为 bottom-center
         anchor: 'center',
       },
       text: {
         content: item.name,
         direction: 'bottom',
+        zooms: [12, 21],
         style: {
-          fontSize: 12,
+          fontSize: app.Global.FontSizeNum == 16 ? 12 : 25,
           fontWeight: 'normal',
           fillColor: color[item.type],
           strokeColor: '#fff',
