@@ -59,9 +59,9 @@ try {
       ZWJSBridge.ssoTicket({}).then(res => {
         if (res.ticketId) {
           // 是小程序
-          app.Global.SetFontSize(res.ticketId)
+          app.Global.SetTicketId(res.ticketId)
         } else {
-          app.Global.SetFontSize('')
+          app.Global.SetTicketId('')
         }
       })
     }

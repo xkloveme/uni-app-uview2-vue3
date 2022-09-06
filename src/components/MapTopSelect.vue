@@ -80,7 +80,6 @@ function goPage(name) {
   app.User.addName('')
   app.User.addLine('')
   app.User.addArea('')
-  app.User.addLocation([])
   app.to(name, { name: props.name })
 }
 </script>

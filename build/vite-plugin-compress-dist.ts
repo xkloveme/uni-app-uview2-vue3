@@ -1,7 +1,15 @@
 import { cwd } from 'process'
 import { resolve, join } from 'path'
 import compressing from 'compressing'
-import { createWriteStream, rename, readdirSync, statSync, unlinkSync, rmdirSync, exists } from 'fs'
+import {
+  createWriteStream,
+  rename,
+  readdirSync,
+  statSync,
+  unlinkSync,
+  rmdirSync,
+  existsSync,
+} from 'fs'
 
 export interface CompressOptions<Type extends 'zip' | 'tar' | 'tgz'> {
   archiverName?: ArchiverName<Type>
@@ -41,7 +49,9 @@ export default function createCompressDist(opts?: CompressOptions<'zip' | 'tar' 
     name: 'vite-plugin-compress-dist',
     buildStart() {
       // 构建开始
-      removeDir(resolve(rootPath, 'dist'))
+      if (existsSync(resolve(rootPath, sourceName))) {
+        removeDir(resolve(rootPath, sourceName))
+      }
     },
     closeBundle() {
       console.log('closeBundle')
