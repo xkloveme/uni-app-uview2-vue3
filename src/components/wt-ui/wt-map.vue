@@ -167,7 +167,8 @@ function initMaps() {
   layer = new AMap.LabelsLayer({
     zooms: [3, 20],
     zIndex: 3,
-    allowCollision: false, //可以让标注避让用户的标注
+    collision: false,
+    allowCollision: true,
   })
   MAps.add(layer)
   location()
@@ -258,7 +259,8 @@ function getDataLine() {
     })
 }
 
-function getDataMap(needPoint = false) {
+// 添加count
+function addCountText() {
   $api
     .getMapCount({
       longitude: app.User.locationArr[0],
@@ -276,6 +278,10 @@ function getDataMap(needPoint = false) {
       })
       addText(obj)
     })
+}
+
+function getDataMap(needPoint = false) {
+  addCountText()
   $api
     .getMapPoints({
       page: 1,
@@ -341,9 +347,11 @@ function addMarker(rows, needPoint = false) {
       name: item.name,
       extData: { id: item.id },
       position: [item.longitude, item.latitude],
-      zooms: [10, 20],
+      zooms: [10, 21],
       opacity: 1,
       zIndex: 1000,
+      collision: false,
+      allowCollision: true,
       icon: {
         // 图标类型，现阶段只支持 image 类型
         type: 'image',
@@ -441,7 +449,6 @@ function addText(obj) {
     let marker = new AMap.Marker({
       position: touristSpots[i].position,
       clickable: true,
-      zIndex: 3000,
       bubble: true,
       anchor: 'center',
       content: `
@@ -459,38 +466,38 @@ function addText(obj) {
 }
 
 function onMapClick(e) {
-  MAps.setZoomAndCenter(12, [e.target.De.position.lng, e.target.De.position.lat])
+  MAps.setZoomAndCenter(10.2, [e.target.De.position.lng, e.target.De.position.lat])
 }
 
 function location() {
   // 原生定位
-  // uni.getLocation({
-  //   type: 'wgs84',
-  //   success: function (res) {
-  //     console.log('当前位置的经度：' + res.longitude)
-  //     console.log('当前位置的纬度：' + res.latitude)
-  //     app.User.addLocation([res.longitude, res.latitude])
-  //     uni.showToast({ icon: 'none', title: '获取地图定位成功' })
-  //   },
-  //   fail: function (err) {
-  //     console.log(err)
-  //     uni.showToast({ icon: 'none', title: '获取地图定位失败' })
-  //   },
-  // })
-  // 浙里办定位
-  ZWJSBridge.onReady(() => {
-    ZWJSBridge.getLocation()
-      .then(result => {
-        console.log('当前位置的经度：' + result.longitude)
-        console.log('当前位置的纬度：' + result.latitude)
-        app.User.addLocation([result.longitude, result.latitude])
-        uni.showToast({ icon: 'none', title: '获取地图定位成功' })
-      })
-      .catch(error => {
-        console.log(error)
-        uni.showToast({ icon: 'none', title: '获取地图定位失败' })
-      })
+  uni.getLocation({
+    type: 'wgs84',
+    success: function (res) {
+      console.log('当前位置的经度：' + res.longitude)
+      console.log('当前位置的纬度：' + res.latitude)
+      app.User.addLocation([res.longitude, res.latitude])
+      uni.showToast({ icon: 'none', title: '获取地图定位成功' })
+    },
+    fail: function (err) {
+      console.log(err)
+      uni.showToast({ icon: 'none', title: '获取地图定位失败' })
+    },
   })
+  // 浙里办定位
+  // ZWJSBridge.onReady(() => {
+  //   ZWJSBridge.getLocation()
+  //     .then(result => {
+  //       console.log('当前位置的经度：' + result.longitude)
+  //       console.log('当前位置的纬度：' + result.latitude)
+  //       app.User.addLocation([result.longitude, result.latitude])
+  //       uni.showToast({ icon: 'none', title: '获取地图定位成功' })
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //       uni.showToast({ icon: 'none', title: '获取地图定位失败' })
+  //     })
+  // })
   // 高德定位
   // AMap.plugin('AMap.Geolocation', function () {
   //   var geolocation = new AMap.Geolocation({
