@@ -21,7 +21,15 @@
       <view flex-center justify="start" color="#666" font-normal my-2 @click="openPopup(item)">
         <uni-icons type="location" size="18" color="#666"></uni-icons>
         {{ item.address }} | {{ data.distance || '-' }}公里
-        <button class="mini-btn ml-1" type="primary" size="mini" w-25>导航</button>
+        <button
+          v-if="app.Global.GetTicketId == ''"
+          class="mini-btn ml-1"
+          type="primary"
+          size="mini"
+          w-25
+        >
+          导航
+        </button>
       </view>
       <view
         v-if="item.phone"
@@ -59,6 +67,11 @@ let info = ref([
 ])
 // 手机号脱敏
 function desensitization(str, beginLen = 3, endLen = -4) {
+  if (str.startsWith('1')) {
+    beginLen = 3
+  } else {
+    beginLen = 4
+  }
   let len = String(str).length
   let firstStr = str.substr(0, beginLen)
   let lastStr = str.substr(endLen)
@@ -80,9 +93,6 @@ function PhoneCall(num) {
       corpId: num,
     })
       .then(result => {
-        uni.makePhoneCall({
-          phoneNumber: num,
-        })
         console.log(result)
       })
       .catch(error => {

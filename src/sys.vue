@@ -33,27 +33,39 @@ const getShowTask = computed(() => {
 })
 
 // #ifdef H5
-let fontSize = app.Global.FontSizeNum || 20
+let fontSize = app.Global.FontSizeNum || 16
 try {
-  ZWJSBridge.getUiStyle({})
-    .then(result => {
-      switch (result.uiStyle) {
-        case 'normal':
-          fontSize = 16
-          break
-        case 'elder':
-          fontSize = 20
-          break
-        default:
-          fontSize = 16
-      }
-      app.Global.SetFontSize(fontSize)
-      window.document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
-    })
-    //浙里办APP 6.11.0 版本以下版本标准模式兼容
-    .catch(() => {
-      window.document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
-    })
+  ZWJSBridge.onReady(() => {
+    ZWJSBridge.getUiStyle({})
+      .then(result => {
+        switch (result.uiStyle) {
+          case 'normal':
+            fontSize = 16
+            break
+          case 'elder':
+            fontSize = 20
+            break
+          default:
+            fontSize = 16
+        }
+        app.Global.SetFontSize(fontSize)
+        window.document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
+      })
+      //浙里办APP 6.11.0 版本以下版本标准模式兼容
+      .catch(() => {
+        window.document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
+      })
+    if (ZWJSBridge.ssoTicket) {
+      ZWJSBridge.ssoTicket({}).then(res => {
+        if (res.ticketId) {
+          // 是小程序
+          app.Global.SetFontSize(res.ticketId)
+        } else {
+          app.Global.SetFontSize('')
+        }
+      })
+    }
+  })
 } catch (error) {
   window.document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
 }

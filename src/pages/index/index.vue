@@ -74,9 +74,6 @@ function PhoneCall(num) {
       corpId: num,
     })
       .then(result => {
-        uni.makePhoneCall({
-          phoneNumber: num,
-        })
         console.log(result)
       })
       .catch(error => {

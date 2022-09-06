@@ -35,7 +35,7 @@
         <uni-icons type="phone-filled" size="18" color="#3089FF"></uni-icons>
         <text mx-2>拨打</text>
       </view>
-      <view flex-center mx-6 @click="openPopup(item)">
+      <view v-if="app.Global.GetTicketId == ''" flex-center mx-6 @click="openPopup(item)">
         <uni-icons type="navigate-filled" size="18" color="#3089FF"></uni-icons>
         <text mx-2>导航</text>
       </view>
@@ -67,9 +67,6 @@ function PhoneCall(num) {
       corpId: num,
     })
       .then(result => {
-        uni.makePhoneCall({
-          phoneNumber: num,
-        })
         console.log(result)
       })
       .catch(error => {
