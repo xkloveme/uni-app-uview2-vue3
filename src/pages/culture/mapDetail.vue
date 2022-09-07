@@ -19,11 +19,15 @@
         <uni-tag :text="item.line" type="error" size="small" ml-1 min-w-18></uni-tag>
       </view>
       <view flex-center justify="start" color="#666" font-normal my-2 @click="openPopup(item)">
-        <uni-icons type="location" size="18" color="#666"></uni-icons>
+        <uni-icons
+          type="location"
+          :size="app.Global.FontSizeNum == 16 ? 18 : 25"
+          color="#666"
+        ></uni-icons>
         {{ item.address }} | {{ data.distance || '-' }}公里
         <button
           v-if="app.Global.GetTicketId == ''"
-          class="mini-btn ml-1"
+          class="mini-btn ml-1 text-base"
           type="primary"
           size="mini"
           w-25
@@ -42,7 +46,7 @@
       >
         <uni-icons type="phone" size="18" color="#666"></uni-icons>
         {{ desensitization(item.phone) }}
-        <button class="mini-btn ml-1" type="primary" size="mini" w-25>拨打</button>
+        <button class="mini-btn ml-1 text-base" type="primary" size="mini" w-25>拨打</button>
       </view>
     </view>
     <hr color="#f0f0f0" />
