@@ -9,30 +9,32 @@
       <div>举报电话</div>
       <div color="red">12388</div>
     </div>
-    <div flex-center mx-20 py-5 relative>
-      <img src="@/static/img/line-title.png" w-full h-10 />
-      <h3 absolute>举报网站</h3>
-    </div>
-    <div
-      class="flex-center justify-between mx-10 p-5 click-btn"
-      @click="gotopage('嘉善', 'http://zhejiang.12388.gov.cn/jiaxing/jiashan/')"
-    >
-      <div>嘉善</div>
-      <div color="red">我要举报</div>
-    </div>
-    <div
-      class="flex-center justify-between mx-10 p-5 click-btn"
-      @click="gotopage('青浦', 'http://shanghai.12388.gov.cn/qingpu/')"
-    >
-      <div>青浦</div>
-      <div color="red">我要举报</div>
-    </div>
-    <div
-      class="flex-center justify-between mx-10 p-5 click-btn"
-      @click="gotopage('吴江', 'http://jiangsu.12388.gov.cn/suzhoushi/wujiangqu/')"
-    >
-      <div>吴江</div>
-      <div color="red">我要举报</div>
+    <div v-if="app.Global.GetTicketId == ''">
+      <div flex-center mx-20 py-5 relative>
+        <img src="@/static/img/line-title.png" w-full h-10 />
+        <h3 absolute>举报网站</h3>
+      </div>
+      <div
+        class="flex-center justify-between mx-10 p-5 click-btn"
+        @click="gotopage('嘉善', 'http://zhejiang.12388.gov.cn/jiaxing/jiashan/')"
+      >
+        <div>嘉善</div>
+        <div color="red">我要举报</div>
+      </div>
+      <div
+        class="flex-center justify-between mx-10 p-5 click-btn"
+        @click="gotopage('青浦', 'http://shanghai.12388.gov.cn/qingpu/')"
+      >
+        <div>青浦</div>
+        <div color="red">我要举报</div>
+      </div>
+      <div
+        class="flex-center justify-between mx-10 p-5 click-btn"
+        @click="gotopage('吴江', 'http://jiangsu.12388.gov.cn/suzhoushi/wujiangqu/')"
+      >
+        <div>吴江</div>
+        <div color="red">我要举报</div>
+      </div>
     </div>
   </div>
 </template>
@@ -74,6 +76,7 @@ function PhoneCall(num) {
   width: 100%;
   color: #fff;
   background: url(@/static/img/bg.png) center/100% 100% no-repeat;
+
   .click-btn {
     color: #2f3435;
     font-weight: 900;

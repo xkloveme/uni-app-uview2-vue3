@@ -72,26 +72,26 @@
         <view v-if="item.phone" flex-center @click="PhoneCall(item.phone)">
           <uni-icons
             type="phone-filled"
-            :size="app.Global.FontSizeNum == 16 ? 18 : 25"
+            :size="app.Global.FontSizeNum == 16 ? 18 : 22"
             color="#3089FF"
           ></uni-icons>
-          <text mx-2 class="text-base">拨打</text>
+          <text class="text-base mx-0.5">拨打</text>
         </view>
         <view v-if="app.Global.GetTicketId == ''" flex-center mx-6 @click="openPopup(item)">
           <uni-icons
             type="navigate-filled"
-            :size="app.Global.FontSizeNum == 16 ? 18 : 25"
+            :size="app.Global.FontSizeNum == 16 ? 18 : 22"
             color="#3089FF"
           ></uni-icons>
-          <text mx-2 class="text-base">导航</text>
+          <text class="text-base mx-0.5">导航</text>
         </view>
         <view flex-center @click="handleGo(item)">
           <uni-icons
             type="bars"
-            :size="app.Global.FontSizeNum == 16 ? 18 : 25"
+            :size="app.Global.FontSizeNum == 16 ? 18 : 22"
             color="#3089FF"
           ></uni-icons>
-          <text mx-2 class="text-base">查看详情</text>
+          <text class="text-base mx-0.5">查看详情</text>
         </view>
       </view>
     </uni-card>
