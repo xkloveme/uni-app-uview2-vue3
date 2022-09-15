@@ -1,6 +1,6 @@
 <template>
   <meta title="点位详情" navigationStyle="custom" />
-  <div>
+  <div @click="previewImage(info)">
     <uni-swiper-dot :info="info" field="content" mode="dot">
       <swiper class="swiper-box" h-40>
         <swiper-item v-for="(img, index) in info" :key="index">
@@ -53,13 +53,30 @@
     <wt-section title="介绍" type="line"></wt-section>
     <div>
       {{ item.intro }}
-      <div w-full h-50></div>
     </div>
+    <div v-if="item.vrLink" flex-center mt-5 flex-col @click="gotopage(item.vrLink)">
+      <qrcode-vue :value="qrUrl" :size="200" level="H" />
+      点击查看VR全景图
+    </div>
+    <div
+      v-if="item.audioLink"
+      fixed
+      bottom-16
+      right-5
+      flex
+      flex-col
+      @click="playAudio(item.audioLink)"
+    >
+      <uni-icons type="headphones" size="50"></uni-icons>
+    </div>
+    <div w-full h-50></div>
   </view>
+
   <SelectMap ref="selectMapPopup" :lnglat="lnglat" :addr="addr" />
 </template>
 
 <script setup>
+import QrcodeVue from 'qrcode.vue'
 import $api from '@/api'
 import { useQuery } from '@/hooks'
 import SelectMap from '@/components/SelectMap'
@@ -69,6 +86,42 @@ let info = ref([
     url: '//store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283',
   },
 ])
+let qrUrl = ref('https://720yun.com/vr/a6f26qf8me6')
+let isPlay = ref(false)
+const innerAudioContext = uni.createInnerAudioContext()
+innerAudioContext.onPlay(() => {
+  console.log('开始播放')
+  isPlay.value = true
+})
+innerAudioContext.onEnded(() => {
+  console.log('播放完毕')
+  isPlay.value = false
+})
+// 播放音频
+function playAudio(audioLink) {
+  innerAudioContext.src = audioLink
+  if (isPlay.value) {
+    innerAudioContext.pause()
+    isPlay.value = false
+  } else {
+    innerAudioContext.play()
+  }
+}
+// 跳转3D预览
+function gotopage(href) {
+  window.location.href = href
+}
+// 预览图片
+function previewImage(info) {
+  let urls = []
+  info.map(item => {
+    urls.push(item.url)
+  })
+  uni.previewImage({
+    urls: urls,
+  })
+}
+
 // 手机号脱敏
 function desensitization(str, beginLen = 3, endLen = -4) {
   if (str.startsWith('1')) {
