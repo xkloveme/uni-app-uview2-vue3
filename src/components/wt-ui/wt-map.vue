@@ -8,11 +8,22 @@
   </div>
   <div fixed bottom-16 right-5 flex flex-col>
     <uni-icons
+      type="settings-filled"
+      bg="light-50"
+      :size="app.Global.FontSizeNum == 16 ? 25 : 40"
+      shadow-xl
+      p-1
+      rounded-100
+      color="#666"
+      @click="showLine"
+    ></uni-icons>
+    <uni-icons
       type="navigate-filled"
       bg="light-50"
       :size="app.Global.FontSizeNum == 16 ? 25 : 40"
       shadow-xl
       p-1
+      my-2
       rounded-100
       color="#666"
       @click="location"
@@ -24,7 +35,6 @@
       bg="light-50"
       shadow-xl
       p-1
-      my-2
       rounded-100
       @click="reset"
     ></uni-icons>
@@ -162,6 +172,20 @@ function logMapinfo() {
     layer.setzIndex(9999)
   }
 }
+let isline = ref(false)
+// 显示隐藏line
+function showLine() {
+  if (isline.value) {
+    polyline1?.hide()
+    polyline2?.hide()
+    polyline3?.hide()
+    polyline4?.hide()
+    isline.value = false
+  } else {
+    getDataLine()
+    isline.value = true
+  }
+}
 function initMaps() {
   // 配置地图的基本显示
   MAps = new AMap.Map('MAps', {
@@ -191,15 +215,18 @@ function initMaps() {
 let touristSpots = [
   {
     name: '嘉善县',
-    position: [120.92, 30.85],
+    position: [120.999, 30.85],
+    center: [120.92, 30.85],
   },
   {
     name: '吴江区',
-    position: [120.638, 31.0598],
+    position: [120.768, 31.0598],
+    center: [120.638, 31.0598],
   },
   {
     name: '青浦区',
-    position: [121.12, 31.15],
+    position: [121.12, 31.05],
+    center: [121.12, 31.15],
   },
 ]
 let polyline1 = null
@@ -270,7 +297,6 @@ function getDataLine() {
       }
     })
 }
-
 // 添加count
 function addCountText() {
   $api
@@ -308,39 +334,37 @@ function getDataMap(needPoint = false) {
       layer?.clear()
       addMarker(res.rows, needPoint)
     })
-  if (!polyline1) {
-    getDataLine()
-  } else {
+  if (polyline1) {
     switch (app.User.line) {
       case '清廉传承线':
-        polyline1?.show()
+        isline.value && polyline1?.show()
         polyline2?.hide()
         polyline3?.hide()
         polyline4?.hide()
         break
       case '清廉实践线':
         polyline1?.hide()
-        polyline2?.show()
+        isline.value && polyline2?.show()
         polyline3?.hide()
         polyline4?.hide()
         break
       case '清廉教育线':
         polyline1?.hide()
         polyline2?.hide()
-        polyline3?.show()
+        isline.value && polyline3?.show()
         polyline4?.hide()
         break
       case '红色文化线':
         polyline1?.hide()
         polyline2?.hide()
         polyline3?.hide()
-        polyline4?.show()
+        isline.value && polyline4?.show()
         break
       default:
-        polyline1?.show()
-        polyline2?.show()
-        polyline3?.show()
-        polyline4?.show()
+        isline.value && polyline1?.show()
+        isline.value && polyline2?.show()
+        isline.value && polyline3?.show()
+        isline.value && polyline4?.show()
         break
     }
   }
@@ -461,6 +485,8 @@ function addText(obj) {
   for (var i = 0; i < touristSpots.length; i += 1) {
     let marker = new AMap.Marker({
       position: touristSpots[i].position,
+      extData: touristSpots[i].center,
+      offset: new AMap.Pixel(-10, -10),
       clickable: true,
       bubble: true,
       anchor: 'center',
@@ -479,7 +505,7 @@ function addText(obj) {
 }
 
 function onMapClick(e) {
-  MAps.setZoomAndCenter(10.2, [e.target.De.position.lng, e.target.De.position.lat])
+  MAps.setZoomAndCenter(10.2, e.target.De.extData)
 }
 
 function location() {
@@ -537,6 +563,7 @@ function location() {
 function reset() {
   let position = new AMap.LngLat(120.84559, 31.09993) // 标准写法
   MAps.setZoomAndCenter(9, position)
+  addCountText()
 }
 onBeforeMount(() => {
   MapLoader().then(

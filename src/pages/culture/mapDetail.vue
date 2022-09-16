@@ -54,9 +54,10 @@
     <div>
       {{ item.intro }}
     </div>
+    <wt-section v-if="item.vrLink" title="VR全景" type="line"></wt-section>
     <div v-if="item.vrLink" flex-center mt-5 flex-col @click="gotopage(item.vrLink)">
       <qrcode-vue :value="qrUrl" :size="200" level="H" />
-      点击查看VR全景图
+      <text mt-4>扫描/点击二维码查看VR全景图</text>
     </div>
     <div
       v-if="item.audioLink"
@@ -86,7 +87,6 @@ let info = ref([
     url: '//store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283',
   },
 ])
-let qrUrl = ref('https://720yun.com/vr/a6f26qf8me6')
 let isPlay = ref(false)
 const innerAudioContext = uni.createInnerAudioContext()
 innerAudioContext.onPlay(() => {
