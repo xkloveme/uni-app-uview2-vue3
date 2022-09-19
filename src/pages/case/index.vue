@@ -27,7 +27,7 @@ import $api from '@/api'
 import { useScroll } from '@/hooks'
 function gotoPage(item) {
   app.to(`detail`, {
-    url: item.videoUrl || `${item.imgUrl}/${item.name}.png`,
+    url: item.videoUrl || `//hltm.jw.linan.gov.cn/linanjiwei/jsjw/al/${item.name}.png`,
     type: item.videoUrl ? 'mp4' : 'mp3',
   })
 }
