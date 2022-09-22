@@ -93,7 +93,7 @@ function Callback(mapType) {
     //         // Android参考地址:  https://lbs.amap.com/api/amap-mobile/gettingstarted
     //         proto = isiOS
     //           ? `iosamap://navi?sourceApplication=applicationName&poiname=${props.addr}&poiid=BGVIS&lat=${latlngStr[0]}&lon=${latlngStr[1]}&dev=1&style=2`
-    //           : `androidamap://navi?sourceApplication=appname&amp;poiname=${props.addr}&amp;lat=${latlngStr[0]}&amp;lon=${latlngStr[1]}&amp;dev=1&amp;style=2`
+    //           : `androidamap://navi?sourceApplication=appname&poiname=${props.addr}&lat=${latlngStr[0]}&lon=${latlngStr[1]}&dev=1&style=2`
     //         window.location.href = proto
     //       } else if (mapType === 'qqmap') {
     //         // IOS 和 Android 一样 参考地址:https://lbs.qq.com/webApi/uriV1/uriGuide/uriMobileRoute
