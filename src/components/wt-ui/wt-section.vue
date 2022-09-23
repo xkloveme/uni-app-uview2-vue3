@@ -1,7 +1,7 @@
 <!--
  * @Author: xkloveme
  * @Date: 2022-04-21 11:52:46
- * @LastEditTime: 2022-09-05 16:47:50
+ * @LastEditTime: 2022-09-23 15:16:48
  * @LastEditors: xkloveme
  * @Description: uni-section
  * @FilePath: /js-zlb-h5/src/components/wt-ui/wt-section.vue
@@ -21,11 +21,11 @@
         >
           {{ title }}
         </text>
+        <view :style="{ marginLeft: margin ? '10px' : '' }">
+          <slot />
+        </view>
         <text v-if="subTitle" class="uni-section__content-sub">{{ subTitle }}</text>
       </view>
-    </view>
-    <view :style="{ padding: padding ? '10px' : '' }">
-      <slot />
     </view>
   </view>
 </template>
@@ -57,9 +57,9 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  padding: {
+  margin: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 })
 const emit = defineEmits(['click'])
@@ -76,17 +76,17 @@ $uni-primary: #2979ff !default;
   // overflow: hidden;
   margin-top: 10px;
 }
+
 .uni-section-header {
   position: relative;
-  /* #ifndef APP-NVUE */
   display: flex;
-  /* #endif */
   flex-direction: row;
   align-items: center;
   padding: 12px 10px;
   // height: 50px;
   font-weight: normal;
 }
+
 .uni-section__head {
   flex-direction: row;
   justify-content: center;
@@ -112,10 +112,9 @@ $uni-primary: #2979ff !default;
 }
 
 .uni-section__content {
-  /* #ifndef APP-NVUE */
   display: flex;
-  /* #endif */
-  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   flex: 1;
   color: #333;
 }
