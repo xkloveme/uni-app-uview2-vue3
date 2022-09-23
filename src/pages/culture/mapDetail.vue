@@ -175,6 +175,8 @@ $api.getPointsDetail(data.detailId).then(res => {
     info.value = res.data.imageList
   }
 })
+
+onUnload(() => innerAudioContext.stop())
 </script>
 
 <style lang="scss"></style>

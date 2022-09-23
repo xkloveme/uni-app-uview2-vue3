@@ -125,9 +125,7 @@ useScroll(onPageScroll).onLoad(page => {
     })
 })
 function init(e) {
-  if (e) {
-    app.User.addresetUpScroll()
-  }
+  app.User.addresetUpScroll()
 }
 </script>
 

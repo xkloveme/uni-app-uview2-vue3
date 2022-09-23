@@ -25,44 +25,19 @@ type ArchiverName<T> = T extends 'zip' | 'tar'
 const initOpts: CompressOptions<'zip'> = {
   archiverName: 'src.zip',
   type: 'zip',
-  sourceName: 'dist/build/build',
+  sourceName: 'dist/build',
 }
 export default function createCompressDist(opts?: CompressOptions<'zip' | 'tar' | 'tgz'>) {
   const { sourceName, archiverName, type } = opts || initOpts
   const rootPath = cwd()
-  let removeDir = dir => {
-    let files = readdirSync(dir)
-    for (let i = 0; i < files.length; i++) {
-      let newPath = join(dir, files[i])
-      let stat = statSync(newPath)
-      if (stat.isDirectory()) {
-        //如果是文件夹就递归下去
-        removeDir(newPath)
-      } else {
-        //删除文件
-        unlinkSync(newPath)
-      }
-    }
-    rmdirSync(dir) //如果文件夹是空的，就将自己删除掉
-  }
   return {
     name: 'vite-plugin-compress-dist',
-    buildStart() {
-      // 构建开始
-      if (existsSync(resolve(rootPath, sourceName))) {
-        removeDir(resolve(rootPath, sourceName))
-      }
-    },
     closeBundle() {
       console.log('closeBundle')
-      rename(resolve(rootPath, 'dist/build/h5'), resolve(rootPath, sourceName), err => {
-        if (err) throw err
-        console.log('重命名完成')
-      })
       const sourcePath = resolve(rootPath, sourceName)
       console.log(`sourcePath: ${sourcePath}`)
-      const packagePath = resolve(rootPath, 'dist/build/package.json')
-      const writerStream = createWriteStream(resolve(rootPath, 'dist/build/package.json'))
+      const packagePath = resolve(rootPath, 'dist/package.json')
+      const writerStream = createWriteStream(resolve(rootPath, 'dist/package.json'))
       const data = `{
         "name": "vite-zlb",
         "private": true,

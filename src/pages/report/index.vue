@@ -10,7 +10,7 @@
         <div>举报电话</div>
         <div color="#537fa2">12388</div>
       </div>
-      <h3 absolute ml-4 mt-5>举报网站</h3>
+      <!-- <h3 absolute ml-4 mt-5 v-if="app.Global.GetTicketId == ''">举报网站</h3>
       <div v-if="app.Global.GetTicketId == ''">
         <div
           class="flex-center justify-between rounded-lg mx-4 p-5 mt-15 click-btn1"
@@ -33,7 +33,7 @@
           <div>吴江</div>
           <div color="#5483c2">我要举报</div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
