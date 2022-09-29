@@ -18,7 +18,9 @@
           动态
         </div>
         |
-        <div color="#333" class="flex-1 w-60 pl-4 text-cut">{{ notice[noticeIndex] }}</div>
+        <div color="#333" class="flex-1 w-60 pl-4 text-cut">
+          {{ notice[noticeIndex] }}
+        </div>
         <div color="#999999" class="px-2">
           全部
           <uni-icons type="forward" color="#999" size="16"></uni-icons>
@@ -85,7 +87,7 @@ let notice = [
 let timer = null
 let current = ref(0)
 function changeNotice() {
-  timer = setTimeout(() => {
+  timer = setInterval(() => {
     noticeIndex.value++
     if (noticeIndex.value == 6) {
       noticeIndex.value = 0
@@ -134,7 +136,7 @@ function PhoneCall(num) {
   })
 }
 onUnload(() => {
-  clearTimeout(timer) //关闭timer定时器
+  clearInterval(timer) //关闭timer定时器
   timer = null
 })
 </script>
