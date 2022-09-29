@@ -116,6 +116,7 @@ innerAudioContext.onEnded(() => {
 // 播放音频
 function playAudio(audioLink) {
   innerAudioContext.src = audioLink
+  innerAudioContext.loop = true
   if (isPlay.value) {
     innerAudioContext.pause()
     isPlay.value = false

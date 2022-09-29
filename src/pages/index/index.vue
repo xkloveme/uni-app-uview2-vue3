@@ -29,7 +29,7 @@
         text="[单行] 这是 NoticeBar 通告栏，这是 NoticeBar 通告栏，这是 NoticeBar 通告栏"></uni-notice-bar> -->
     </div>
   </div>
-  <uni-row class="flex-center mt-15 w-full gap-2 px-2">
+  <uni-row class="flex-center mt-11 w-full gap-2 px-2">
     <uni-col :span="12">
       <img src="@/static/assets/举报.png" w-full h-20 @click="goPage('report')" />
     </uni-col>
@@ -37,7 +37,7 @@
       <img src="@/static/assets/案例.png" w-full h-20 @click="goPage('case')" />
     </uni-col>
   </uni-row>
-  <div px-1 mt-3 @click="goPage('culture')">
+  <div px-1 mt-1 @click="goPage('culture')">
     <img src="@/static/assets/map.png" w-full h-full />
   </div>
   <!-- <div fixed bottom-40 right-2 p-1 py-2 flex-center flex-col bg-white rounded>
@@ -56,7 +56,7 @@
       常规版
     </div>
   </div> -->
-  <div fixed bottom-10 right-2 left-2 text-center flex-center flex-col text-gray-500>
+  <div fixed bottom-6 right-2 left-2 text-center flex-center flex-col text-gray-500>
     <div>本服务由浙江政务服务网、嘉善县西塘镇人民政府提供，</div>
     <div>
       咨询服务热线：
