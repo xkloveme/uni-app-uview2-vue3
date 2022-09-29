@@ -7,8 +7,8 @@
         class="bg-light-50 absolute top-0 left-0 right-0 overflow-auto"
       >
         <div @click="previewImage(info)">
-          <uni-swiper-dot :info="info" field="content" mode="dot">
-            <swiper class="swiper-box" h-40>
+          <uni-swiper-dot :info="info" :current="current" field="content" mode="dot">
+            <swiper class="swiper-box" h-40 @change="change">
               <swiper-item v-for="(img, index) in info" :key="index">
                 <view class="swiper-item">
                   <img :src="img.url" w-full h-full />
@@ -64,9 +64,9 @@
           </view>
           <hr color="#f0f0f0" />
           <wt-section title="介绍" type="line">
-            <div v-if="item.audioLink" @click="playAudio(item.audioLink)">
-              <uni-icons v-if="isPlay" type="sound-filled" size="25" color="#0179ff"></uni-icons>
-              <uni-icons v-else type="headphones" size="25"></uni-icons>
+            <div v-if="item.audioLink" w-6 h-6 @click="playAudio(item.audioLink)">
+              <img v-if="isPlay" src="@/static/img/banimg.gif" w-6 h-6 />
+              <img v-else src="@/static/img/voice.png" w-6 h-6 />
             </div>
           </wt-section>
           <div>
@@ -94,11 +94,15 @@ import $api from '@/api'
 import { useQuery } from '@/hooks'
 import SelectMap from '@/components/SelectMap'
 const { data } = $(useQuery())
+let current = ref(0)
 let info = ref([
   {
     url: '//store.is.autonavi.com/showpic/cf623a546cdbcf6c8cfc35c392106283',
   },
 ])
+function change(e) {
+  current.value = e.detail.current
+}
 let isPlay = ref(false)
 const innerAudioContext = uni.createInnerAudioContext()
 innerAudioContext.onPlay(() => {

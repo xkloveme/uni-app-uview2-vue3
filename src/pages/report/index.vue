@@ -10,6 +10,27 @@
         <div>举报电话</div>
         <div color="#537fa2">12388</div>
       </div>
+      <div
+        class="flex-center justify-between rounded-lg mx-4 p-5 mt-5 click-btn1"
+        @click="PhoneCall('021-12388')"
+      >
+        <div>青浦区举报电话</div>
+        <div color="#5483c2">021-12388</div>
+      </div>
+      <div
+        class="flex-center justify-between rounded-lg mx-4 p-5 mt-5 click-btn1"
+        @click="PhoneCall('0512-12388')"
+      >
+        <div>吴江区举报电话</div>
+        <div color="#5483c2">0512-12388</div>
+      </div>
+      <div
+        class="flex-center justify-between rounded-lg mx-4 p-5 mt-5 click-btn1"
+        @click="PhoneCall('0573-84228107')"
+      >
+        <div>嘉善县举报电话</div>
+        <div color="#5483c2">0573-84228107</div>
+      </div>
       <!-- <h3 absolute ml-4 mt-5 v-if="app.Global.GetTicketId == ''">举报网站</h3>
       <div v-if="app.Global.GetTicketId == ''">
         <div

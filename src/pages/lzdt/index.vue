@@ -11,11 +11,11 @@
       @click="gotoPage(`${item.imgUrl}/动态/${index + 1}.png`)"
     >
       <div flex-center justify="start" class="text-sm">
-        <img :src="`${item.imgUrl}/缩略图/${index + 1}.png`" mode="scaleToFill" w-10 h-10 />
-        <view ml-2 flex-1>
-          <view class="text-cut w-5/6">{{ item.name }}</view>
-          <view>
-            <uni-icons type="map-pin-ellipse" size="16"></uni-icons>
+        <img :src="`${item.imgUrl}/缩略图/${index + 1}.png`" mode="scaleToFill" w-15 h-15 />
+        <view ml-2 flex-1 flex-col>
+          <view class="text-cut w-7/8">{{ item.name }}</view>
+          <view class="text-gray-400 mt-3">
+            <!-- <uni-icons type="map-pin-ellipse" size="16"></uni-icons> -->
             {{ item.addrs }}
           </view>
         </view>
