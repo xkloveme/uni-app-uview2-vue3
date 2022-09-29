@@ -7,7 +7,7 @@
         class="flex-center justify-between rounded-lg mx-4 p-5 mt-10 click-btn"
         @click="PhoneCall('12388')"
       >
-        <div>举报电话</div>
+        <div>全国纪检监察举报电话</div>
         <div color="#537fa2">12388</div>
       </div>
       <div
