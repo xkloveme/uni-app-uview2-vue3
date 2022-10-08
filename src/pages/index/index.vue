@@ -39,7 +39,7 @@
       <img src="@/static/assets/案例.png" w-full h-20 @click="goPage('case')" />
     </uni-col>
   </uni-row>
-  <div px-1 mt-1 @click="goPage('culture')">
+  <div px-1 mt-1 @click="goPageOpenLink()">
     <img src="@/static/assets/map.png" w-full h-full />
   </div>
   <!-- <div fixed bottom-40 right-2 p-1 py-2 flex-center flex-col bg-white rounded>
@@ -68,6 +68,7 @@
 </template>
 
 <script setup>
+import { encrypt } from '@/utils/rsaEncrypt.js'
 function goPage(url) {
   app.to(`/pages/${url}/index`)
 }
@@ -110,7 +111,36 @@ let info = ref([
 function change(e) {
   current.value = e.detail.current
 }
+function getMoble() {
+  var prefixArray = ['130', '131', '132', '133', '135', '137', '138', '170', '187', '189']
+  var i = parseInt(10 * Math.random())
+  var prefix = prefixArray[i]
+  for (var j = 0; j < 8; j++) {
+    prefix = prefix + Math.floor(Math.random() * 10)
+  }
+  return prefix
+}
 
+function goPageOpenLink() {
+  /* eslint handle-callback-err: "warn" */
+  ZWJSBridge.onReady(() => {
+    let url = `https://material.jiashan.gov.cn:8082/zwdton/#/trans?uiStyle=${encrypt(
+      app.Global.FontSizeNum == '16' ? 'normal' : 'elder',
+    )}&username=${encrypt(Math.random().toString(36).substring(2))}&idnum=xxx&mobile=${encrypt(
+      getMoble(),
+    )}&source=xxxx&bigType=${encrypt('清廉文化')}&type=${encrypt('场馆')}`
+    console.log('初始化完成后，执行bridge方法', url)
+    ZWJSBridge.openLink({
+      url: url,
+    })
+      .then(res => {
+        console.log('跳转成功')
+      })
+      .catch(res => {
+        console.log('跳转失败')
+      })
+  })
+}
 function PhoneCall(num) {
   if (!num) {
     return uni.showToast({
