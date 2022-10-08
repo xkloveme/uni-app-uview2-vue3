@@ -11,7 +11,7 @@
       </swiper>
     </uni-swiper-dot>
     <div class="-mt-4 py-2 z-9999 absolute w-full">
-      <div class="bg-light-50 rounded-lg flex-center mx-3">
+      <div class="bg-light-50 rounded-lg flex-center mx-3" @click="goPage('lzdt')">
         <div class="text-dark-900 font-bold p-1 px-4">
           <span color="#FF3535">清廉</span>
           <br />
